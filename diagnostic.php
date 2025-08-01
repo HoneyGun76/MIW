@@ -780,6 +780,8 @@ $diagnosticData = getAllDiagnosticData();
         .btn-success { background: #28a745; color: white; }
         .btn-warning { background: #ffc107; color: #212529; }
         .btn-danger { background: #dc3545; color: white; }
+        .btn-info { background: #17a2b8; color: white; }
+        .btn-secondary { background: #6c757d; color: white; }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         
         .diagnostic-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(600px, 1fr)); gap: 20px; }
@@ -801,7 +803,10 @@ $diagnosticData = getAllDiagnosticData();
         .status-danger { background: #dc3545; }
         .status-info { background: #17a2b8; }
         
-        .auto-refresh { position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.8); color: white; padding: 10px 15px; border-radius: 8px; font-size: 12px; }
+        .auto-refresh { position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.8); color: white; padding: 15px 20px; border-radius: 8px; font-size: 12px; min-width: 200px; text-align: center; }
+        .auto-refresh #refresh-status { line-height: 1.4; }
+        .auto-refresh #refresh-state { font-weight: bold; font-size: 13px; }
+        .auto-refresh #refresh-timer { opacity: 0.8; }
         
         .environment-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         .environment-table th, .environment-table td { padding: 8px 12px; border: 1px solid #e9ecef; text-align: left; }
@@ -881,6 +886,9 @@ $diagnosticData = getAllDiagnosticData();
                 </button>
                 <button class="btn btn-danger" onclick="clearLogs()">
                     🗑️ Clear Logs
+                </button>
+                <button class="btn btn-info" id="auto-refresh-toggle" onclick="toggleAutoRefresh()">
+                    ⏸️ Pause Auto-Refresh
                 </button>
                 <a href="?logout=1" class="btn btn-secondary">
                     🚪 Logout
@@ -1080,7 +1088,10 @@ $diagnosticData = getAllDiagnosticData();
     </div>
 
     <div class="auto-refresh" id="auto-refresh">
-        Auto-refresh in <span id="refresh-countdown"><?= AUTO_REFRESH_INTERVAL ?></span>s
+        <div id="refresh-status">
+            <span id="refresh-state">🔄 Auto-refresh: ON</span><br>
+            <span id="refresh-timer">Next refresh in <span id="refresh-countdown"><?= AUTO_REFRESH_INTERVAL ?></span>s</span>
+        </div>
     </div>
 
     <script>
@@ -1106,6 +1117,10 @@ $diagnosticData = getAllDiagnosticData();
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
+                        // Reset refresh interval when manually refreshing
+                        if (autoRefreshEnabled) {
+                            refreshInterval = <?= AUTO_REFRESH_INTERVAL ?>;
+                        }
                         location.reload(); // Simple reload for now
                     }
                 })
@@ -1182,16 +1197,40 @@ $diagnosticData = getAllDiagnosticData();
             }
         }
 
-        // Auto-refresh countdown
+        // Auto-refresh countdown and toggle
         let refreshInterval = <?= AUTO_REFRESH_INTERVAL ?>;
-        
-        setInterval(() => {
-            refreshInterval--;
-            document.getElementById('refresh-countdown').textContent = refreshInterval;
+        let autoRefreshEnabled = true;
+        let refreshCountdownTimer;
+
+        function toggleAutoRefresh() {
+            autoRefreshEnabled = !autoRefreshEnabled;
+            const toggleBtn = document.getElementById('auto-refresh-toggle');
+            const refreshState = document.getElementById('refresh-state');
+            const refreshTimer = document.getElementById('refresh-timer');
             
-            if (refreshInterval <= 0) {
-                refreshDiagnostics();
-                refreshInterval = <?= AUTO_REFRESH_INTERVAL ?>;
+            if (autoRefreshEnabled) {
+                toggleBtn.innerHTML = '⏸️ Pause Auto-Refresh';
+                toggleBtn.className = 'btn btn-info';
+                refreshState.innerHTML = '🔄 Auto-refresh: ON';
+                refreshTimer.style.display = 'block';
+                refreshInterval = <?= AUTO_REFRESH_INTERVAL ?>; // Reset countdown
+            } else {
+                toggleBtn.innerHTML = '▶️ Resume Auto-Refresh';
+                toggleBtn.className = 'btn btn-warning';
+                refreshState.innerHTML = '⏸️ Auto-refresh: PAUSED';
+                refreshTimer.style.display = 'none';
+            }
+        }
+        
+        refreshCountdownTimer = setInterval(() => {
+            if (autoRefreshEnabled) {
+                refreshInterval--;
+                document.getElementById('refresh-countdown').textContent = refreshInterval;
+                
+                if (refreshInterval <= 0) {
+                    refreshDiagnostics();
+                    refreshInterval = <?= AUTO_REFRESH_INTERVAL ?>;
+                }
             }
         }, 1000);
 
@@ -1207,6 +1246,31 @@ $diagnosticData = getAllDiagnosticData();
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
             console.log('MIW Diagnostic Tool loaded successfully');
+            
+            // Add keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                // Spacebar to toggle auto-refresh
+                if (e.code === 'Space' && !e.target.matches('input, textarea')) {
+                    e.preventDefault();
+                    toggleAutoRefresh();
+                }
+                // F5 or Ctrl+R for manual refresh (override default to use our function)
+                if (e.key === 'F5' || (e.ctrlKey && e.key === 'r')) {
+                    e.preventDefault();
+                    refreshDiagnostics();
+                }
+            });
+            
+            // Add tooltip info for keyboard shortcuts
+            const refreshBtn = document.querySelector('.btn-primary');
+            if (refreshBtn) {
+                refreshBtn.title = 'Manual refresh (F5 or Ctrl+R)';
+            }
+            
+            const toggleBtn = document.getElementById('auto-refresh-toggle');
+            if (toggleBtn) {
+                toggleBtn.title = 'Toggle auto-refresh (Spacebar)';
+            }
         });
     </script>
 </body>
