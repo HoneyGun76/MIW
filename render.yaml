@@ -1,0 +1,54 @@
+services:
+  # Web Service using Docker
+  - type: web
+    name: miw-production
+    env: docker
+    region: singapore # Adjust based on your target audience
+    plan: free # or choose a paid plan if needed
+    branch: main
+    healthCheckPath: /
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DB_HOST
+        fromDatabase:
+          name: miw-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: miw-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: miw-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: miw-db
+          property: user
+      - key: DB_PASS
+        fromDatabase:
+          name: miw-db
+          property: password
+      - key: SMTP_HOST
+        sync: false # Will be set manually
+      - key: SMTP_USERNAME
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_ENCRYPTION
+        value: "tls"
+      - key: PDF_STORAGE
+        value: /tmp/pdfs
+
+  # Database Service
+  - type: pserv
+    name: miw-db
+    env: docker
+    plan: free # or choose a paid plan
+    disk:
+      name: data
+      mountPath: /var/lib/postgresql/data
+      sizeGB: 10

@@ -1,0 +1,12 @@
+Options -Indexes
+
+<FilesMatch "\.(jpg|jpeg|png|pdf)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Deny access to all other file types
+<FilesMatch "^.*$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>

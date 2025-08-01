@@ -1,0 +1,31 @@
+# PHP
+/vendor/
+composer.lock
+
+# IDE/Editor specific
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+/logs/
+/error_logs/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Database dumps
+*.sql
+
+# Temporary files
+*.tmp
+*.temp
+*.swp

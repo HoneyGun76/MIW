@@ -1,0 +1,460 @@
+/* Base Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.container-fluid {
+    padding: 0 15px;
+}
+
+/* Header Styles */
+.admin-header {
+    background-color: #343a40;
+    color: white;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.admin-header h2 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+/* Navigation Tabs */
+.nav-tabs {
+    border-bottom: 2px solid #dee2e6;
+    margin-bottom: 20px;
+}
+
+.nav-tabs .nav-link {
+    color: #495057;
+    border: none;
+    padding: 10px 20px;
+    font-weight: 500;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #f6b127;
+    color: #000;
+    font-weight: bold;
+    border-bottom: 3px solid #000;
+}
+
+/* Add these to the end of admin_styles.css */
+
+/* Table-specific styles */
+.table-container {
+    margin-bottom: 40px;
+}
+
+.table-title {
+    background-color: #f6b127;
+    color: #000;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 5px 5px 0 0;
+}
+
+.action-btns {
+    white-space: nowrap;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #f6b127;
+    color: #000;
+    font-weight: bold;
+}
+
+.status-pending {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.status-processed {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.status-rejected {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Tab content styles */
+.tab-content {
+    padding: 20px 0;
+}
+
+.tab-pane {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Table action buttons */
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* Status badges */
+.badge {
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 700;
+}
+
+.badge.bg-success {
+    background-color: #198754 !important;
+}
+
+.badge.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+/* Tables */
+.table {
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.table thead {
+    width: 100%;
+}
+
+.table thead th {
+    background-color: #343a40;
+    color: white;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table-responsive {
+    width: 100%;
+}
+
+.table.package-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.package-table th, 
+.package-table td {
+    word-wrap: break-word;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0,0,0,.02);
+}
+
+/* Scrollable Tables */
+.scrollable-table {
+    max-height: calc(var(--records-per-page) * 50px);
+    overflow-y: auto;
+    display: block;
+}
+
+/* Records Per Page Selector */
+.records-per-page {
+    margin-bottom: 10px;
+}
+
+.records-per-page label {
+    margin-right: 10px;
+}
+
+.records-per-page select {
+    width: auto;
+    display: inline-block;
+}
+
+/* Action Buttons */
+.action-btns {
+    white-space: nowrap;
+}
+
+.btn-verify {
+    margin-right: 5px;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* Hotel Container Styles */
+.hotel-container {
+    background-color: #f0f8ff;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.hotel-entry {
+    background-color: #e6f2ff;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.remove-hotel {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+/* Document Icons Section */
+.document-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.document-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.document-link:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    text-decoration: none;
+}
+
+.document-link.btn-outline-primary {
+    border-color: #0d6efd;
+    color: #0d6efd;
+}
+
+.document-link.btn-outline-success {
+    border-color: #198754;
+    color: #198754;
+}
+
+/* Badges for unavailable documents */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    border-radius: 4px;
+}
+
+/* Action buttons with icons */
+.btn i {
+    margin-right: 3px;
+}
+
+/* Time Remaining Indicator */
+.time-remaining {
+    font-weight: bold;
+}
+
+.time-remaining.critical {
+    color: #dc3545;
+}
+
+/* Sortable Headers */
+.sortable:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* Alert Messages */
+.alert {
+    margin-top: 20px;
+}
+
+/* Form Styles (for admin_edit.php) */
+.form-label {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.form-control, .form-select {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #f6b127;
+    box-shadow: 0 0 0 0.25rem rgba(246, 177, 39, 0.25);
+}
+
+/* Modal Fixes */
+.modal-content {
+    max-width: 100%;
+    overflow: visible;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-top: 1px solid #dee2e6;
+    background-color: #f8f9fa;
+}
+
+/* Form field adjustments */
+.modal-form-row {
+    margin-bottom: 15px;
+}
+
+.modal-form-row label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.modal-form-row input,
+.modal-form-row select,
+.modal-form-row textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+/* Action buttons */
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.modal-dialog.modal-xl {
+    max-width: 95%;
+    margin: 1.75rem auto;
+}
+
+/* Registration Details Specific Styles */
+.registration-details {
+    width: 100%;
+}
+
+.registration-details h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #343a40;
+}
+
+.registration-details h3 {
+    font-size: 1.2rem;
+    margin: 20px 0 15px;
+    color: #495057;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 5px;
+}
+
+.registration-details table {
+    width: 100%;
+    margin-bottom: 15px;
+    border-collapse: collapse;
+}
+
+.registration-details table td {
+    padding: 8px 5px;
+    vertical-align: top;
+    border-bottom: 1px solid #eee;
+}
+
+.registration-details table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Payment section styling */
+.payment-section {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+.payment-section h5 {
+    margin-bottom: 15px;
+    color: #343a40;
+}
+
+/* Document Checklist */
+.document-checklist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.document-checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Responsive adjustments for document icons */
+@media (max-width: 768px) {
+    .document-icons {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .document-link, .badge {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .modal-dialog {
+        margin: 10px auto;
+    }
+    
+    .modal-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+    }
+}
+
+.feature-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .room-numbering {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        .room-badge {
+            padding: 5px 10px;
+            background-color: #e9ecef;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        /* Add to your existing styles */
+        .modal-backdrop {
+            z-index: 1040 !important;
+        }
+
+        body.modal-open {
+            overflow: auto;
+            padding-right: 0 !important;
+        }

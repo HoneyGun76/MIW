@@ -1,0 +1,30 @@
+@startuml Aktivitas Pendaftaran
+
+start
+:Jemaah mengakses halaman pendaftaran;
+
+:Pilih jenis paket (Umrah/Haji);
+:Isi data pribadi;
+:Unggah dokumen yang diperlukan;
+
+if (Semua data terisi?) then (ya)
+  :Kirim pendaftaran;
+  :Sistem memvalidasi data;
+  
+  if (Data valid?) then (ya)
+    :Buat catatan pendaftaran;
+    :Hitung pembayaran awal;
+    :Kirim email konfirmasi;
+    :Tampilkan ringkasan pendaftaran;
+  else (tidak)
+    :Tampilkan pesan kesalahan validasi;
+    :Kembali ke formulir;
+  endif
+else (tidak)
+  :Tampilkan pesan data wajib;
+  :Kembali ke formulir;
+endif
+
+stop
+
+@enduml

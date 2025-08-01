@@ -1,0 +1,35 @@
+@startuml Make Payment Activity
+
+start
+:Customer accesses payment page;
+
+:View payment details;
+:Select payment method;
+:Enter payment amount;
+
+if (Amount valid?) then (yes)
+  :Submit payment information;
+  
+  fork
+    :Calculate payment details;
+  fork again
+    :Process payment;
+  end fork
+
+  if (Payment successful?) then (yes)
+    :Update payment status;
+    :Generate receipt;
+    :Send payment confirmation;
+    :Show success message;
+  else (no)
+    :Show payment error;
+    :Return to payment form;
+  endif
+else (no)
+  :Show amount error;
+  :Return to form;
+endif
+
+stop
+
+@enduml

@@ -1,0 +1,69 @@
+@startuml MIW Travel Management System
+
+left to right direction
+skinparam actorStyle awesome
+
+' Actors
+actor "Customer/Jamaah" as customer
+actor :Admin: as admin #FFFFFF;line:black
+
+rectangle "MIW Travel Management System" {
+  ' Customer use cases
+  usecase "Register for Umrah/Haji" as register
+  usecase "Upload Documents" as upload
+  usecase "Make Payment" as payment
+  usecase "View Registration Status" as viewStatus
+  usecase "Submit Cancellation" as cancel
+  usecase "Submit Special Requests" as request
+
+  ' Admin use cases
+  usecase "Manage Packages" as managePackages
+  usecase "Verify Payments" as verifyPayment
+  usecase "Process Registrations" as processReg
+  usecase "Manage Manifests" as manifest
+  usecase "View Dashboard" as dashboard
+  usecase "Handle Cancellations" as handleCancel
+  usecase "Generate Documents" as genDocs
+  usecase "Manage Jamaah Data" as manageJamaah
+
+  ' System use cases
+  usecase "Send Notifications" as notify
+  usecase "Calculate Payments" as calc
+  usecase "Track Document Status" as trackDocs
+  usecase "Generate Reports" as reports
+
+  ' Customer relationships
+  customer --> register
+  customer --> upload
+  customer --> payment
+  customer --> viewStatus
+  customer --> cancel
+  customer --> request
+
+  ' Admin relationships
+  admin --> managePackages
+  admin --> verifyPayment
+  admin --> processReg
+  admin --> manifest
+  admin --> dashboard
+  admin --> handleCancel
+  admin --> genDocs
+  admin --> manageJamaah
+
+  ' System relationships
+  register ..> notify : includes
+  payment ..> calc : includes
+  payment ..> notify : includes
+  upload ..> trackDocs : includes
+  processReg ..> notify : includes
+  verifyPayment ..> notify : includes
+  dashboard ..> reports : includes
+  manifest ..> reports : includes
+
+  ' Additional relationships
+  managePackages ..> notify : extends
+  handleCancel ..> notify : includes
+  processReg ..> trackDocs : includes
+}
+
+@enduml

@@ -1,0 +1,58 @@
+@startuml Diagram Urutan MIW
+
+actor "Admin" as admin
+participant "Antarmuka Admin" as ui
+participant "Layanan Manifest" as manifest
+participant "Layanan Kamar" as kamar
+participant "Layanan Email" as email
+database "Basis Data" as db
+
+' Sequence untuk Keberangkatan
+admin -> ui: Akses halaman manifest
+activate ui
+
+ui -> manifest: Muat data manifest
+activate manifest
+manifest -> db: Query data jamaah
+db --> manifest: Kembalikan data jamaah
+manifest --> ui: Tampilkan daftar jamaah
+deactivate manifest
+
+admin -> ui: Pilih paket perjalanan
+ui -> kamar: Ambil alokasi kamar
+activate kamar
+kamar -> db: Query status kamar
+db --> kamar: Kembalikan data kamar
+kamar --> ui: Tampilkan status kamar
+deactivate kamar
+
+admin -> ui: Tetapkan kamar & mahram
+ui -> kamar: Perbarui penugasan
+activate kamar
+kamar -> db: Perbarui manifest
+db --> kamar: Konfirmasi pembaruan
+kamar --> ui: Penugasan selesai
+deactivate kamar
+
+admin -> ui: Generate manifest
+ui -> manifest: Buat dokumen manifest
+activate manifest
+manifest -> db: Query detail lengkap
+db --> manifest: Kembalikan detail
+manifest -> manifest: Generate Excel
+manifest --> ui: Download manifest
+deactivate manifest
+
+admin -> ui: Kirim notifikasi
+ui -> email: Kirim info keberangkatan
+activate email
+email -> db: Ambil data kontak
+db --> email: Data kontak
+email -> email: Kirim email massal
+email --> ui: Konfirmasi pengiriman
+deactivate email
+
+ui --> admin: Tampilkan status sukses
+deactivate ui
+
+@enduml

@@ -1,0 +1,44 @@
+@startuml Upload Documents Activity
+
+start
+:Customer accesses document upload page;
+
+:View required documents list;
+:Select document type;
+:Choose file to upload;
+
+if (File type valid?) then (yes)
+  if (File size valid?) then (yes)
+    :Upload document;
+    
+    fork
+      :Process document;
+    fork again
+      :Update document status;
+    end fork
+
+    if (Upload successful?) then (yes)
+      :Update document tracking;
+      :Show success message;
+      
+      if (More documents required?) then (yes)
+        :Return to document list;
+      else (no)
+        :Show completion message;
+      endif
+    else (no)
+      :Show upload error;
+      :Return to upload form;
+    endif
+  else (no)
+    :Show size error;
+    :Return to form;
+  endif
+else (no)
+  :Show format error;
+  :Return to form;
+endif
+
+stop
+
+@enduml

@@ -1,0 +1,36 @@
+@startuml Submit Cancellation Activity
+
+start
+:Customer accesses cancellation page;
+
+:View registration details;
+:Enter cancellation reason;
+:Upload supporting documents (if any);
+
+if (Form complete?) then (yes)
+  :Submit cancellation request;
+  
+  fork 
+    :Process cancellation;
+  fork again
+    :Calculate refund (if applicable);
+  end fork
+
+  :Admin reviews cancellation;
+  
+  if (Cancellation approved?) then (yes)
+    :Update registration status;
+    :Process refund (if applicable);
+    :Send cancellation confirmation;
+  else (no)
+    :Send rejection notification;
+    :Return to registration status;
+  endif
+else (no)
+  :Show form errors;
+  :Return to form;
+endif
+
+stop
+
+@enduml
