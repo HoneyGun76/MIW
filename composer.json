@@ -21,7 +21,7 @@
     "repositories": {
         "dompdf": {
             "type": "vcs",
-            "url": "https://github.com/dompdf/php-svg-lib"
+            "url": "https://github.com/dompdf/php-svg-lib.git"
         }
     },
     "scripts": {
