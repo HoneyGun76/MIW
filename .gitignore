@@ -29,3 +29,10 @@ Thumbs.db
 *.tmp
 *.temp
 *.swp
+
+# Backup files (keep scripts, exclude actual backups)
+backup/database/*.sql*
+backup/database/*.gz
+backup/files/*.tar.gz
+backup/files/*.zip
+backup/files/temp_*

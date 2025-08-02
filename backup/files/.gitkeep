@@ -1,0 +1,2 @@
+# Keep backup directory structure but ignore actual backup files
+!.gitkeep
