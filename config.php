@@ -168,8 +168,8 @@ function getCurrentEnvironment() {
 
 function getUploadDirectory() {
     if (isProduction()) {
-        // Railway: use temp directory for file uploads
-        return sys_get_temp_dir() . '/uploads';
+        // Railway: use mounted volume for persistent uploads
+        return '/app/uploads';
     } else {
         // Local: use uploads directory
         return __DIR__ . '/uploads';

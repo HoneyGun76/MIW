@@ -382,11 +382,15 @@ function checkFilePermissions() {
     // Railway-specific important paths
     if (getenv('RAILWAY_ENVIRONMENT')) {
         $importantPaths = [
+            '/app/uploads' => 'Railway Persistent Uploads directory (mounted volume)',
+            '/app/uploads/documents' => 'Documents subdirectory',
+            '/app/uploads/payments' => 'Payments subdirectory',
+            '/app/uploads/cancellations' => 'Cancellations subdirectory',
+            '/app/error_logs' => 'Error logs directory (persistent)',
             sys_get_temp_dir() . '/uploads' => 'Railway Temp Uploads directory',
             sys_get_temp_dir() => 'System temp directory',
             __DIR__ . '/uploads' => 'Local Uploads directory (ephemeral)',
             __DIR__ . '/config.php' => 'Configuration file',
-            __DIR__ . '/error_logs' => 'Error logs directory (if exists)',
             '/tmp' => 'Railway temp storage'
         ];
     } else {
@@ -418,17 +422,31 @@ function checkFilePermissions() {
  */
 function getApplicationErrorLogs() {
     $errors = [];
-    $logDir = __DIR__ . '/error_logs';
     
-    if (is_dir($logDir)) {
-        $files = glob($logDir . '/*.log');
-        
-        foreach ($files as $file) {
-            if (is_readable($file) && filesize($file) > 0) {
-                $content = tailFile($file, 50);
-                $errors[] = [
-                    'source' => 'Application Log: ' . basename($file),
-                    'path' => $file,
+    // Check both Railway persistent and local error log directories
+    $logDirs = [];
+    
+    if (getenv('RAILWAY_ENVIRONMENT')) {
+        // Railway: Check persistent error logs first, then local
+        $logDirs = [
+            '/app/error_logs',
+            __DIR__ . '/error_logs'
+        ];
+    } else {
+        // Local development
+        $logDirs = [__DIR__ . '/error_logs'];
+    }
+    
+    foreach ($logDirs as $logDir) {
+        if (is_dir($logDir)) {
+            $files = glob($logDir . '/*.log');
+            
+            foreach ($files as $file) {
+                if (is_readable($file) && filesize($file) > 0) {
+                    $content = tailFile($file, 50);
+                    $errors[] = [
+                        'source' => 'Application Log: ' . basename($file) . ' (' . basename($logDir) . ')',
+                        'path' => $file,
                     'size' => formatBytes(filesize($file)),
                     'modified' => date('Y-m-d H:i:s', filemtime($file)),
                     'content' => $content
@@ -627,15 +645,28 @@ function testDatabaseConnection() {
  */
 function clearErrorLogs() {
     $cleared = 0;
-    $logDir = __DIR__ . '/error_logs';
     
-    if (is_dir($logDir)) {
-        $files = glob($logDir . '/*.log');
-        
-        foreach ($files as $file) {
-            if (is_writable($file)) {
-                file_put_contents($file, '');
-                $cleared++;
+    // Clear logs from both directories (Railway persistent and local)
+    $logDirs = [];
+    
+    if (getenv('RAILWAY_ENVIRONMENT')) {
+        $logDirs = [
+            '/app/error_logs',
+            __DIR__ . '/error_logs'
+        ];
+    } else {
+        $logDirs = [__DIR__ . '/error_logs'];
+    }
+    
+    foreach ($logDirs as $logDir) {
+        if (is_dir($logDir)) {
+            $files = glob($logDir . '/*.log');
+            
+            foreach ($files as $file) {
+                if (is_writable($file)) {
+                    file_put_contents($file, '');
+                    $cleared++;
+                }
             }
         }
     }

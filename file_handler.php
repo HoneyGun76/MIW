@@ -51,8 +51,14 @@ if (isset($_GET['file']) && isset($_GET['type'])) {
         exit('Invalid file type.');
     }
     
-    // Setup paths
-    $uploadsDir = __DIR__ . '/uploads/';
+    // Setup paths - detect Railway environment
+    if (isset($_ENV['RAILWAY_ENVIRONMENT']) || isset($_ENV['RAILWAY_PROJECT_ID']) || getenv('RAILWAY_ENVIRONMENT')) {
+        // Railway: Use mounted volume
+        $uploadsDir = '/app/uploads/';
+    } else {
+        // Local development
+        $uploadsDir = __DIR__ . '/uploads/';
+    }
     $typePath = $uploadsDir . $validTypes[$type] . '/';
     
     // Clean and validate the file path

@@ -8,13 +8,32 @@ class UploadHandler {
     private $errors = [];
 
     public function __construct($uploadBaseDir = 'uploads') {
-        $this->uploadBaseDir = rtrim($_SERVER['DOCUMENT_ROOT'] . '/MIW/' . $uploadBaseDir, '/');
+        // Detect Railway environment and set appropriate upload directory
+        if ($this->isRailwayEnvironment()) {
+            // Railway: Use mounted volume at /app/uploads
+            $this->uploadBaseDir = '/app/' . $uploadBaseDir;
+        } else {
+            // Local development: Use document root path
+            $this->uploadBaseDir = rtrim($_SERVER['DOCUMENT_ROOT'] . '/MIW/' . $uploadBaseDir, '/');
+        }
+        
         $this->allowedTypes = [
             'image/jpeg',
             'image/png',
             'application/pdf'
         ];
         $this->maxSize = 2 * 1024 * 1024; // 2MB
+    }
+    
+    /**
+     * Check if running in Railway environment
+     * @return bool True if Railway environment detected
+     */
+    private function isRailwayEnvironment() {
+        return isset($_ENV['RAILWAY_ENVIRONMENT']) || 
+               isset($_ENV['RAILWAY_PROJECT_ID']) || 
+               getenv('RAILWAY_ENVIRONMENT') ||
+               isset($_ENV['DB_HOST']);
     }
 
     /**
