@@ -38,17 +38,22 @@ try {
     }
 
     require_once 'upload_handler.php';
-    $uploader = new UploadHandler('documents');
+    $uploader = new UploadHandler();
     $uploadedPaths = [];
     
     foreach ($files as $fileField => $file) {
+        // Generate custom filename
+        $customName = $jamaah['nik'] . '_' . $fileField . '_' . date('YmdHis');
+        
         $result = $uploader->handleUpload(
             $file,
-            $jamaah['nik'] . '_' . $fileField . '_'
+            'documents',
+            $customName
         );
         
-        if (!$result['success']) {
-            throw new Exception("Failed to upload $fileField: " . $result['message']);
+        if (!$result) {
+            $errors = $uploader->getErrors();
+            throw new Exception("Failed to upload $fileField: " . implode(', ', $errors));
         }
         $uploadedPaths[$fileField] = $result['path'];
     }
