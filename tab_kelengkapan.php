@@ -44,16 +44,16 @@
                     <form class="kelengkapan-form" enctype="multipart/form-data">
                         <input type="hidden" name="nik" value="<?= $jamaah['nik'] ?>">
                         <div class="upload-status">
-                            <?php if ($jamaah['bk_kuning']): ?>
-                                <span class="text-success">Uploaded <?= date('d/m/Y H:i', strtotime($jamaah['bk_kuning'])) ?></span>
+                            <?php if ($jamaah['bk_kuning_path']): ?>
+                                <span class="text-success">Uploaded <?= date('d/m/Y H:i', strtotime($jamaah['bk_kuning_path'])) ?></span>
                             <?php endif; ?>
                         </div>
                         <input type="file" class="form-control" name="bk_kuning" accept=".pdf,.jpg,.jpeg,.png">
                 </td>
                 <td>
                     <div class="upload-status">
-                        <?php if ($jamaah['foto']): ?>
-                            <span class="text-success">Uploaded <?= date('d/m/Y H:i', strtotime($jamaah['foto'])) ?></span>
+                        <?php if ($jamaah['foto_path']): ?>
+                            <span class="text-success">Uploaded <?= date('d/m/Y H:i', strtotime($jamaah['foto_path'])) ?></span>
                         <?php endif; ?>
                     </div>
                     <input type="file" class="form-control" name="foto" accept=".jpg,.jpeg,.png">

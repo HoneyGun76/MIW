@@ -62,8 +62,8 @@ try {
     $currentTime = date('Y-m-d H:i:s');
     $stmt = $conn->prepare("
         UPDATE data_jamaah SET
-            bk_kuning = ?,
-            foto = ?,
+            bk_kuning_path = ?,
+            foto_path = ?,
             fc_ktp_path = ?,
             fc_ijazah_path = ?,
             fc_kk_path = ?,
@@ -87,8 +87,8 @@ try {
         'success' => true,
         'message' => 'Documents uploaded successfully',
         'timestamps' => [
-            'bk_kuning' => $currentTime,
-            'foto' => $currentTime,
+            'bk_kuning_path' => $currentTime,
+            'foto_path' => $currentTime,
             'fc_ktp_path' => $currentTime,
             'fc_ijazah_path' => $currentTime,
             'fc_kk_path' => $currentTime,
