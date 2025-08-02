@@ -137,7 +137,8 @@ function getAllDiagnosticData() {
         'system_health' => getSystemHealth(),
         'environment' => getEnvironmentInfo(),
         'permissions' => checkFilePermissions(),
-        'recent_logs' => getRecentErrorLogs()
+        'recent_logs' => getRecentErrorLogs(),
+        'application_analysis' => analyzeApplicationErrors()
     ];
 }
 
@@ -729,6 +730,109 @@ function formatLogLine($line) {
     }
     
     return htmlspecialchars($line);
+}
+
+/**
+ * Analyze application-level registration and form submission errors
+ */
+function analyzeApplicationErrors() {
+    $analysis = [];
+    
+    // Check for common application-level issues
+    try {
+        require_once 'config.php';
+        global $conn;
+        
+        // Check for duplicate NIK attempts in the last 24 hours
+        $cutoff = date('Y-m-d H:i:s', time() - (24 * 60 * 60));
+        
+        // Look for duplicate registration attempts via error logs
+        $errorLogPaths = [
+            ini_get('error_log'),
+            '/app/uploads/logs/php_errors.log',
+            __DIR__ . '/error_logs/application.log'
+        ];
+        
+        $duplicateAttempts = 0;
+        $memoryErrors = 0;
+        $formSubmissionErrors = [];
+        
+        foreach ($errorLogPaths as $logPath) {
+            if ($logPath && file_exists($logPath) && is_readable($logPath)) {
+                $content = file_get_contents($logPath);
+                $lines = explode("\n", $content);
+                
+                foreach ($lines as $line) {
+                    if (strpos($line, $cutoff) !== false || strpos($line, date('Y-m-d')) !== false) {
+                        // Check for duplicate NIK registration attempts
+                        if (stripos($line, 'Duplicate NIK registration attempt') !== false) {
+                            $duplicateAttempts++;
+                            preg_match('/NIK.*?(\d{16})/', $line, $matches);
+                            $nik = isset($matches[1]) ? $matches[1] : 'Unknown';
+                            $formSubmissionErrors[] = "Duplicate NIK registration: $nik";
+                        }
+                        
+                        // Check for memory exhaustion
+                        if (stripos($line, 'memory size') !== false && stripos($line, 'exhausted') !== false) {
+                            $memoryErrors++;
+                            $formSubmissionErrors[] = "Memory exhaustion: " . substr($line, 0, 100) . "...";
+                        }
+                        
+                        // Check for form submission errors
+                        if (stripos($line, 'Form submission errors') !== false) {
+                            $formSubmissionErrors[] = substr($line, 0, 150) . "...";
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Database analysis for recent registrations
+        if (isset($conn) && $conn instanceof PDO) {
+            try {
+                // Check for recent failed registrations (no corresponding success records)
+                $stmt = $conn->prepare("
+                    SELECT DATE(created_at) as reg_date, COUNT(*) as reg_count 
+                    FROM data_jamaah 
+                    WHERE created_at >= ? 
+                    GROUP BY DATE(created_at) 
+                    ORDER BY reg_date DESC
+                ");
+                $stmt->execute([date('Y-m-d', time() - (7 * 24 * 60 * 60))]);
+                $recentRegistrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                $analysis['registration_trends'] = $recentRegistrations;
+                
+                // Check for NIKs that appear multiple times (potential duplicates)
+                $stmt = $conn->prepare("
+                    SELECT nik, COUNT(*) as attempt_count 
+                    FROM data_jamaah 
+                    WHERE created_at >= ? 
+                    GROUP BY nik 
+                    HAVING COUNT(*) > 1
+                ");
+                $stmt->execute([date('Y-m-d', time() - (24 * 60 * 60))]);
+                $duplicateNiks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                $analysis['duplicate_niks_in_db'] = $duplicateNiks;
+                
+            } catch (PDOException $e) {
+                $analysis['database_error'] = $e->getMessage();
+            }
+        }
+        
+        $analysis['summary'] = [
+            'duplicate_attempts_24h' => $duplicateAttempts,
+            'memory_errors_24h' => $memoryErrors,
+            'total_form_errors' => count($formSubmissionErrors),
+            'error_details' => array_slice($formSubmissionErrors, -10) // Last 10 errors
+        ];
+        
+    } catch (Exception $e) {
+        $analysis['analysis_error'] = $e->getMessage();
+    }
+    
+    return $analysis;
 }
 
 /**

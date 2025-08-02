@@ -32,7 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare("SELECT COUNT(*) FROM data_jamaah WHERE nik = ?");
             $stmt->execute([$_POST['nik']]);
             if ($stmt->fetchColumn() > 0) {
-                $errors[] = "Mohon maaf, pendaftaran tidak dapat dilanjutkan.";
+                $errors[] = "NIK sudah terdaftar. Silakan gunakan NIK yang berbeda atau hubungi admin jika ini kesalahan.";
+                error_log("Duplicate NIK registration attempt: " . $_POST['nik'] . " from IP: " . $_SERVER['REMOTE_ADDR']);
             }
         }
         
@@ -190,6 +191,7 @@ if ($success) {
     header("Location: invoice.php?" . $queryString);
 } else {
     $errorMessages = implode("\\n", $errors);
-    header("Location: invoice.php?errors=" . urlencode($errorMessages));
+    error_log("Form submission errors in submit_haji.php: " . implode(", ", $errors));
+    header("Location: form_haji.php?errors=" . urlencode($errorMessages));
 }
 exit();
