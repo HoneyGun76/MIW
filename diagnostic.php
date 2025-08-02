@@ -447,10 +447,11 @@ function getApplicationErrorLogs() {
                     $errors[] = [
                         'source' => 'Application Log: ' . basename($file) . ' (' . basename($logDir) . ')',
                         'path' => $file,
-                    'size' => formatBytes(filesize($file)),
-                    'modified' => date('Y-m-d H:i:s', filemtime($file)),
-                    'content' => $content
-                ];
+                        'size' => formatBytes(filesize($file)),
+                        'modified' => date('Y-m-d H:i:s', filemtime($file)),
+                        'content' => $content
+                    ];
+                }
             }
         }
     }
