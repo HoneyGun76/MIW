@@ -3,6 +3,18 @@ require_once 'config.php';
 require_once 'email_functions.php';
 require_once 'terbilang.php';
 
+// Increase memory limit for PDF generation and large operations
+if (function_exists('ini_set')) {
+    ini_set('memory_limit', '512M');
+    ini_set('max_execution_time', '300');
+    ini_set('max_input_time', '300');
+}
+
+// For Railway environment, also try to set via environment
+if (getenv('RAILWAY_ENVIRONMENT')) {
+    @ini_set('memory_limit', '512M');
+}
+
 // Ensure error logs directory exists
 if (!file_exists(__DIR__ . '/error_logs')) {
     mkdir(__DIR__ . '/error_logs', 0755, true);
@@ -105,8 +117,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Generate kwitansi using dompdf
             require_once 'vendor/autoload.php';
+            
+            // Clear any existing output buffers to free memory
+            while (ob_get_level()) {
+                ob_end_clean();
+            }
+            
             $dompdf = new \Dompdf\Dompdf([
-                'isRemoteEnabled' => true
+                'isRemoteEnabled' => true,
+                'chroot' => realpath(__DIR__),
+                'debugPng' => false,
+                'debugKeepTemp' => false,
+                'debugCss' => false,
+                'debugLayout' => false,
+                'debugLayoutLines' => false,
+                'debugLayoutBlocks' => false,
+                'debugLayoutInline' => false,
+                'debugLayoutPaddingBox' => false
             ]);
 
             // Prepare data for kwitansi
@@ -128,19 +155,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'keterangan' => 'Pembayaran ' . ($paymentRemaining > 0 ? 'DP' : 'LUNAS')
             ];
 
-            // Generate PDF
+            // Generate PDF with memory optimization
             ob_start();
             require 'kwitansi_template.php';
             $html = ob_get_clean();
 
-            $dompdf->loadHtml($html);
-            $dompdf->setPaper('A5', 'landscape');
-            $dompdf->render();
+            try {
+                $dompdf->loadHtml($html);
+                $dompdf->setPaper('A5', 'landscape');
+                $dompdf->render();
 
-            // Save to temporary file
-            $pdfContent = $dompdf->output();
-            $tempFile = tempnam(sys_get_temp_dir(), 'kwitansi_');
-            file_put_contents($tempFile, $pdfContent);
+                // Save to temporary file
+                $pdfContent = $dompdf->output();
+                $tempFile = tempnam(sys_get_temp_dir(), 'kwitansi_');
+                file_put_contents($tempFile, $pdfContent);
+                
+                // Free PDF memory immediately
+                unset($dompdf, $html, $pdfContent);
+                
+            } catch (Exception $pdfException) {
+                error_log("PDF generation error: " . $pdfException->getMessage());
+                throw new Exception('Gagal membuat kwitansi PDF. Silakan coba lagi.');
+            }
 
             // Send verification email
             $emailData = [
