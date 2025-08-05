@@ -1,0 +1,61 @@
+@startuml Registration and Payment Sequence
+
+!include ../uml_black_white_style.puml
+
+' Strict black and white UML 2.5 standard design
+skinparam monochrome true
+skinparam shadowing false
+skinparam handwritten false
+skinparam backgroundColor White
+
+actor "Jamaah" as Jamaah
+participant "Web Interface" as ui
+participant "Registration Service" as reg
+participant "Document Service" as doc
+participant "Payment Service" as payment
+participant "Email Service" as email
+database "Database" as db
+
+Jamaah -> ui: Access registration form
+activate ui
+
+ui -> reg: Load package options
+activate reg
+reg -> db: Query available packages
+db --> reg: Return packages
+reg --> ui: Display packages
+deactivate reg
+
+Jamaah -> ui: Fill registration form
+Jamaah -> ui: Upload documents
+ui -> doc: Process documents
+activate doc
+doc -> db: Store documents
+db --> doc: Confirm storage
+doc --> ui: Documents processed
+deactivate doc
+
+Jamaah -> ui: Submit registration
+ui -> reg: Process registration
+activate reg
+reg -> db: Create Jamaah record
+db --> reg: Confirm creation
+reg -> payment: Generate invoice
+activate payment
+payment -> db: Store invoice
+db --> payment: Confirm storage
+payment --> reg: Invoice generated
+deactivate payment
+
+reg -> email: Send confirmation
+activate email
+email --> reg: Email sent
+deactivate email
+
+reg --> ui: Registration complete
+deactivate reg
+
+ui --> pilgrim: Show success message
+deactivate ui
+
+@enduml

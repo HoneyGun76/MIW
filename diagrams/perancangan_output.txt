@@ -1,0 +1,67 @@
+PERANCANGAN OUTPUT SISTEM MIW TRAVEL BERBASIS RAILWAY
+===========================================================================
+
+1. JENIS-JENIS OUTPUT SISTEM
+---------------------------
+
+Sistem MIW Travel menghasilkan beberapa jenis output yang dirancang untuk memenuhi kebutuhan operasional, administratif, dan layanan pelanggan. Output utama meliputi invoice pembayaran, kwitansi, manifest jamaah, roomlist paket perjalanan, laporan kelengkapan dokumen, dan notifikasi email. Setiap jenis output dihasilkan melalui modul yang berbeda dalam sistem dan memiliki format yang disesuaikan dengan peruntukannya. Invoice dan kwitansi memiliki format yang formal dan sesuai dengan standar akuntansi, sedangkan manifest dan roomlist memiliki struktur tabular yang dioptimalkan untuk pengelolaan operasional perjalanan umroh dan haji.
+
+2. INVOICE PEMBAYARAN
+-------------------
+
+Invoice pembayaran adalah dokumen output yang dihasilkan oleh sistem setelah proses pendaftaran jamaah. Dokumen ini ditampilkan melalui file invoice.php dan dirancang dengan struktur yang jelas terdiri dari header (berisi logo dan judul), informasi jamaah (nama, alamat, kontak), detail paket (program pilihan, tanggal keberangkatan, tipe kamar), dan informasi pembayaran (total harga dalam angka dan terbilang, metode pembayaran). Invoice dilengkapi dengan detail rekening bank tujuan pembayaran yang dinamis bergantung pada jenis paket (Umroh/Haji) dan bank yang dipilih jamaah. Tampilan invoice menggunakan CSS terpisah (invoice_styles.css) untuk memastikan konsistensi visual dan kemudahan pemeliharaan.
+
+3. KWITANSI PEMBAYARAN
+--------------------
+
+Kwitansi pembayaran merupakan bukti resmi transaksi keuangan yang dihasilkan setelah admin memverifikasi pembayaran jamaah. Output ini dihasilkan oleh kwitansi_template.php menggunakan library dompdf untuk menghasilkan dokumen PDF yang dapat diunduh dan dicetak. Struktur kwitansi mencakup header dengan logo MIW Travel, nomor kwitansi unik, informasi penerima pembayaran, informasi jamaah, jumlah pembayaran (dalam angka dan terbilang), serta tanda tangan dan cap resmi perusahaan. Format kwitansi dirancang dengan memperhatikan aspek legalitas dan kesesuaian dengan standar akuntansi, sehingga dapat digunakan sebagai bukti pembayaran yang sah.
+
+4. MANIFEST JAMAAH
+----------------
+
+Manifest jamaah adalah dokumen output komprehensif yang berisi daftar semua jamaah untuk paket perjalanan tertentu. Dihasilkan melalui export_manifest.php dan manifest_scripts.js, output ini berbentuk file Excel yang memuat data lengkap jamaah untuk keperluan pengurusan visa, tiket pesawat, akomodasi, dan dokumen imigrasi. Struktur manifest mencakup kolom untuk nomor urut, jenis kelamin, nama sesuai paspor, marketing, informasi kelahiran, detail paspor (nomor, tempat penerbitan, tanggal terbit, tanggal kadaluarsa), hubungan mahram, usia, informasi roomlist, NIK, alamat, dan keterangan khusus. Format Excel memungkinkan pihak travel untuk dengan mudah mengedit dan membagikan data kepada pihak terkait seperti maskapai penerbangan dan otoritas imigrasi.
+
+5. ROOMLIST PAKET PERJALANAN
+--------------------------
+
+Roomlist adalah output yang menunjukkan pengaturan kamar jamaah selama perjalanan. Output ini dihasilkan sebagai bagian dari ekspor manifest namun juga dapat diakses secara terpisah melalui menu Roomlist. Struktur data roomlist diorganisasi berdasarkan hotel (Mekkah dan Madinah) dan tipe kamar (Quad, Triple, Double). Format Excel yang dihasilkan mencakup pengelompokan kamar dengan informasi nomor kamar, nama penghuni, jenis kelamin, hubungan antar penghuni (keluarga, mahram, dll), dan preferensi khusus jamaah. Output roomlist dirancang dengan format yang memudahkan pihak hotel dan tour leader untuk mengatur check-in dan penempatan jamaah, dengan warna dan format yang membedakan tipe kamar dan karakteristik penghuni.
+
+6. LAPORAN KELENGKAPAN DOKUMEN
+----------------------------
+
+Laporan kelengkapan dokumen adalah output yang menampilkan status dokumen yang telah diunggah oleh jamaah. Output ini dihasilkan sebagai sheet terpisah dalam ekspor manifest dan memuat indikator visual berupa checkmark (✓) atau cross (✗) yang menandakan kelengkapan setiap jenis dokumen seperti buku kuning, foto, fotokopi KTP, ijazah, KK, buku nikah, dan akta kelahiran. Output ini dilengkapi dengan tanggal unggah dokumen dan status kelengkapan keseluruhan yang diberi kode warna (hijau untuk lengkap, kuning untuk dalam proses, merah untuk belum lengkap). Laporan ini memungkinkan administrator untuk dengan cepat mengidentifikasi jamaah yang perlu melengkapi dokumen sebelum keberangkatan.
+
+7. NOTIFIKASI EMAIL
+-----------------
+
+Sistem MIW Travel menghasilkan notifikasi email sebagai output komunikasi penting kepada jamaah. Email dikirim pada beberapa tahapan proses: konfirmasi pendaftaran, konfirmasi pembayaran, informasi kelengkapan dokumen, dan pengingat keberangkatan. Struktur email terdiri dari header dengan logo perusahaan, sapaan personal, isi pesan dengan format HTML yang terstruktur, dan footer berisi informasi kontak dan disclaimer. Email konfirmasi pembayaran secara khusus menyertakan lampiran kwitansi dalam format PDF dan ringkasan informasi pembayaran. Format email dioptimalkan untuk tampilan di berbagai perangkat (responsive design) dan mencakup tautan langsung ke sistem untuk kemudahan akses jamaah.
+
+8. TAMPILAN ERROR DAN VALIDASI
+----------------------------
+
+Output berupa pesan error dan validasi dirancang untuk memberikan feedback yang jelas kepada pengguna ketika terjadi kesalahan. Untuk error sistem, output ditampilkan dalam format yang user-friendly dengan pesan yang informatif dan tanpa menampilkan detail teknis yang dapat membingungkan pengguna. Error ditampilkan dalam container dengan latar merah muda, teks warna merah tua, dan border yang jelas. Untuk validasi form, output ditampilkan sebagai pesan di bawah field yang bermasalah dengan ikon yang relevan dan teks berwarna yang sesuai (merah untuk error, kuning untuk warning). Semua pesan validasi dan error secara konsisten menggunakan htmlspecialchars() untuk mencegah XSS dan menjaga keamanan output.
+
+9. FORMAT EXCEL EKSPOR DATA
+-------------------------
+
+Format Excel yang dihasilkan oleh sistem MIW Travel dirancang dengan memperhatikan aspek fungsionalitas dan estetika. Setiap file Excel memiliki multiple worksheets yang masing-masing mewakili kategori data berbeda (manifest, roomlist, kelengkapan). Header worksheet menggunakan format bold dengan latar belakang abu-abu (RGB: D9D9D9), border medium untuk batas luar, dan alignment center untuk meningkatkan keterbacaan. Kolom diatur dengan lebar yang proporsional sesuai dengan konten (misalnya kolom nama lebih lebar dibandingkan kolom jenis kelamin). Format khusus diterapkan untuk data tertentu, seperti format tanggal (dd/mm/yyyy), alignment center untuk kode, dan warna teks khusus untuk status (hijau untuk status positif, merah untuk status negatif).
+
+10. RESPONSIVITAS DAN ADAPTASI OUTPUT
+-----------------------------------
+
+Output sistem MIW Travel dirancang dengan mempertimbangkan responsivitas dan adaptasi pada berbagai perangkat dan lingkungan. Invoice dan halaman web menggunakan CSS responsive dengan media queries untuk menyesuaikan tampilan pada desktop, tablet, dan smartphone. Output PDF (kwitansi) dihasilkan dengan ukuran standar A4 yang dapat dicetak dengan sempurna pada printer umum. File Excel ekspor menggunakan format yang kompatibel dengan berbagai versi Microsoft Excel dan alternatifnya seperti LibreOffice Calc dan Google Sheets, memastikan konsistensi tampilan dan fungsionalitas. Untuk output yang ditampilkan di browser, sistem menggunakan feature detection untuk memastikan kompatibilitas dengan berbagai browser dan versi.
+
+11. KEAMANAN OUTPUT
+-----------------
+
+Aspek keamanan dalam perancangan output MIW Travel diterapkan melalui beberapa mekanisme. Semua data sensitif seperti informasi pembayaran dan detail pribadi jamaah difilter menggunakan htmlspecialchars() sebelum ditampilkan untuk mencegah Cross-Site Scripting (XSS). Output dokumen seperti kwitansi dan manifest memiliki watermark dan header dengan informasi perusahaan untuk mencegah pemalsuan. Email notifikasi menggunakan protokol keamanan SPF dan DKIM untuk memastikan autentisitas dan mencegah spoofing. Dokumen PDF dilindungi dari modifikasi tidak sah meskipun masih dapat dicetak. Akses ke output tertentu seperti manifest dan roomlist dibatasi hanya untuk pengguna dengan hak akses administrator yang sesuai, dengan setiap akses tercatat dalam log sistem.
+
+12. OPTIMASI PERFORMA OUTPUT
+--------------------------
+
+Output sistem MIW Travel dioptimalkan untuk performa melalui beberapa pendekatan teknis. File CSS dan JavaScript yang digunakan untuk formatting output di-minify untuk mengurangi ukuran dan mempercepat loading. Gambar pada invoice dan email menggunakan format yang terkompresi dan ukuran yang dioptimalkan. Untuk ekspor data dalam jumlah besar (seperti manifest jamaah), sistem menggunakan teknik chunking dan streaming untuk mengurangi beban memori server. Output PDF (kwitansi) dibuat dengan opsi kompresi yang seimbang antara kualitas dan ukuran file. Semua output digital, termasuk Excel dan PDF, dihasilkan di server dan dikirimkan ke client dalam format terkompresi untuk mengoptimalkan bandwidth dan waktu transfer, dengan perhatian khusus pada kondisi jaringan di lingkungan Railway.
+
+13. DOKUMENTASI OUTPUT
+--------------------
+
+Setiap jenis output dalam sistem MIW Travel memiliki dokumentasi komprehensif yang mencakup tujuan, struktur, format, dan penjelasan setiap elemen. Dokumentasi tersedia dalam format digital melalui menu bantuan di panel admin dan manual tercetak untuk staf operasional. Untuk output teknis seperti manifest dan roomlist, terdapat panduan interpretasi data dan kode warna. Dokumentasi juga mencakup proses troubleshooting untuk masalah umum terkait output, seperti panduan jika terjadi kegagalan ekspor atau format yang tidak sesuai. Sistem logging juga menyimpan informasi tentang semua output yang dihasilkan, termasuk waktu pembuatan, user yang membuatnya, dan parameter yang digunakan, untuk memfasilitasi audit dan pengembangan berkelanjutan.

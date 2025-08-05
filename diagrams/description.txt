@@ -1,0 +1,206 @@
+DESKRIPSI DIAGRAM UML - SISTEM MANAJEMEN MIW TRAVEL
+===========================================================================
+
+DIAGRAM KELAS (CLASS DIAGRAMS)
+---------------------------------------
+
+1. Main Class Diagram (main_class_diagram.puml)
+   Ringkasan: Menampilkan semua kelas dalam sistem beserta hubungan antar kelas.
+   
+   Detail:
+   Diagram ini menunjukkan struktur lengkap sistem MIW Travel yang terdiri dari kelas-kelas utama seperti Package, User, Pembatalan, dan Manifest. Diagram menampilkan hubungan inheritance dimana PackageType (Haji dan Umroh) merupakan turunan dari kelas Package. Terdapat juga hubungan komposisi antara User dengan dokumen kelengkapan, dan hubungan agregasi antara Package dengan Manifest. Sistem juga dilengkapi dengan komponen pendukung seperti FileUpload, EmailService, dan DatabaseConnection. Diagram ini menjadi rujukan utama untuk memahami struktur sistem secara keseluruhan.
+
+2. Classes Only (classes_only.puml)
+   Ringkasan: Menampilkan detail struktur internal setiap kelas tanpa menunjukkan hubungan antar kelas.
+   
+   Detail:
+   Diagram ini memfokuskan pada struktur internal masing-masing kelas dengan menampilkan atribut dan metode beserta tingkat aksesnya (private, protected, public). Setiap kelas ditampilkan lengkap dengan tipe data, parameter metode, dan nilai yang dikembalikan. Diagram ini berguna untuk memahami tanggung jawab setiap kelas dan sebagai panduan dalam penulisan kode program.
+
+3. Relationships Only (relationships_only.puml)
+   Ringkasan: Menampilkan hanya hubungan dan ketergantungan antar kelas.
+   
+   Detail:
+   Diagram ini menunjukkan pola interaksi antar komponen sistem tanpa detail internal kelas. Menampilkan berbagai jenis hubungan UML seperti inheritance, composition, aggregation, association, dan dependency. Diagram ini membantu memahami alur data dan kontrol antar modul sistem serta mengidentifikasi tingkat ketergantungan dalam arsitektur sistem.
+
+DIAGRAM SEKUENSIAL (SEQUENCE DIAGRAMS)
+----------------------------------------
+
+4. Registration Process (01_registration_process.puml)
+   Ringkasan: Menampilkan urutan interaksi dalam proses pendaftaran jamaah umroh/haji.
+   
+   Detail:
+   Diagram ini menggambarkan kronologi interaksi antara User, RegistrationForm, ValidationService, DatabaseService, dan EmailService selama proses pendaftaran. Dimulai dari pengisian formulir, validasi data, penyimpanan ke database, hingga pengiriman email konfirmasi. Diagram juga menunjukkan kondisi ketika validasi gagal dan penanganan error yang terjadi.
+
+5. Payment Verification (02_payment_verification.puml)
+   Ringkasan: Menampilkan proses verifikasi pembayaran dan konfirmasi booking.
+   
+   Detail:
+   Diagram ini menunjukkan interaksi antara PaymentForm, Admin, VerificationService, dan NotificationService dalam proses verifikasi pembayaran. Mencakup upload bukti pembayaran, review oleh admin, update status pembayaran, dan notifikasi ke jamaah. Terdapat titik keputusan untuk menyetujui atau menolak pembayaran dengan alur alternatif yang berbeda.
+
+6. Package Management (03_package_management.puml)
+   Ringkasan: Menampilkan proses pengelolaan paket umroh/haji oleh administrator.
+   
+   Detail:
+   Diagram ini menggambarkan interaksi antara Admin, PackageManager, dan DatabaseService untuk operasi CRUD (Create, Read, Update, Delete) paket perjalanan. Mencakup validasi input, pengecekan aturan bisnis, dan penyimpanan data dengan penanganan error yang sesuai.
+
+7. Manifest Export (04_manifest_export.puml)
+   Ringkasan: Menampilkan proses export data manifest jamaah ke format Excel.
+   
+   Detail:
+   Diagram ini menunjukkan alur export manifest yang melibatkan ManifestController, ExcelGenerator, dan FileDownload. Proses dimulai dari pengambilan data dari database, formatting ke struktur Excel, hingga pengiriman file ke pengguna. Termasuk penanganan untuk dataset yang besar.
+
+8. Cancellation Process (05_cancellation_process.puml)
+   Ringkasan: Menampilkan proses pembatalan booking dengan perhitungan refund.
+   
+   Detail:
+   Diagram ini menunjukkan logika bisnis pembatalan termasuk validasi syarat pembatalan, perhitungan denda, proses refund, dan update tabel-tabel terkait. Menampilkan pohon keputusan untuk berbagai skenario pembatalan dan integrasi dengan payment gateway untuk pemrosesan refund.
+
+9. Basic Registration (06_basic_registration.puml)
+   Ringkasan: Versi sederhana dari proses registrasi untuk pemahaman dasar.
+   
+   Detail:
+   Diagram ringkas yang menunjukkan alur registrasi tanpa detail implementasi teknis. Fokus pada alur bisnis dan pengalaman pengguna. Berguna untuk stakeholder non-teknis dan sebagai gambaran umum perilaku sistem.
+
+10. Basic Manifest (07_basic_manifest.puml)
+    Ringkasan: Menampilkan alur sederhana pembuatan manifest jamaah.
+    
+    Detail:
+    Diagram sederhana untuk proses pembuatan manifest yang menampilkan aktivitas inti tanpa kompleksitas detail teknis. Membantu pemahaman proses bisnis dan pengumpulan kebutuhan sistem.
+
+DIAGRAM BASIS DATA (DATABASE DIAGRAMS)
+----------------------------------------
+
+11. Main Database Diagram (main_database_diagram.puml)
+    Ringkasan: Menampilkan skema lengkap database dengan hubungan antar tabel.
+    
+    Detail:
+    Entity-Relationship Diagram yang menampilkan struktur lengkap skema database sistem MIW Travel. Mencakup entitas utama (users, packages, bookings, manifests, pembatalan) dengan hubungan foreign key, constraints, dan indexes. Diagram menunjukkan normalisasi yang tepat dengan integritas referensial. Termasuk tabel lookup, field audit, dan tabel teknis. Penting untuk desain database, optimisasi, dan maintenance sistem.
+
+DIAGRAM DEPLOYMENT (DEPLOYMENT DIAGRAMS)
+------------------------------------------
+
+12. Main Deployment Diagram (main_deployment_diagram.puml)
+    Ringkasan: Menampilkan arsitektur deployment sistem di environment Railway.com.
+    
+    Detail:
+    Diagram infrastruktur yang menampilkan arsitektur deployment pada platform Railway.com. Menunjukkan komponen aplikasi PHP, database MySQL, penyimpanan file, dan layanan eksternal (email gateway, payment gateway). Diagram mencakup topologi jaringan, protokol komunikasi, dan komponen deployment. Penting untuk perencanaan infrastruktur dan troubleshooting masalah produksi.
+
+DIAGRAM USE CASE (USE CASE DIAGRAMS)
+--------------------------------------
+
+13. Main Use Case Diagram (main_use_case_diagram.puml)
+    Ringkasan: Menampilkan fungsionalitas sistem dari sudut pandang pengguna.
+    
+    Detail:
+    Diagram yang menampilkan kebutuhan fungsional lengkap dari perspektif pengguna. Mengidentifikasi aktor (Jamaah, Admin, System) dan use case yang dapat mereka lakukan. Menunjukkan hubungan seperti include, extend, dan generalization antar use case. Mencakup alur utama dan skenario alternatif. Penting untuk validasi kebutuhan, pengujian sistem, dan kriteria penerimaan pengguna.
+
+DIAGRAM AKTIVITAS (ACTIVITY DIAGRAMS)
+---------------------------------------
+
+14. Register Activity (register_activity.puml)
+    Ringkasan: Menampilkan flow chart proses registrasi dengan titik keputusan.
+    
+    Detail:
+    Activity diagram yang menampilkan workflow detail registrasi jamaah dengan pembagian jalur untuk aktor yang berbeda. Menunjukkan diamond keputusan, aktivitas paralel, dan titik sinkronisasi. Mencakup jalur pengecualian dan penanganan error. Berguna untuk optimisasi proses dan rekayasa ulang proses bisnis.
+
+15. Payment Activity (payment_activity.puml)
+    Ringkasan: Menampilkan workflow pembayaran dengan validasi bertingkat.
+    
+    Detail:
+    Diagram aktivitas untuk proses pembayaran yang menampilkan aturan bisnis kompleks, langkah validasi, dan workflow persetujuan. Menunjukkan cabang kondisional untuk metode pembayaran yang berbeda dan validasi jumlah. Penting untuk kepatuhan proses keuangan dan jejak audit.
+
+16. Manage Packages Activity (manage_packages_activity.puml)
+    Ringkasan: Menampilkan workflow pengelolaan paket perjalanan oleh admin.
+    
+    Detail:
+    Alur aktivitas untuk operasi manajemen paket termasuk membuat, mengupdate, dan menonaktifkan paket. Menampilkan validasi aturan bisnis, proses persetujuan, dan analisis dampak untuk perubahan paket.
+
+17. Upload Documents Activity (upload_documents_activity.puml)
+    Ringkasan: Menampilkan proses upload dan validasi dokumen jamaah.
+    
+    Detail:
+    Workflow detail untuk proses upload dokumen termasuk validasi file, pemindaian virus, pengecekan format, dan manajemen penyimpanan. Menampilkan pemrosesan paralel untuk beberapa dokumen dan mekanisme rollback untuk kegagalan.
+
+18. Cancellation Activity (cancellation_activity.puml)
+    Ringkasan: Menampilkan flow pembatalan booking dengan perhitungan dampak finansial.
+    
+    Detail:
+    Activity diagram kompleks untuk proses pembatalan yang mencakup evaluasi aturan bisnis, perhitungan finansial, workflow persetujuan, dan pemrosesan refund. Menampilkan jalur berbeda berdasarkan waktu pembatalan dan jenis paket.
+
+RINGKASAN SISTEM
+==================
+Sistem MIW Travel adalah aplikasi web berbasis PHP untuk manajemen perjalanan umroh dan haji yang terintegrasi dengan database MySQL dan di-deploy pada platform Railway.com. Sistem mendukung proses bisnis lengkap dari registrasi jamaah hingga export manifest dengan fitur seperti manajemen dokumen, verifikasi pembayaran, penanganan pembatalan, dan pelaporan administratif.
+
+Total Diagram: 18 diagram UML yang terdiri dari:
+- 3 Class Diagrams (struktur sistem)
+- 7 Sequence Diagrams (interaksi komponen)
+- 1 Database Diagram (skema data)
+- 1 Deployment Diagram (arsitektur infrastruktur)
+- 1 Use Case Diagram (kebutuhan fungsional)
+- 5 Activity Diagrams (workflow bisnis)
+
+Standar: UML 2.5 dengan gaya hitam-putih untuk keperluan akademis dan dokumentasi formal.
+
+PERANCANGAN KODIFIKASI SISTEM
+==========================================
+
+Sistem MIW Travel mengimplementasikan struktur kodifikasi berbasis PHP procedural yang terorganisir dengan pola modular untuk memudahkan maintenance dan pengembangan. Berikut adalah penjelasan perancangan kodifikasi dari sistem yang telah di-deploy di Railway.com:
+
+1. **Struktur File**
+   - **File Konfigurasi**: Sistem menggunakan `config.php` sebagai file konfigurasi utama dengan kemampuan deteksi environment otomatis untuk Railway dan pengembangan lokal
+   - **File Modul**: Dikelompokkan berdasarkan fungsi seperti `paket_functions.php`, `email_functions.php`, `file_handler.php`
+   - **File Tampilan**: Menggunakan pola PHP dengan HTML embedded seperti `admin_dashboard.php`, `form_umroh.php`
+   - **File JavaScript**: Terpisah untuk fungsi interaktif seperti `manifest_scripts.js`, `roomlist_scripts.js`, `paket_scripts.js`
+   - **File CSS**: Terpisah seperti `styles.css`, `admin_styles.css`, `invoice_styles.css`
+
+2. **Pola Koneksi Database**
+   - Implementasi koneksi database terpusat menggunakan PDO (PHP Data Objects)
+   - Deteksi environment otomatis untuk Railway.com dan lokal
+   - Penggunaan prepared statements untuk keamanan dari SQL injection
+   - Pengelolaan transaksi atomik untuk operasi kompleks
+
+3. **Struktur Kode**
+   - **Fungsi Modular**: Kode diorganisir dalam fungsi-fungsi dengan tanggung jawab spesifik
+   - **Error Handling**: Menggunakan try-catch untuk penanganan error dan logging
+   - **Validasi Input**: Implementasi validasi client-side dan server-side
+   - **Abstraksi Database**: Fungsi helper untuk operasi umum database
+
+4. **Pengelolaan Aset dan Upload**
+   - Sistem file terstruktur untuk upload dokumen jamaah
+   - Validasi tipe file dan batasan ukuran
+   - Organisasi file berdasarkan kategori dan jenis dokumen
+
+5. **Struktur Deployment**
+   - Optimisasi untuk Railway.com dengan konfigurasi khusus
+   - Penggunaan environment variables untuk konfigurasi sensitif
+   - Docker containerization untuk konsistensi environment
+   - Health checks untuk pemantauan sistem
+
+6. **Penanganan Sesi dan Keamanan**
+   - Penggunaan session untuk manajemen state
+   - Sanitasi input untuk mencegah XSS
+   - Prepared statements untuk mencegah SQL injection
+   - Validasi hak akses untuk fungsi administratif
+
+7. **Integrasi Pihak Ketiga**
+   - Integrasi email service untuk notifikasi
+   - Library Excel untuk export manifest
+   - Bootstrap dan jQuery untuk UI
+
+8. **Kodifikasi Database**
+   - Skema relasional dengan normalisasi yang tepat
+   - Indeks untuk optimisasi query
+   - Foreign key constraints untuk integritas referensial
+   - Kode prefiks tabel untuk kategorisasi (seperti `data_jamaah`, `data_paket`, `data_manifest`)
+
+9. **Penanganan Manifest dan Roomlist**
+   - Sistem kodifikasi kamar dengan prefiks dan nomor
+   - Pengelolaan relasi antar jamaah dalam satu paket
+   - Tracking kelengkapan dokumen dengan status persentase
+
+10. **Struktur Logging dan Monitoring**
+    - Log error terstruktur untuk troubleshooting
+    - Penanganan batasan eksekusi untuk operasi berat
+    - Timestamp untuk tracking perubahan data
+
+Struktur kodifikasi ini mendukung skalabilitas, maintainability, dan keamanan aplikasi dalam mengelola seluruh siklus hidup layanan travel haji dan umroh dari pendaftaran hingga keberangkatan.

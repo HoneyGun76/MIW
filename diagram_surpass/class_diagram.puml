@@ -30,7 +30,7 @@ class Package {
     +isRoomAvailable(hotel: String, roomNumber: String): Boolean
 }
 
-class Pilgrim {
+class Jamaah {
     -nik: String
     -package: Package
     -name: String
@@ -63,7 +63,7 @@ class Pilgrim {
 class Invoice {
     -invoiceId: String
     -package: Package
-    -pilgrim: Pilgrim
+    -Jamaah: Jamaah
     -details: InvoiceDetails
     -paymentInfo: PaymentInfo
     -amount: MoneyInfo
@@ -75,7 +75,7 @@ class Invoice {
 class Manifest {
     -manifestId: Integer
     -package: Package
-    -pilgrim: Pilgrim
+    -Jamaah: Jamaah
     -roomAssignment: RoomAssignment
     -relation: String
     -createdAt: DateTime
@@ -86,7 +86,7 @@ class Manifest {
 }
 
 class Cancellation {
-    -pilgrim: Pilgrim
+    -Jamaah: Jamaah
     -reason: String
     -documents: CancellationDocs
     -timestamp: DateTime
@@ -178,11 +178,11 @@ enum PaymentStatus {
 }
 
 ' Relationships
-Package "1" *-- "*" Pilgrim
+Package "1" *-- "*" Jamaah
 Package "1" *-- "*" Invoice
 Package "1" *-- "*" Manifest
-Pilgrim "1" *-- "*" Invoice
-Pilgrim "1" *-- "0..1" Cancellation
-Pilgrim "1" *-- "*" Manifest
+Jamaah "1" *-- "*" Invoice
+Jamaah "1" *-- "0..1" Cancellation
+Jamaah "1" *-- "*" Manifest
 
 @enduml

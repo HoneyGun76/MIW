@@ -1,0 +1,121 @@
+@startuml sequence_manifest_export
+!include ../uml_black_white_style.puml
+
+' Strict black and white UML 2.5 standard design
+skinparam monochrome true
+skinparam shadowing false
+skinparam handwritten false
+skinparam backgroundColor White
+
+title Sequence Diagram - Generate Manifest & Export Roomlist
+
+actor "Admin" as Admin
+participant "Admin Manifest" as Manifest
+participant "Manifest Controller" as ManifestCtrl
+participant "Database" as DB
+participant "Excel Generator" as Excel
+participant "Room Manager" as RoomMgr
+participant "File System" as FS
+
+Admin -> Manifest: Akses halaman manifest
+activate Manifest
+
+Manifest -> DB: SELECT semua paket dengan jamaah count
+activate DB
+DB --> Manifest: List paket + jumlah jamaah
+deactivate DB
+
+Manifest --> Admin: Tampilkan daftar paket
+deactivate Manifest
+
+Admin -> ManifestCtrl: Pilih paket untuk export manifest
+activate ManifestCtrl
+
+ManifestCtrl -> DB: SELECT jamaah by pak_id
+activate DB
+DB -> DB: JOIN data_jamaah dengan data_paket
+DB --> ManifestCtrl: Data jamaah lengkap
+deactivate DB
+
+== Generate Roomlist ==
+
+ManifestCtrl -> RoomMgr: Assign room numbers
+activate RoomMgr
+
+RoomMgr -> RoomMgr: Parse room_numbers dari paket
+RoomMgr -> RoomMgr: Kelompokkan jamaah by room type
+RoomMgr -> RoomMgr: Assign room prefix (Q1, T1, D1)
+RoomMgr -> RoomMgr: Set room relations (single/couple)
+
+RoomMgr -> DB: UPDATE jamaah dengan room assignments
+activate DB
+DB -> DB: UPDATE room_prefix, medinah_room, mekkah_room
+DB --> RoomMgr: Room assignments saved
+deactivate DB
+
+RoomMgr --> ManifestCtrl: Room assignments complete
+deactivate RoomMgr
+
+== Export ke Excel ==
+
+ManifestCtrl -> Excel: Generate manifest Excel
+activate Excel
+
+Excel -> Excel: Load template manifest
+Excel -> Excel: Fill header data (paket info)
+Excel -> Excel: Fill jamaah data per row
+Excel -> Excel: Set room assignments
+Excel -> Excel: Apply formatting
+
+Excel -> FS: Save Excel file
+activate FS
+FS -> FS: Generate unique filename
+FS -> FS: Save ke direktori temp
+FS --> Excel: File path
+deactivate FS
+
+Excel --> ManifestCtrl: Excel file ready
+deactivate Excel
+
+ManifestCtrl --> Admin: Download Excel manifest
+deactivate ManifestCtrl
+
+== Export Roomlist ==
+
+Admin -> ManifestCtrl: Export roomlist untuk paket
+activate ManifestCtrl
+
+ManifestCtrl -> DB: SELECT jamaah dengan room assignments
+activate DB
+DB --> ManifestCtrl: Data roomlist lengkap
+deactivate DB
+
+ManifestCtrl -> Excel: Generate roomlist Excel
+activate Excel
+
+Excel -> Excel: Create roomlist format
+Excel -> Excel: Group by room type
+Excel -> Excel: Show room relations
+Excel -> Excel: Include hotel room numbers
+
+Excel -> FS: Save roomlist file
+activate FS
+FS --> Excel: Roomlist file path
+deactivate FS
+
+Excel --> ManifestCtrl: Roomlist Excel ready
+deactivate Excel
+
+ManifestCtrl --> Admin: Download roomlist Excel
+deactivate ManifestCtrl
+
+note over Admin, FS
+    Fitur Manifest & Roomlist:
+    1. Auto room assignment berdasarkan tipe kamar
+    2. Export ke Excel dengan template
+    3. Roomlist dengan hotel room numbers
+    4. Room relation management (single/couple)
+    5. Integration dengan data paket dan jamaah
+end note
+
+@enduml

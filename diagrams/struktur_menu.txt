@@ -1,0 +1,215 @@
+STRUKTUR MENU SISTEM MIW TRAVEL BERBASIS RAILWAY
+===========================================================================
+
+1. Website Admin
+   ```
+   +-----------------+
+   |  Website Admin  |
+   +-----------------+
+           |
+           |
+   +-------+-------+-------+--------+--------+--------+--------+--------+
+   |       |       |       |        |        |        |        |        |
+   v       v       v       v        v        v        v        v        v
+   +-------+ +-------+ +-------+ +-------+ +-------+ +-------+ +-------+ +-------+
+   |Pendaf-| |Dashbor| |Manaje-| |Pembat-| |Pembat-| |Room-  | |Mani-  | |Dokumen|
+   |taran  | |       | |men    | |alan   | |alan   | |list   | |fest   | |       |
+   |Pending| |       | |Paket  | |       | |       | |       | |       | |       |
+   +-------+ +-------+ +-------+ +-------+ +-------+ +-------+ +-------+ +-------+
+   ```
+   
+   Halaman Website Admin merupakan antarmuka utama administrator sistem MIW Travel. Halaman ini berfungsi sebagai pusat kontrol yang menyediakan akses ke seluruh fungsionalitas pengelolaan sistem. Administrator dapat mengakses berbagai modul melalui menu navigasi yang terstruktur dengan jelas. Menu utama ini dirancang dengan pendekatan user-centered, memastikan administrator dapat dengan mudah menavigasi ke bagian sistem yang dibutuhkan tanpa harus melalui banyak langkah.
+
+2. Pendaftaran Pending
+   ```
+   +------------------+
+   |   Pendaftaran    |
+   |     Pending      |
+   +------------------+
+            |
+            v
+   +------------------+
+   | Tabel Pendaftar  |
+   |    Menunggu      |
+   | Verifikasi       |
+   +------------------+
+            |
+    +-------+-------+
+    |               |
+    v               v
+   +--------+    +--------+
+   |Detail  |    |Verifi- |
+   |Pendaf- |    |kasi    |
+   |taran   |    |Pembaya-|
+   |        |    |ran     |
+   +--------+    +--------+
+   ```
+   
+   Menu Pendaftaran Pending menampilkan daftar semua jamaah yang baru mendaftar dan menunggu verifikasi pembayaran dari administrator. Data ditampilkan dalam format tabel yang mencakup informasi penting seperti NIK, nama lengkap, program yang dipilih (Haji/Umroh), jenis paket, tanggal keberangkatan, dan status pembayaran. Dari halaman ini, administrator dapat melihat detail lengkap pendaftaran dan dokumen yang diunggah, serta dapat memverifikasi bukti pembayaran dengan mengubah status menjadi terverifikasi atau ditolak. Menu ini dilengkapi dengan fitur pencarian dan penyaringan untuk memudahkan pengelolaan pendaftar baru, terutama saat jumlahnya banyak.
+
+3. Dashbor
+   ```
+   +-----------------+
+   |     Dashbor     |
+   +-----------------+
+           |
+           v
+   +-----------------+
+   | Statistik dan   |
+   | Ringkasan Data  |
+   +-----------------+
+           |
+    +------+-------+
+    |      |       |
+    v      v       v
+   +-----+ +-----+ +-----+
+   |Daftar|Data  |Grafik|
+   |Jamaah|Paket |Statis|
+   |Aktif |Aktif |tik   |
+   +-----+ +-----+ +-----+
+   ```
+   
+   Dasbor Admin menyediakan tampilan komprehensif tentang status keseluruhan sistem MIW Travel. Halaman ini menampilkan statistik penting seperti jumlah total jamaah terdaftar, jumlah paket aktif, dan tren pendaftaran dalam format grafis yang mudah dipahami. Di bagian bawah, ditampilkan tabel dengan data lengkap jamaah beserta status pembayaran dan informasi paket yang dipilih. Administrator dapat melihat detail lengkap setiap jamaah termasuk informasi pribadi, kontak, keluarga, data fisik, paket perjalanan, pembayaran, dan dokumen yang telah diunggah. Dasbor ini juga menyediakan fungsi penghapusan data jamaah jika diperlukan, dengan mekanisme konfirmasi untuk mencegah penghapusan yang tidak disengaja.
+
+4. Manajemen Paket
+   ```
+   +-----------------+
+   |   Manajemen     |
+   |     Paket       |
+   +-----------------+
+           |
+           v
+   +-----------------+
+   |   Tabel Paket   |
+   |    Tersedia     |
+   +-----------------+
+           |
+    +------+------+------+
+    |      |      |      |
+    v      v      v      v
+   +-----+ +-----+ +-----+ +-----+
+   |Tambah| |Edit | |Hapus| |Filter|
+   |Paket | |Paket| |Paket| |Paket |
+   |      | |     | |     | |      |
+   +-----+ +-----+ +-----+ +-----+
+   ```
+   
+   Menu Manajemen Paket memungkinkan administrator untuk mengelola semua paket perjalanan umroh dan haji yang ditawarkan oleh MIW Travel. Halaman ini menampilkan tabel dengan daftar lengkap paket yang tersedia, termasuk informasi seperti jenis paket (Umroh/Haji), program, tanggal keberangkatan, durasi, harga dasar untuk berbagai tipe kamar (quad, triple, double), informasi hotel di Mekkah dan Madinah, serta nomor HCN jika tersedia. Administrator dapat menambahkan paket baru melalui form yang komprehensif, mengedit informasi paket yang sudah ada, atau menghapus paket yang tidak lagi ditawarkan. Fitur filter berdasarkan tipe paket (Umroh/Haji) dan tanggal keberangkatan memudahkan pengelolaan saat jumlah paket yang tersedia banyak.
+
+5. Pembatalan
+   ```
+   +-----------------+
+   |   Pembatalan    |
+   +-----------------+
+           |
+           v
+   +-----------------+
+   | Tabel Request   |
+   |   Pembatalan    |
+   +-----------------+
+           |
+    +------+------+
+    |      |      |
+    v      v      v
+   +-----+ +-----+ +-----+
+   |Proses| |Detail| |Export|
+   |Pemba-| |Pemba-| |Data  |
+   |talan | |talan | |      |
+   +-----+ +-----+ +-----+
+   ```
+   
+   Menu Pembatalan di sisi administrator menampilkan daftar semua permintaan pembatalan yang diajukan oleh jamaah. Data ditampilkan dalam format tabel yang mencakup informasi penting seperti NIK jamaah, nama lengkap, tanggal pengajuan pembatalan, alasan pembatalan, dan status proses. Administrator dapat melihat detail lengkap setiap permintaan pembatalan, termasuk dokumen pendukung yang diunggah oleh jamaah. Melalui menu ini, administrator dapat memproses pembatalan dengan menghitung pengembalian dana sesuai kebijakan perusahaan, memperbarui status jamaah di sistem, dan mencetak dokumen konfirmasi pembatalan. Menu ini juga dilengkapi dengan fungsi ekspor data ke format Excel untuk keperluan pelaporan dan dokumentasi administratif.
+
+6. Roomlist
+   ```
+   +-----------------+
+   |    Roomlist     |
+   +-----------------+
+           |
+    +------+-------+
+    |              |
+    v              v
+   +-----+       +------+
+   |Tab  |       |Tab   |
+   |Umroh|       |Haji  |
+   +-----+       +------+
+      |             |
+      v             v
+   +--------+    +--------+
+   |Pilih   |    |Pilih   |
+   |Paket   |    |Paket   |
+   |Umroh   |    |Haji    |
+   +--------+    +--------+
+      |             |
+      v             v
+   +--------+    +--------+
+   |Pengatu-|    |Pengatu-|
+   |ran     |    |ran     |
+   |Kamar   |    |Kamar   |
+   +--------+    +--------+
+   ```
+   
+   Menu Roomlist memberikan antarmuka untuk mengelola pengaturan kamar jamaah untuk setiap paket perjalanan. Menu ini dibagi menjadi dua tab utama: Roomlist Umroh dan Roomlist Haji, memudahkan administrator untuk fokus pada jenis perjalanan yang spesifik. Dalam setiap tab, administrator dapat memilih paket perjalanan yang tersedia dari dropdown menu. Setelah paket dipilih, sistem akan menampilkan daftar jamaah yang terdaftar pada paket tersebut beserta status penempatan kamar mereka. Administrator dapat mengatur penempatan kamar dengan memilih nomor kamar dan mengelompokkan jamaah sesuai dengan preferensi mereka (misalnya, jamaah yang berangkat bersama keluarga). Sistem secara otomatis memastikan bahwa pengaturan kamar sesuai dengan kapasitas dan jenis kamar yang dipesan (quad, triple, double). Menu ini juga dilengkapi dengan fungsi pencarian dan penyaringan untuk memudahkan pengelolaan roomlist, terutama untuk paket dengan jumlah jamaah yang besar.
+
+7. Manifest
+   ```
+   +-----------------+
+   |    Manifest     |
+   +-----------------+
+           |
+    +------+-------+
+    |              |
+    v              v
+   +-----+       +------+
+   |Tab  |       |Tab   |
+   |Umroh|       |Haji  |
+   +-----+       +------+
+      |             |
+      v             v
+   +--------+    +--------+
+   |Pilih   |    |Pilih   |
+   |Paket   |    |Paket   |
+   |Umroh   |    |Haji    |
+   +--------+    +--------+
+      |             |
+      v             v
+   +--------+    +--------+
+   |Export  |    |Export  |
+   |Manifest|    |Manifest|
+   |Excel   |    |Excel   |
+   +--------+    +--------+
+   ```
+   
+   Menu Export Manifest memungkinkan administrator untuk menghasilkan dokumen manifest yang diperlukan untuk administrasi perjalanan haji dan umroh. Menu ini dibagi menjadi dua tab: Manifest Umroh dan Manifest Haji, masing-masing menampilkan daftar paket yang tersedia beserta informasi ringkas seperti tanggal keberangkatan dan jumlah jamaah yang terdaftar. Administrator dapat memilih paket tertentu dan melihat preview data jamaah yang akan dimasukkan dalam manifest. Data manifest mencakup informasi lengkap jamaah yang diperlukan untuk keperluan administrasi, imigrasi, dan operasional perjalanan, seperti nama lengkap, nomor paspor, tanggal lahir, alamat, kontak darurat, dan informasi akomodasi. Administrator dapat mengekspor data manifest dalam format Excel yang sudah diformat sesuai dengan standar yang diperlukan oleh otoritas terkait. Format ekspor dirancang agar kompatibel dengan kebutuhan dokumen resmi dari Kementerian Agama dan otoritas imigrasi.
+
+8. Dokumen
+   ```
+   +-----------------+
+   |     Dokumen     |
+   +-----------------+
+           |
+           v
+   +-----------------+
+   | Tabel Jamaah &  |
+   | Status Dokumen  |
+   +-----------------+
+           |
+           v
+   +-----------------+
+   |Modal Kelengkapan|
+   |    Dokumen      |
+   +-----------------+
+           |
+    +------+------+
+    |      |      |
+    v      v      v
+   +-----+ +-----+ +-----+
+   |Lihat | |Upload| |Update|
+   |Dokum | |Dokum | |Status |
+   |en    | |en    | |Dokumen|
+   +-----+ +-----+ +-----+
+   ```
+   
+   Menu Dokumen Jamaah menyediakan antarmuka komprehensif untuk mengelola dokumen yang diperlukan dari setiap jamaah. Halaman ini menampilkan tabel dengan daftar jamaah beserta status kelengkapan dokumen mereka, ditandai dengan indikator warna yang memudahkan identifikasi visual (hijau untuk lengkap, kuning untuk sebagian, merah untuk belum lengkap). Dokumen yang dikelola mencakup buku kuning/kartu vaksin, foto formal, fotokopi KTP, fotokopi ijazah, fotokopi KK, fotokopi buku nikah (untuk yang menikah), dan fotokopi akta kelahiran. Ketika administrator mengklik tombol "Kelola Dokumen" untuk jamaah tertentu, sebuah modal akan muncul yang menampilkan status setiap dokumen dengan tombol untuk melihat, mengunggah, atau memperbarui dokumen. Administrator dapat melihat dokumen yang telah diunggah, mengunggah dokumen baru atas nama jamaah jika diperlukan, dan memperbarui status kelengkapan dokumen. Menu ini juga dilengkapi dengan fitur pencarian dan penyaringan berdasarkan nama jamaah atau status kelengkapan dokumen, memudahkan pengelolaan dokumen terutama ketika jumlah jamaah banyak.
+
+

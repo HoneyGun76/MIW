@@ -1,0 +1,222 @@
+PENGUJIAN SISTEM MIW TRAVEL BERBASIS RAILWAY
+===========================================================================
+
+4.5 Pengujian
+
+Pengujian pada sistem MIW Travel berbasis Railway merupakan tahap krusial untuk memastikan kehandalan dan kesiapan sistem sebelum digunakan secara penuh oleh pengguna. Pengujian dilakukan dengan metode Black Box Testing, yaitu pengujian yang berfokus pada fungsionalitas sistem tanpa memperhatikan struktur kode internal. Pendekatan ini dipilih karena memungkinkan pengujian dari perspektif pengguna akhir dan memastikan bahwa semua fitur berfungsi sesuai kebutuhan dalam lingkungan deployment Railway. Pengujian black box juga memungkinkan verifikasi bahwa sistem beroperasi dengan baik dalam lingkungan cloud tanpa memerlukan perubahan pada konfigurasi deployment yang sudah berjalan.
+
+4.5.1 Rencana Pengujian
+-----------------------
+
+Rencana pengujian untuk sistem MIW Travel berbasis Railway disusun secara sistematis untuk mencakup seluruh aspek fungsional sistem. Pengujian dilakukan dengan fokus pada modul-modul utama yang mencakup pendaftaran jamaah, pengelolaan paket, pengelolaan pembatalan, serta fungsi administratif. Untuk menjaga stabilitas lingkungan Railway yang sudah berjalan, pengujian dilakukan dengan pendekatan non-invasif, di mana perubahan data dilakukan melalui antarmuka sistem dan tidak langsung pada basis data atau konfigurasi server.
+
+Pengujian dikelompokkan menjadi beberapa kategori berdasarkan fungsi utama sistem:
+1. Pengujian Konektivitas dan Deployment - memastikan sistem dapat diakses dan berfungsi dalam lingkungan Railway
+2. Pengujian Pendaftaran Jamaah - menguji proses pendaftaran umroh dan haji
+3. Pengujian Manajemen Paket - menguji pengelolaan paket perjalanan
+4. Pengujian Pembatalan - menguji proses pengajuan dan pemrosesan pembatalan
+5. Pengujian Administratif - menguji fungsi panel admin
+6. Pengujian Upload dan Pengelolaan File - menguji fungsi upload dan pengelolaan dokumen dalam persistent storage Railway
+7. Pengujian Keamanan - menguji aspek keamanan sistem
+
+Setiap kategori pengujian memiliki serangkaian kasus uji spesifik dengan input yang ditentukan, hasil yang diharapkan, dan kriteria keberhasilan yang jelas. Pengujian dilakukan dalam urutan tertentu untuk memastikan bahwa fungsi-fungsi dasar yang menjadi prasyarat fungsi lain telah berjalan dengan baik sebelum pengujian lebih lanjut.
+
+4.5.2 Kasus dan Hasil Pengujian
+-------------------------------
+
+### A. Pengujian Konektivitas dan Deployment
+
+1. **Akses Website**
+   - **Deskripsi**: Menguji apakah website MIW Travel dapat diakses melalui URL Railway
+   - **Input**: Akses URL https://miw.up.railway.app/
+   - **Expected Result**: Halaman utama MIW Travel tampil dengan benar
+   - **Hasil Pengujian**: Berhasil. Halaman utama tampil dengan semua elemen termasuk menu utama dan pilihan layanan
+   
+2. **Health Check Endpoint**
+   - **Deskripsi**: Memastikan endpoint health check berfungsi untuk monitoring Railway
+   - **Input**: Akses URL https://miw.up.railway.app/health.php
+   - **Expected Result**: Response JSON dengan status "healthy"
+   - **Hasil Pengujian**: Berhasil. Endpoint mengembalikan status healthy dengan informasi tambahan seperti versi PHP dan status koneksi database
+
+3. **Database Connection**
+   - **Deskripsi**: Memastikan koneksi ke database MySQL Railway berfungsi
+   - **Input**: Akses halaman diagnostic.php
+   - **Expected Result**: Informasi koneksi database menunjukkan status "Connected"
+   - **Hasil Pengujian**: Berhasil. Database terkoneksi dengan respons time < 50ms
+
+4. **Environment Variables**
+   - **Deskripsi**: Memastikan variabel lingkungan Railway terkonfigurasi dengan benar
+   - **Input**: Akses halaman railway_diagnostics.php
+   - **Expected Result**: Semua variabel lingkungan yang diperlukan terisi
+   - **Hasil Pengujian**: Berhasil. Semua variabel lingkungan wajib terdeteksi dan terisi
+
+### B. Pengujian Pendaftaran Jamaah
+
+1. **Pendaftaran Umroh**
+   - **Deskripsi**: Menguji proses pendaftaran jamaah umroh
+   - **Input**: Form pendaftaran umroh dengan data valid
+   - **Expected Result**: Pendaftaran berhasil dan data tersimpan di database
+   - **Hasil Pengujian**: Berhasil. Data jamaah tersimpan dengan benar dan halaman konfirmasi muncul
+
+2. **Pendaftaran Haji**
+   - **Deskripsi**: Menguji proses pendaftaran jamaah haji
+   - **Input**: Form pendaftaran haji dengan data valid
+   - **Expected Result**: Pendaftaran berhasil dan data tersimpan di database
+   - **Hasil Pengujian**: Berhasil. Data jamaah tersimpan dengan benar dan halaman konfirmasi muncul
+
+3. **Validasi Data NIK**
+   - **Deskripsi**: Menguji validasi NIK yang sudah terdaftar
+   - **Input**: Form pendaftaran dengan NIK yang sudah ada dalam database
+   - **Expected Result**: Sistem menolak pendaftaran dan menampilkan pesan error
+   - **Hasil Pengujian**: Berhasil. Sistem menampilkan pesan error "NIK sudah terdaftar dalam sistem"
+
+4. **Upload Dokumen**
+   - **Deskripsi**: Menguji upload dokumen saat pendaftaran
+   - **Input**: File KTP (PDF, 1MB) dan file KK (JPG, 2MB)
+   - **Expected Result**: File berhasil diupload ke persistent storage Railway
+   - **Hasil Pengujian**: Berhasil. File tersimpan di lokasi yang benar dan dapat diakses
+
+5. **Validasi Ukuran File**
+   - **Deskripsi**: Menguji validasi ukuran maksimum file
+   - **Input**: File dengan ukuran melebihi 5MB
+   - **Expected Result**: Sistem menolak file dan menampilkan pesan error
+   - **Hasil Pengujian**: Berhasil. Sistem menampilkan pesan "Ukuran file melebihi batas maksimum"
+
+### C. Pengujian Manajemen Paket
+
+1. **Tambah Paket Baru**
+   - **Deskripsi**: Menguji penambahan paket perjalanan baru
+   - **Input**: Form tambah paket dengan data lengkap
+   - **Expected Result**: Paket baru tersimpan dalam database
+   - **Hasil Pengujian**: Berhasil. Paket baru muncul dalam daftar paket
+
+2. **Edit Paket**
+   - **Deskripsi**: Menguji perubahan data paket
+   - **Input**: Perubahan harga dan tanggal keberangkatan paket yang ada
+   - **Expected Result**: Data paket terupdate dalam database
+   - **Hasil Pengujian**: Berhasil. Perubahan data tersimpan dan terlihat dalam daftar paket
+
+3. **Hapus Paket**
+   - **Deskripsi**: Menguji penghapusan paket
+   - **Input**: Aksi hapus pada paket yang dipilih
+   - **Expected Result**: Paket terhapus dari database
+   - **Hasil Pengujian**: Berhasil. Paket tidak lagi muncul dalam daftar paket
+
+4. **Validasi Tanggal Keberangkatan**
+   - **Deskripsi**: Menguji validasi tanggal keberangkatan
+   - **Input**: Tanggal keberangkatan yang sudah lewat
+   - **Expected Result**: Sistem menolak dan menampilkan pesan error
+   - **Hasil Pengujian**: Berhasil. Sistem menampilkan pesan "Tanggal keberangkatan harus di masa depan"
+
+### D. Pengujian Pembatalan
+
+1. **Pengajuan Pembatalan**
+   - **Deskripsi**: Menguji pengajuan pembatalan pendaftaran
+   - **Input**: Form pembatalan dengan data valid
+   - **Expected Result**: Data pembatalan tersimpan dalam database
+   - **Hasil Pengujian**: Berhasil. Data pembatalan tersimpan dan konfirmasi ditampilkan
+
+2. **Verifikasi Pembatalan**
+   - **Deskripsi**: Menguji proses verifikasi pembatalan oleh admin
+   - **Input**: Aksi verifikasi pada pembatalan yang dipilih
+   - **Expected Result**: Status pembatalan berubah menjadi "verified"
+   - **Hasil Pengujian**: Berhasil. Status terupdate dan email konfirmasi terkirim
+
+3. **Upload Bukti Pembatalan**
+   - **Deskripsi**: Menguji upload dokumen bukti pembatalan
+   - **Input**: File PDF (1.5MB)
+   - **Expected Result**: File tersimpan di persistent storage Railway
+   - **Hasil Pengujian**: Berhasil. File tersimpan dan dapat diakses oleh admin
+
+### E. Pengujian Administratif
+
+1. **Login Admin**
+   - **Deskripsi**: Menguji proses login ke panel admin
+   - **Input**: Username dan password admin yang valid
+   - **Expected Result**: Berhasil login dan masuk ke dasbor admin
+   - **Hasil Pengujian**: Berhasil. Login berhasil dan dasbor admin tampil
+
+2. **Verifikasi Pembayaran**
+   - **Deskripsi**: Menguji proses verifikasi pembayaran jamaah
+   - **Input**: Aksi verifikasi pada pembayaran jamaah yang dipilih
+   - **Expected Result**: Status pembayaran berubah menjadi "verified"
+   - **Hasil Pengujian**: Berhasil. Status terupdate dan jamaah berpindah ke daftar terverifikasi
+
+3. **Export Manifest**
+   - **Deskripsi**: Menguji fungsi ekspor manifest jamaah
+   - **Input**: Pemilihan paket untuk ekspor manifest
+   - **Expected Result**: File Excel dengan data manifest dihasilkan
+   - **Hasil Pengujian**: Berhasil. File manifest berhasil didownload dengan data yang sesuai
+
+4. **Pengaturan Roomlist**
+   - **Deskripsi**: Menguji fungsi pengaturan kamar jamaah
+   - **Input**: Penempatan jamaah ke dalam kamar hotel
+   - **Expected Result**: Data penempatan kamar tersimpan
+   - **Hasil Pengujian**: Berhasil. Roomlist terupdate dengan penempatan yang baru
+
+### F. Pengujian Upload dan Pengelolaan File
+
+1. **Upload File di Railway**
+   - **Deskripsi**: Menguji penyimpanan file di persistent storage Railway
+   - **Input**: Upload berbagai jenis file (PDF, JPG, PNG)
+   - **Expected Result**: File tersimpan dan dapat diakses
+   - **Hasil Pengujian**: Berhasil. Semua file tersimpan di direktori /app/uploads/ dengan struktur yang benar
+
+2. **Akses File**
+   - **Deskripsi**: Menguji akses file yang sudah diupload
+   - **Input**: Akses file melalui file_handler.php
+   - **Expected Result**: File berhasil dibuka/didownload
+   - **Hasil Pengujian**: Berhasil. File dapat diakses melalui file handler dengan permission yang benar
+
+3. **Persistensi File**
+   - **Deskripsi**: Menguji persistensi file setelah redeploy
+   - **Input**: Redeploy aplikasi via "railway up"
+   - **Expected Result**: File yang diupload tetap tersedia
+   - **Hasil Pengujian**: Berhasil. Semua file tetap tersedia dan dapat diakses setelah redeploy
+
+### G. Pengujian Keamanan
+
+1. **Validasi Input Form**
+   - **Deskripsi**: Menguji sanitasi input dari form
+   - **Input**: Input dengan karakter khusus dan potensi XSS
+   - **Expected Result**: Input disanitasi dan disimpan dengan aman
+   - **Hasil Pengujian**: Berhasil. Input berbahaya disanitasi sebelum disimpan
+
+2. **Proteksi Admin Panel**
+   - **Deskripsi**: Menguji proteksi akses ke panel admin
+   - **Input**: Akses langsung URL admin tanpa login
+   - **Expected Result**: Redirect ke halaman login
+   - **Hasil Pengujian**: Berhasil. Sistem mengarahkan ke halaman login
+
+3. **CSRF Protection**
+   - **Deskripsi**: Menguji proteksi CSRF pada form
+   - **Input**: Submit form tanpa token CSRF
+   - **Expected Result**: Form submission ditolak
+   - **Hasil Pengujian**: Berhasil. Sistem menampilkan pesan "Invalid CSRF token"
+
+4. **File Permission**
+   - **Deskripsi**: Menguji keamanan akses file upload
+   - **Input**: Akses direct URL file tanpa melalui file_handler.php
+   - **Expected Result**: Akses ditolak
+   - **Hasil Pengujian**: Berhasil. Direct access tidak diizinkan
+
+4.5.3 Kesimpulan hasil Pengujian
+--------------------------------
+
+Berdasarkan rangkaian pengujian black box yang telah dilakukan pada sistem MIW Travel berbasis Railway, dapat disimpulkan bahwa:
+
+1. **Fungsionalitas Sistem**: Seluruh modul utama sistem berfungsi sesuai dengan yang diharapkan. Pendaftaran jamaah, pengelolaan paket, proses pembatalan, dan fungsi administratif berjalan dengan baik dalam lingkungan deployment Railway.
+
+2. **Konektivitas dan Deployment**: Sistem berhasil diakses dan berfungsi dengan optimal pada platform Railway. Health check endpoint, koneksi database, dan environment variables terkonfigurasi dengan benar, memungkinkan sistem beroperasi tanpa kendala.
+
+3. **Penanganan File**: Mekanisme upload dan pengelolaan file berfungsi dengan baik dalam persistent storage Railway. File yang diupload tetap tersedia meskipun setelah redeployment, menunjukkan konfigurasi volume mounting Railway telah berhasil.
+
+4. **Validasi dan Keamanan**: Sistem memiliki mekanisme validasi input yang kuat, baik client-side maupun server-side. Proteksi keamanan seperti CSRF protection, sanitasi input, dan kontrol akses berfungsi sebagaimana mestinya.
+
+5. **Integrasi Database**: Koneksi dan operasi database berjalan lancar dengan response time yang baik, memastikan performa aplikasi tetap optimal dalam menangani data jamaah.
+
+6. **Ketahanan Sistem**: Sistem menangani input tidak valid dan kasus error dengan baik, menampilkan pesan error yang informatif dan mencegah crash atau perilaku tidak diinginkan.
+
+7. **Email Notification**: Fungsi notifikasi email untuk konfirmasi pendaftaran, verifikasi pembayaran, dan pembatalan berjalan dengan baik menggunakan konfigurasi SMTP di Railway.
+
+Dari hasil pengujian tersebut, dapat dikatakan bahwa implementasi sistem MIW Travel berbasis Railway telah berhasil dan siap digunakan untuk operasional. Pendekatan black box testing memungkinkan verifikasi fungsionalitas sistem secara menyeluruh tanpa mengganggu konfigurasi deployment yang sudah berjalan. Beberapa rekomendasi untuk pengembangan lebih lanjut meliputi peningkatan performance monitoring, implementasi automated testing untuk deployment berkelanjutan, dan pengembangan fitur backup otomatis untuk database dan file.

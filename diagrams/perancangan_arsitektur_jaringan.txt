@@ -1,0 +1,57 @@
+PERANCANGAN ARSITEKTUR JARINGAN SISTEM MIW TRAVEL BERBASIS RAILWAY
+===========================================================================
+
+1. ARSITEKTUR INFRASTRUKTUR CLOUD
+---------------------------------
+
+Sistem MIW Travel diimplementasikan pada platform Railway yang menyediakan infrastruktur cloud berbasis container. Railway menggunakan konsep service-based architecture di mana setiap komponen sistem (aplikasi web, database, storage) dijalankan sebagai layanan terpisah namun terintegrasi. Arsitektur ini mendukung skalabilitas horizontal dan memberikan isolasi antar komponen, meningkatkan keandalan sistem secara keseluruhan. Platform Railway menangani kompleksitas infrastruktur seperti orkestrasi container, load balancing, dan network routing, memungkinkan tim pengembangan fokus pada pengembangan aplikasi.
+
+2. TOPOLOGI LAYANAN PADA RAILWAY
+-------------------------------
+
+Sistem MIW Travel mengimplementasikan topologi multi-service yang terdiri dari dua layanan utama yang berjalan pada Railway: layanan web application dan layanan database MySQL. Kedua layanan ini terhubung melalui jaringan internal Railway yang aman dan terenkripsi. Layanan web application dikonfigurasi untuk menggunakan persistent volume untuk penyimpanan file yang tetap tersedia bahkan setelah restart container. Topologi ini memungkinkan performa tinggi dengan latensi rendah antar layanan, karena komunikasi terjadi dalam infrastruktur cloud Railway tanpa harus melalui internet publik.
+
+3. MANAJEMEN KONEKSI DATABASE
+---------------------------
+
+Koneksi database dikelola melalui environment variables yang disediakan oleh Railway secara otomatis ketika MySQL service terhubung. Variabel seperti DB_HOST, DB_PORT, DB_NAME, DB_USER, dan DB_PASS digunakan oleh aplikasi untuk melakukan koneksi ke database. Sistem mengimplementasikan connection pooling melalui konfigurasi PDO dengan parameter PDO::ATTR_PERSISTENT yang diatur menjadi false untuk menghindari kelebihan koneksi database. Health check database dilakukan secara berkala untuk memastikan konektivitas, dengan response time diukur dan dicatat untuk keperluan monitoring performa.
+
+4. KONFIGURASI PERSISTENT STORAGE
+-------------------------------
+
+Sistem file storage diimplementasikan menggunakan volume persistensi Railway untuk menjamin ketersediaan file yang diunggah. Path utama storage adalah '/app/uploads/' dengan subdirektori terorganisir berdasarkan jenis dokumen: 'documents', 'payments', 'photos', dan 'cancellations'. Setiap direktori dibuat secara otomatis saat deployment dengan permission yang tepat (chmod 0755). Metadata file disimpan dalam database pada tabel 'file_metadata' untuk kemudahan pencarian dan pengelolaan, sementara file fisik disimpan dalam filesystem. Arsitektur ini memastikan file tetap tersedia meski container di-restart atau di-redeploy.
+
+5. MEKANISME KEAMANAN JARINGAN
+----------------------------
+
+Keamanan jaringan diimplementasikan pada berbagai lapisan sistem. Pada level transport, Railway secara otomatis menyediakan TLS/SSL untuk koneksi HTTPS. Pada level aplikasi, sistem mengaktifkan security headers seperti X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, dan Strict-Transport-Security. Untuk session, sistem mengimplementasikan konfigurasi keamanan dengan mengaktifkan session.cookie_secure, session.cookie_httponly, session.use_strict_mode, dan session.cookie_samesite=Strict. Kredensial sensitif seperti password database dan SMTP tidak disimpan dalam kode sumber melainkan dikelola melalui environment variables Railway.
+
+6. KOMUNIKASI DENGAN LAYANAN EKSTERNAL
+------------------------------------
+
+Sistem MIW Travel berkomunikasi dengan layanan email eksternal melalui protokol SMTP untuk pengiriman notifikasi dan dokumen ke jamaah. Konfigurasi SMTP didefinisikan melalui environment variables (SMTP_HOST, SMTP_USERNAME, SMTP_PASSWORD, SMTP_PORT, SMTP_ENCRYPTION) yang dapat diatur pada dashboard Railway atau melalui CLI. Koneksi SMTP dienkripsi menggunakan TLS. Sistem juga dirancang dengan kemampuan untuk berkomunikasi dengan payment gateway pihak ketiga menggunakan API calls melalui protokol HTTPS. Semua komunikasi eksternal dienkapsulasi dalam service classes yang dapat dikonfigurasi dan dimonitor secara terpusat.
+
+7. ARSITEKTUR MONITORING DAN DIAGNOSTIK
+-------------------------------------
+
+Sistem monitoring dirancang dengan RailwayDeploymentManager dan RailwayDiagnostics yang menyediakan dashboard realtime untuk monitoring kesehatan aplikasi. Sistem mencatat metrik utama seperti performa database (waktu respon query), status sistem file (ketersediaan dan jumlah file), penggunaan memori, CPU usage, dan aktivitas pengguna. Data logging disimpan dalam tabel 'deployment_logs' dengan kategorisasi untuk memudahkan analisis (page_access, system_error, user_activity). Endpoint '/health.php' disediakan sebagai health check untuk pemantauan eksternal oleh Railway. Monitoring ini memungkinkan deteksi dini masalah dan troubleshooting yang cepat.
+
+8. MANAJEMEN DEPLOYMENT DAN ROLLBACK
+----------------------------------
+
+Proses deployment dikelola melalui konfigurasi 'railway.json' yang mendefinisikan builder (DOCKERFILE/NIXPACKS), health check path, restart policy, dan startup command. Railway CLI digunakan untuk mengelola deployment dengan perintah seperti 'railway up' untuk deployment dan 'railway status' untuk memeriksa status. Sistem mengimplementasikan strategi branch-based deployment di mana versi stabil berada di branch 'production-backup', pengembangan aktif di 'main', dan pengujian di 'staging'. Fitur RailwayBranchSwitcher memungkinkan administrator beralih antar branch untuk deployment, memfasilitasi rollback cepat ke versi stabil jika terjadi masalah pada versi baru.
+
+9. KONFIGURASI HEALTH CHECK DAN AUTO-RESTART
+------------------------------------------
+
+Railway dikonfigurasi dengan health check path yang mengarah ke endpoint '/health.php' yang melakukan pemeriksaan komprehensif terhadap konektivitas database, akses sistem file, dan dependensi PHP yang diperlukan. Sistem menggunakan konfigurasi "restartPolicyType": "ON_FAILURE" dengan "restartPolicyMaxRetries": 10 untuk secara otomatis memulai ulang container jika health check gagal, meningkatkan ketersediaan sistem. Health check secara aktif memeriksa status database dengan mengukur waktu respons dan ketersediaan tabel-tabel kritis, serta memverifikasi akses tulis ke direktori penyimpanan file untuk memastikan fungsi upload file berjalan dengan baik.
+
+10. KONFIGURASI ENVIRONMENT BERBASIS KONDISI
+-----------------------------------------
+
+Sistem mengimplementasikan deteksi environment otomatis yang membedakan antara development lokal dan production di Railway. Deteksi ini dilakukan dengan memeriksa keberadaan variabel RAILWAY_ENVIRONMENT atau RAILWAY_PROJECT_ID. Berdasarkan environment yang terdeteksi, sistem secara otomatis menyesuaikan konfigurasi seperti detail koneksi database, path penyimpanan file, pengaturan logging, dan keamanan. Pendekatan ini memungkinkan kode yang sama berjalan di lingkungan development dan production tanpa modifikasi manual, sekaligus mengoptimalkan konfigurasi sesuai karakteristik masing-masing lingkungan.
+
+11. PENGELOLAAN TRAFFIC DAN ANALITIK
+----------------------------------
+
+Sistem mengimplementasikan mekanisme tracking traffic dan analytics melalui RailwayAnalytics yang mencatat data seperti halaman yang diakses, waktu eksekusi, penggunaan memori, dan IP address pengunjung. Data ini disimpan dalam tabel 'analytics_events' untuk analisis jangka panjang. Dashboard analytics menampilkan metrik seperti top pages (halaman yang paling sering diakses), traffic per jam, dan statistik error. Sistem juga melacak performa dengan mencatat execution time dan memory usage untuk setiap request, memungkinkan optimasi berkelanjutan berdasarkan data penggunaan aktual.

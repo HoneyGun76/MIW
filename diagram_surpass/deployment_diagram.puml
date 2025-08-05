@@ -36,7 +36,7 @@ node "Web Server" as webserver {
 
 node "Database Server" as dbserver {
     database "MySQL Database" as mysql {
-        [Pilgrim Data]
+        [Jamaah Data]
         [Package Data]
         [Manifest Data]
         [Payment Data]

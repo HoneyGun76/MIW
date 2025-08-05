@@ -1,0 +1,37 @@
+@startuml MIW_Class_Diagram_Relationships
+!include ../uml_black_white_style.puml
+title Class Diagram - Sistem Manajemen MIW Travel (Relationships Only)
+
+' Include the classes (simplified for relationships)
+class Package
+class Jamaah
+class Invoice
+class Manifest
+class Pembatalan
+
+' Relationships
+Package "1" *-- "*" Jamaah : contains
+Package "1" *-- "*" Invoice : generates
+Package "1" *-- "*" Manifest : includes
+Jamaah "1" *-- "*" Invoice : pays for
+Jamaah "1" *-- "0..1" Pembatalan : may cancel
+Jamaah "1" *-- "*" Manifest : appears in
+
+' Value Object Relationships
+Jamaah *-- Address : has
+Jamaah *-- ContactInfo : has
+Jamaah *-- PhysicalInfo : has
+Jamaah *-- PassportInfo : has
+Jamaah *-- PaymentInfo : has
+Jamaah *-- DocumentInfo : has
+
+' Enum Usage
+Package --> PackageType : uses
+Package --> CurrencyType : uses
+Package --> RoomType : uses
+Jamaah --> Gender : has
+Jamaah --> RoomType : prefers
+PaymentInfo --> PaymentType : uses
+PaymentInfo --> PaymentStatus : has
+
+@enduml

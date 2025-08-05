@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIW Travel System - Diagram Gallery</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .header h1 {
+            color: #333;
+            margin: 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        
+        .diagram-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .diagram-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .diagram-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+        
+        .diagram-card h3 {
+            color: #333;
+            margin: 0 0 15px 0;
+            font-size: 1.4em;
+        }
+        
+        .diagram-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            border: 2px solid #dee2e6;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .diagram-card img:hover {
+            border-color: #667eea;
+            transform: scale(1.02);
+        }
+        
+        .diagram-description {
+            margin-top: 15px;
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+        }
+        
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 90%;
+            max-width: 1200px;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #bbb;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🕌 MIW Travel System</h1>
+            <p><strong>Diagram Collection</strong> - Sistem Manajemen Perjalanan Umroh & Haji</p>
+            <p style="font-size: 0.9em; color: #888;">Generated on August 3, 2025 | PlantUML Export</p>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Total Diagrams</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Sequence Diagrams</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">1</div>
+                <div class="stat-label">Class Diagram</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">1</div>
+                <div class="stat-label">Database Diagram</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">1</div>
+                <div class="stat-label">Deployment Diagram</div>
+            </div>
+        </div>
+        
+        <div class="diagram-grid">
+            <div class="diagram-card">
+                <h3>🏗️ Class Diagram</h3>
+                <img src="MIW_Travel_Class_Diagram.png" alt="Class Diagram" onclick="openModal(this.src)">
+                <div class="diagram-description">
+                    Struktur kelas sistem dan hubungan antar komponen utama aplikasi.
+                </div>
+            </div>
+            
+            <div class="diagram-card">
+                <h3>🗄️ Database Diagram</h3>
+                <img src="MIW_Travel_Database_Diagram.png" alt="Database Diagram" onclick="openModal(this.src)">
+                <div class="diagram-description">
+                    Skema database dan relasi antar tabel dalam sistem.
+                </div>
+            </div>
+            
+            <div class="diagram-card">
+                <h3>🌐 Deployment Diagram</h3>
+                <img src="MIW_Travel_Deployment_Diagram.png" alt="Deployment Diagram" onclick="openModal(this.src)">
+                <div class="diagram-description">
+                    Arsitektur deployment sistem di environment lokal dan Railway.
+                </div>
+            </div>
+            
+            <div class="diagram-card">
+                <h3>📝 Sequence: Registration</h3>
+                <img src="MIW_Travel_Sequence_1_Registration.png" alt="Registration Sequence" onclick="openModal(this.src)">
+                <div class="diagram-description">
+                    Alur proses pendaftaran jamaah dengan upload dokumen.
+                </div>
+            </div>
+            
+            <div class="diagram-card">
+                <h3>💰 Sequence: Payment Verification</h3>
+                <img src="MIW_Travel_Sequence_2_Payment_Verification.png" alt="Payment Verification Sequence" onclick="openModal(this.src)">
+                <div class="diagram-description">
+                    Proses verifikasi pembayaran oleh admin dan notifikasi.
+                </div>
+            </div>
+            
+            <div class="diagram-card">
+                <h3>🏨 Sequence: Room Management</h3>
+                <img src="MIW_Travel_Sequence_3_Room_Management.png" alt="Room Management Sequence" onclick="openModal(this.src)">
+                <div class="diagram-description">
+                    Manajemen penugasan kamar hotel Madinah dan Mekkah.
+                </div>
+            </div>
+            
+            <div class="diagram-card">
+                <h3>📦 Sequence: Package Management</h3>
+                <img src="MIW_Travel_Sequence_4_Package_Management.png" alt="Package Management Sequence" onclick="openModal(this.src)">
+                <div class="diagram-description">
+                    Pengelolaan paket perjalanan Umroh dan Haji.
+                </div>
+            </div>
+            
+            <div class="diagram-card">
+                <h3>❌ Sequence: Cancellation Process</h3>
+                <img src="MIW_Travel_Sequence_5_Cancellation_Process.png" alt="Cancellation Sequence" onclick="openModal(this.src)">
+                <div class="diagram-description">
+                    Proses pembatalan perjalanan dan pengembalian dana.
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for full-size image viewing -->
+    <div id="myModal" class="modal" onclick="closeModal()">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="img01">
+    </div>
+    
+    <script>
+        function openModal(src) {
+            document.getElementById('myModal').style.display = 'block';
+            document.getElementById('img01').src = src;
+        }
+        
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+        
+        // Close modal when pressing Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+@startuml sequence_pembatalan
+!include ../uml_black_white_style.puml
+
+' Strict black and white UML 2.5 standard design
+skinparam monochrome true
+skinparam shadowing false
+skinparam handwritten false
+skinparam backgroundColor White
+
+title Sequence Diagram - Proses Pembatalan Perjalanan
+
+actor "Jamaah" as User
+participant "Form Pembatalan" as Form
+participant "Pembatalan Controller" as PembatalanCtrl
+participant "Input Validator" as Validator
+participant "File Manager" as FileManager
+participant "Database" as DB
+participant "Email Service" as Email
+participant "Admin" as Admin
+
+User -> Form: Akses form pembatalan
+activate Form
+
+Form --> User: Tampilkan form pembatalan
+deactivate Form
+
+User -> PembatalanCtrl: Submit data pembatalan\n+ upload bukti
+activate PembatalanCtrl
+
+PembatalanCtrl -> Validator: Validasi data pembatalan
+activate Validator
+Validator -> Validator: Cek NIK exists di data_jamaah
+Validator -> Validator: Validasi email & telepon
+Validator -> Validator: Cek alasan pembatalan
+Validator --> PembatalanCtrl: Data valid
+deactivate Validator
+
+PembatalanCtrl -> FileManager: Upload bukti pembatalan
+activate FileManager
+FileManager -> FileManager: Validasi file kwitansi
+FileManager -> FileManager: Validasi file bukti lain
+FileManager -> FileManager: Simpan ke direktori cancellations
+FileManager --> PembatalanCtrl: File paths
+deactivate FileManager
+
+PembatalanCtrl -> DB: INSERT ke data_pembatalan
+activate DB
+DB -> DB: Simpan request pembatalan
+DB --> PembatalanCtrl: Pembatalan ID
+deactivate DB
+
+PembatalanCtrl -> Email: Kirim konfirmasi ke jamaah
+activate Email
+Email -> Email: Generate email konfirmasi
+Email --> User: Email pembatalan diterima
+deactivate Email
+
+PembatalanCtrl -> Email: Notifikasi ke admin
+activate Email
+Email -> Email: Generate notifikasi admin
+Email --> Admin: Email pembatalan baru
+deactivate Email
+
+PembatalanCtrl --> User: Halaman konfirmasi pembatalan
+deactivate PembatalanCtrl
+
+== Verifikasi Admin ==
+
+Admin -> Admin: Login ke admin panel
+Admin -> Admin: Akses halaman pembatalan
+
+Admin -> DB: SELECT data_pembatalan
+activate DB
+DB --> Admin: List pembatalan pending
+deactivate DB
+
+Admin -> Admin: Review bukti pembatalan
+Admin -> Admin: Verifikasi kwitansi & alasan
+
+Admin -> PembatalanCtrl: Proses pembatalan
+activate PembatalanCtrl
+
+PembatalanCtrl -> DB: UPDATE status jamaah
+activate DB
+DB -> DB: SET payment_status = 'cancelled'
+DB -> DB: UPDATE cancellation_status
+DB --> PembatalanCtrl: Status updated
+deactivate DB
+
+PembatalanCtrl -> Email: Kirim konfirmasi refund
+activate Email
+Email -> Email: Generate email refund process
+Email --> User: Email konfirmasi refund
+deactivate Email
+
+PembatalanCtrl --> Admin: Pembatalan diproses
+deactivate PembatalanCtrl
+
+note over User, Admin
+    Proses Pembatalan:
+    1. Jamaah submit request dengan bukti
+    2. Admin verifikasi dokumen
+    3. Status jamaah diupdate
+    4. Email konfirmasi refund
+    5. Admin dapat hapus data jika perlu
+end note
+
+@enduml

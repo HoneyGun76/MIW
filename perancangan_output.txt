@@ -1,0 +1,279 @@
+# PERANCANGAN OUTPUT
+---
+
+## 1. Pendahuluan
+
+Perancangan output merupakan bagian penting dalam pengembangan sistem MIW-Railway yang mencakup desain format output, struktur data, dan tampilan dokumen yang dihasilkan sistem. Output sistem didesain untuk memberikan informasi yang jelas, mudah dibaca, dan sesuai kebutuhan pengguna baik dalam format digital maupun cetak. Dokumen-dokumen output memegang peranan penting dalam operasional bisnis dan kebutuhan administratif perusahaan.
+
+## 2. Jenis-Jenis Output
+
+Sistem MIW-Railway menghasilkan beberapa jenis output utama sebagai berikut:
+
+### 2.1. Invoice Pembayaran
+
+Invoice pembayaran merupakan dokumen yang dihasilkan sistem sebagai tagihan resmi untuk pembayaran paket umroh atau haji yang dipilih oleh jamaah. Invoice dirancang dengan format HTML responsif dan dapat ditampilkan pada berbagai perangkat.
+
+**Struktur invoice mencakup:**
+- Header berisi logo dan identitas MIW Travel
+- Informasi pendaftar (nama, NIK, alamat, nomor telepon, dan email)
+- Detail paket yang dipilih (program pilihan, tanggal keberangkatan, tipe kamar)
+- Informasi pembayaran (jenis pembayaran, total harga, terbilang, metode pembayaran)
+- Informasi rekening tujuan transfer (bank, nomor rekening, atas nama)
+- Formulir konfirmasi pembayaran (upload bukti transfer)
+- Footer dengan informasi kontak tambahan
+
+**Format data:**
+- HTML dengan CSS untuk tampilan web
+- Nomor invoice unik untuk identifikasi
+- Penerapan format mata uang sesuai pilihan (IDR/USD)
+
+### 2.2. Kwitansi Pembayaran
+
+Kwitansi pembayaran adalah dokumen resmi yang dihasilkan sistem sebagai bukti pembayaran yang telah dilakukan oleh jamaah. Kwitansi dibuat dalam format PDF yang bisa diunduh dan dicetak.
+
+**Struktur kwitansi mencakup:**
+- Header dengan logo dan informasi kontak MIW Travel
+- Nomor kwitansi unik
+- Data penyetor (nama, alamat, nomor telepon)
+- Deskripsi pembayaran
+- Detail pembayaran (jumlah yang dibayarkan dalam angka dan terbilang)
+- Informasi total harga, diskon, total yang dibayarkan, dan sisa pembayaran
+- Metode pembayaran
+- Bagian tanda tangan untuk penyetor dan penerima
+- Informasi referral jika ada
+- Footer dengan kontak perusahaan dan media sosial
+
+**Format data:**
+- File PDF dalam ukuran A5 landscape
+- Struktur tabel untuk tata letak yang konsisten
+- Format mata uang sesuai dengan pilihan paket (IDR/USD)
+
+### 2.3. Manifest Jamaah
+
+Manifest jamaah adalah dokumen berisi data lengkap seluruh jamaah dalam satu paket keberangkatan yang dapat diekspor dalam format Excel. Manifest ini digunakan untuk kebutuhan administratif, operasional, dan pelaporan.
+
+**Struktur manifest mencakup:**
+- Informasi paket (nama paket, tanggal keberangkatan, jenis program)
+- Data jamaah meliputi:
+  - Nomor urut
+  - Jenis kelamin
+  - Nama sesuai paspor
+  - Marketing
+  - Nama ayah
+  - Tanggal dan kota lahir
+  - Informasi paspor (nomor, tempat penerbitan, tanggal terbit, tanggal kadaluarsa)
+  - Hubungan keluarga
+  - Umur
+  - Cabang
+  - Informasi roomlist
+  - NIK
+  - Alamat
+  - Keterangan tambahan
+
+**Format data:**
+- File Excel (.xlsx)
+- Sheet terpisah untuk manifest utama
+- Penerapan format dan styling untuk memudahkan pembacaan
+- Nama file yang mencakup identifikasi paket dan tanggal
+
+### 2.4. Roomlist
+
+Roomlist adalah dokumen yang berisi pengaturan kamar untuk jamaah selama masa perjalanan, baik di Mekkah maupun Madinah. Roomlist diekspor sebagai bagian dari file manifest dalam format Excel.
+
+**Struktur roomlist mencakup:**
+- Informasi paket (nama, tanggal keberangkatan, jenis program)
+- Data kamar yang meliputi:
+  - Nomor kamar
+  - Tipe kamar
+  - Jumlah tamu
+  - Nama jamaah
+  - NIK
+  - Jenis kelamin
+  - Umur
+  - Hubungan keluarga
+
+**Format data:**
+- Sheet terpisah dalam file Excel manifest
+- Pengelompokan kamar berdasarkan hotel (Mekkah/Madinah)
+- Format tabular dengan header yang jelas
+
+### 2.5. Dokumen Kelengkapan
+
+Dokumen kelengkapan adalah output yang menampilkan status kelengkapan berkas-berkas yang diperlukan oleh setiap jamaah. Output ini dihasilkan dalam format Excel sebagai bagian dari file manifest.
+
+**Struktur dokumen kelengkapan mencakup:**
+- Informasi paket (nama, tanggal keberangkatan, jenis program)
+- Daftar jamaah dengan status kelengkapan dokumen yang meliputi:
+  - Nomor urut
+  - NIK
+  - Nama
+  - Jenis kelamin
+  - Status dokumen (Buku Kuning, Foto, FC KTP, FC Ijazah, FC KK, FC Buku Nikah, FC Akta Lahir)
+  - Tanggal upload dokumen
+  - Status kelengkapan keseluruhan
+
+**Format data:**
+- Sheet terpisah dalam file Excel manifest
+- Penerapan format warna untuk status (hijau untuk lengkap, kuning untuk hampir lengkap, merah untuk tidak lengkap)
+- Indikator visual (✓/✗) untuk status kelengkapan setiap dokumen
+
+### 2.6. Halaman Konfirmasi (Closing Page)
+
+Halaman konfirmasi adalah output yang ditampilkan setelah jamaah berhasil melakukan konfirmasi pembayaran atau mengajukan pembatalan. Halaman ini memberikan feedback dan konfirmasi visual kepada pengguna.
+
+**Struktur halaman konfirmasi mencakup:**
+- Logo dan header aplikasi
+- Pesan konfirmasi keberhasilan transaksi
+- Informasi tambahan (jika diperlukan)
+- Status pengiriman email notifikasi
+- Link untuk kembali ke halaman utama
+
+**Format data:**
+- Halaman HTML responsif
+- Indikator visual (animasi loading, icon checkmark)
+- Pesan yang jelas dan singkat
+
+### 2.7. Email Notifikasi
+
+Email notifikasi adalah output yang dikirimkan ke alamat email jamaah untuk memberikan konfirmasi atau pemberitahuan terkait registrasi, pembayaran, atau pembatalan.
+
+**Struktur email notifikasi mencakup:**
+- Sapaan personal
+- Konfirmasi tindakan yang dilakukan
+- Detail transaksi atau status
+- Informasi kontak jika diperlukan
+- Link untuk tindakan selanjutnya (jika diperlukan)
+- Tanda tangan dan informasi kontak MIW Travel
+
+**Format data:**
+- Email HTML dengan formatting yang baik
+- Teks alternatif untuk klien email yang tidak mendukung HTML
+- Penerapan branding perusahaan
+
+## 3. Spesifikasi Detail Format Output
+
+### 3.1. Format Invoice
+
+- **Media**: Halaman web HTML
+- **Ukuran**: Responsif, menyesuaikan perangkat
+- **Orientasi**: Portrait
+- **Font**: Arial, sans-serif
+- **Warna**: Putih (#ffffff) untuk background, Hitam (#000000) untuk teks, Aksen (#2196F3) untuk header
+- **Struktur Grid**: Penerapan flex dan grid CSS untuk tata letak responsif
+- **Spasi**: Padding 40px untuk container utama, margin 20px antar section
+- **Header**: Logo perusahaan dan judul invoice
+- **Footer**: Informasi kontak perusahaan
+
+### 3.2. Format Kwitansi
+
+- **Media**: File PDF
+- **Ukuran**: A5 (148mm x 210mm)
+- **Orientasi**: Landscape
+- **Font**: Arial, sans-serif, ukuran 9-16px
+- **Warna**: Putih (#ffffff) untuk background, Hitam (#000000) untuk teks dan border
+- **Struktur Tabel**: Tabel header, tabel detail item, tabel rekapitulasi pembayaran, tabel tanda tangan
+- **Header**: Logo perusahaan, informasi kontak, judul "KWITANSI"
+- **Footer**: Tanda tangan dan informasi kontak
+
+### 3.3. Format Manifest Excel
+
+- **Media**: File Excel (.xlsx)
+- **Sheets**: Multiple (Manifest, Roomlist, Kelengkapan)
+- **Format Kolom**: Disesuaikan dengan jenis data
+  - Text untuk nama, alamat, keterangan
+  - Date untuk tanggal
+  - Number untuk umur dan nomor urut
+- **Styling**: 
+  - Judul sheet dengan font tebal dan background abu-abu
+  - Header kolom dengan background abu-abu dan border tebal
+  - Data rows dengan border tipis
+  - Penerapan conditional formatting untuk status kelengkapan
+  - Lebar kolom disesuaikan dengan jenis data
+- **Nama File**: Format `manifest_with_roomlist_kelengkapan_[nama_paket]_[tanggal]_pak[id].xlsx`
+
+### 3.4. Format Email
+
+- **Media**: HTML Email
+- **Template**: Struktur HTML dengan CSS inline
+- **Responsivitas**: Desain yang dapat dibaca dengan baik pada desktop dan mobile
+- **Komponen**: Header dengan logo, body dengan pesan, footer dengan informasi kontak
+- **Style**: Font sans-serif, ukuran teks yang nyaman dibaca, spacing yang cukup
+
+## 4. Alur Proses Pembuatan Output
+
+### 4.1. Alur Pembuatan Invoice
+
+1. Sistem menerima data registrasi jamaah dan pilihan paket
+2. Data divalidasi dan diproses
+3. Sistem menghasilkan nomor invoice unik
+4. Template invoice HTML diisi dengan data yang relevan
+5. Invoice ditampilkan kepada pengguna untuk proses pembayaran
+6. Invoice dapat diakses kembali melalui link yang dikirimkan via email
+
+### 4.2. Alur Pembuatan Kwitansi
+
+1. Admin memverifikasi pembayaran jamaah
+2. Sistem mengambil data pembayaran dan data jamaah
+3. Template kwitansi diisi dengan data yang relevan
+4. Kwitansi dirender menjadi HTML
+5. HTML dikonversi menjadi PDF menggunakan DomPDF
+6. File PDF disimpan sementara dan dikirimkan sebagai lampiran email
+7. Jamaah dapat mengunduh atau mencetak kwitansi tersebut
+
+### 4.3. Alur Pembuatan Manifest, Roomlist, dan Kelengkapan
+
+1. Admin memilih paket untuk diekspor
+2. Sistem mengumpulkan data jamaah dalam paket tersebut
+3. Jika diperlukan, data roomlist dan kelengkapan dokumen juga dikumpulkan
+4. Data distrukturisasi sesuai format yang ditentukan
+5. Workbook Excel dibuat dengan sheet terpisah untuk setiap jenis data
+6. Format dan styling diterapkan pada workbook
+7. File Excel dihasilkan dan diunduh ke komputer admin
+
+### 4.4. Alur Pembuatan Closing Page
+
+1. Sistem menerima konfirmasi transaksi (pembayaran atau pembatalan)
+2. Status transaksi divalidasi dan disimpan di database
+3. Notifikasi email dikirim (jika diperlukan)
+4. Template closing page diisi dengan data status
+5. Halaman konfirmasi ditampilkan kepada pengguna
+
+### 4.5. Alur Pembuatan Email Notifikasi
+
+1. Trigger email terjadi (registrasi, konfirmasi pembayaran, verifikasi admin, pembatalan)
+2. Sistem mengumpulkan data yang relevan untuk email
+3. Template email yang sesuai dipilih
+4. Template diisi dengan data dinamis
+5. Email diformat dengan HTML dan teks alternatif
+6. Email dikirim menggunakan fungsi mail PHP atau layanan SMTP
+
+## 5. Kebutuhan Implementasi
+
+### 5.1. Library dan Teknologi
+
+- **DomPDF**: Untuk menghasilkan file PDF kwitansi
+- **SheetJS/XLSX**: Untuk manipulasi dan pembuatan file Excel
+- **PHPMailer**: Untuk mengirim email dengan attachment
+- **Bootstrap**: Untuk styling komponen pada interface web
+- **jQuery**: Untuk manipulasi DOM dan AJAX request
+
+### 5.2. Manajemen File
+
+- File output disimpan dalam struktur direktori yang terorganisir
+- Penamaan file mengikuti konvensi yang konsisten
+- File temporer dibersihkan secara berkala
+
+### 5.3. Keamanan
+
+- Validasi input sebelum pembuatan output
+- Sanitasi data yang ditampilkan pada output
+- Proteksi terhadap akses tidak sah ke file output
+- Enkripsi data sensitif yang muncul pada output
+
+## 6. Contoh Format Output
+
+Contoh format output disesuaikan dengan kebutuhan bisnis dan dapat dimodifikasi sesuai kebutuhan. Format standar dirancang untuk memastikan konsistensi dan profesionalitas dalam setiap dokumen yang dihasilkan sistem.
+
+## 7. Kesimpulan
+
+Perancangan output pada sistem MIW-Railway dirancang untuk menghasilkan dokumen yang profesional, informatif, dan sesuai kebutuhan pengguna. Setiap jenis output memiliki format dan struktur yang dioptimalkan untuk tujuan dan audiensnya masing-masing. Dengan perancangan output yang baik, sistem dapat memberikan nilai tambah bagi proses bisnis dan meningkatkan kepercayaan pengguna terhadap layanan MIW Travel.

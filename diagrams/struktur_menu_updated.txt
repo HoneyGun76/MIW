@@ -1,0 +1,115 @@
+STRUKTUR MENU SISTEM MIW TRAVEL BERBASIS RAILWAY
+===========================================================================
+
+1. PENDAFTARAN PENDING (ADMIN PANEL)
+-----------------------------------
+
+Deskripsi:
+Menu Pendaftaran Pending menampilkan daftar jamaah yang baru mendaftar dan menunggu verifikasi pembayaran. Ini adalah titik masuk utama untuk administrator memproses pendaftaran baru. Administrator dapat melihat detail setiap pendaftar, memeriksa bukti pembayaran yang diunggah, memverifikasi atau menolak pembayaran, dan menghasilkan kwitansi pembayaran setelah verifikasi berhasil. 
+
+Fitur Utama:
+- Tabel interaktif dengan informasi lengkap jamaah (NIK, nama, program, jenis paket, tanggal keberangkatan)
+- Status pembayaran dengan kode warna (pending ditandai dengan badge kuning)
+- Preview dokumen pembayaran langsung di antarmuka
+- Fungsi verifikasi pembayaran dengan opsi menyesuaikan jumlah pembayaran
+- Opsi untuk menolak pembayaran dengan alasan
+- Pencarian dan pengurutan untuk mengelola daftar panjang
+- Detail komprehensif untuk setiap jamaah termasuk data pribadi dan dokumen
+
+2. DASHBOARD (ADMIN PANEL)
+-------------------------
+
+Deskripsi:
+Dashboard Admin menyediakan tampilan komprehensif dari seluruh jamaah yang terdaftar dalam sistem. Menu ini berfungsi sebagai pusat kontrol utama untuk administrator, menampilkan tabel dengan data semua jamaah beserta status pembayaran dan informasi paket. Administrator dapat melihat detail lengkap setiap jamaah, memeriksa dokumen yang diunggah, dan mengelola data jamaah.
+
+Fitur Utama:
+- Tabel komprehensif semua jamaah dengan status pembayaran (verified, pending, rejected)
+- Tampilan detail jamaah melalui modal yang mencakup:
+  * Informasi pribadi (NIK, nama, tempat/tanggal lahir, jenis kelamin)
+  * Informasi kontak (alamat, nomor telepon, email)
+  * Data fisik (golongan darah, tinggi/berat badan)
+  * Detail paket (jenis paket, program, tanggal keberangkatan)
+  * Status pembayaran dengan rincian transaksi
+  * Preview dokumen yang diunggah (KTP, KK, Passport, bukti pembayaran)
+- Fungsi penghapusan data jamaah dengan konfirmasi keamanan
+- Filter dan pencarian untuk memudahkan navigasi data
+
+3. MANAJEMEN PAKET (ADMIN PANEL)
+-------------------------------
+
+Deskripsi:
+Menu Manajemen Paket memungkinkan administrator untuk mengelola seluruh katalog paket perjalanan umroh dan haji. Administrator dapat melihat semua paket yang tersedia, menambahkan paket baru, mengedit paket yang ada, atau menghapus paket. Menu ini berfungsi sebagai pusat pengelolaan produk travel yang ditawarkan kepada jamaah.
+
+Fitur Utama:
+- Tabel lengkap paket perjalanan dengan informasi komprehensif
+- Filter berdasarkan tipe paket (Umroh/Haji/All)
+- Formulir modal untuk menambahkan paket baru dengan validasi
+- Detail paket yang mencakup:
+  * Informasi dasar (ID, jenis paket, program, tanggal)
+  * Struktur harga (base price untuk quad, triple, double)
+  * Data kamar (jumlah, tipe)
+  * Informasi hotel di Mekkah dan Madinah
+  * Nomor HCN (Haji Comprehensive Number)
+- Fungsi edit dan delete untuk manajemen paket
+- Validasi data masukan untuk memastikan integritas data
+
+4. PEMBATALAN (ADMIN PANEL)
+-------------------------
+
+Deskripsi:
+Menu Pembatalan menampilkan daftar permintaan pembatalan dari jamaah. Administrator dapat melihat detail setiap pembatalan termasuk alasan, tanggal pengajuan, dan dokumen pendukung yang diunggah. Menu ini memungkinkan administrator untuk memverifikasi, memproses pembatalan, dan mengelola status jamaah yang mengajukan pembatalan.
+
+Fitur Utama:
+- Tabel pembatalan dengan informasi kunci (NIK, nama, nomor telepon, email, alasan)
+- Preview dokumen bukti pembatalan
+- Modal detail dengan informasi lengkap pembatalan
+- Fungsi verifikasi pembatalan dengan perhitungan refund
+- Perhitungan pengembalian dana sesuai kebijakan perusahaan
+- Pencarian dan pengurutan untuk memudahkan manajemen
+- Konfirmasi pembatalan dengan opsi email notifikasi
+
+5. ROOMLIST (ADMIN PANEL)
+-----------------------
+
+Deskripsi:
+Menu Roomlist memberikan antarmuka untuk mengelola pengaturan kamar jamaah untuk setiap paket perjalanan. Menu ini dibagi menjadi dua tab utama: Roomlist Umroh dan Roomlist Haji, memudahkan pengelolaan berdasarkan jenis perjalanan. Administrator dapat mengatur penempatan jamaah di kamar hotel dengan mempertimbangkan preferensi kamar yang dipilih selama pendaftaran.
+
+Fitur Utama:
+- Tab terpisah untuk Roomlist Umroh dan Haji dengan badge penghitung
+- Daftar paket perjalanan aktif untuk setiap kategori
+- Tampilan terorganisir berdasarkan paket dan hotel
+- Antarmuka untuk mengatur penempatan kamar jamaah
+- Pengelompokan jamaah berdasarkan preferensi kamar (Quad, Triple, Double)
+- Tabel interaktif dengan fitur pencarian dan pengurutan
+- Status okupansi kamar untuk membantu pengambilan keputusan
+
+6. MANIFEST (ADMIN PANEL)
+-----------------------
+
+Deskripsi:
+Menu Manifest memungkinkan administrator untuk menghasilkan dokumen manifest untuk paket perjalanan yang akan berangkat. Menu ini menampilkan daftar paket yang tersedia beserta jumlah jamaah yang terdaftar pada setiap paket. Administrator dapat memilih paket tertentu dan mengekspor data manifest lengkap dalam format Excel yang terstruktur.
+
+Fitur Utama:
+- Tabel paket perjalanan dengan informasi lengkap (ID, jenis, program, tanggal, hotel)
+- Jumlah jamaah terdaftar untuk setiap paket
+- Tombol ekspor untuk menghasilkan manifest dalam format Excel
+- Modal status ekspor dengan indikator proses
+- Download link otomatis setelah ekspor selesai
+- Format ekspor yang kompatibel dengan kebutuhan dokumen resmi
+- Integrasi data roomlist dan kelengkapan dokumen dalam satu file
+
+7. DOKUMEN (ADMIN PANEL)
+----------------------
+
+Deskripsi:
+Menu Dokumen Jamaah menyediakan antarmuka terpusat untuk mengelola seluruh dokumen yang diunggah oleh jamaah. Administrator dapat melihat status kelengkapan dokumen setiap jamaah seperti paspor, visa, buku kuning, foto, KTP, ijazah, KK, dan dokumen lain yang diperlukan untuk perjalanan. Menu ini membantu memastikan bahwa semua dokumen yang diperlukan lengkap dan valid sebelum keberangkatan.
+
+Fitur Utama:
+- Tabel jamaah dengan indikator status kelengkapan dokumen
+- Filter jamaah berdasarkan paket atau status kelengkapan
+- Preview dokumen langsung di browser
+- Opsi upload ulang untuk dokumen yang tidak valid
+- Checklist kelengkapan dokumen per jamaah
+- Status validasi untuk setiap dokumen
+- Notifikasi dokumen yang perlu perhatian khusus
+- Catatan administratif untuk setiap dokumen

@@ -1,0 +1,437 @@
+# MIW Travel System - Diagram Analysis & Design Documentation
+
+**Tanggal:** 3 Agustus 2025  
+**Sistem:** MIW Travel Management System (Umroh & Haji)  
+**Platform:** Railway.com & Local Development  
+
+---
+
+## OVERVIEW SISTEM MIW
+
+MIW Travel System adalah aplikasi manajemen perjalanan Umroh dan Haji yang dikembangkan menggunakan PHP dengan arsitektur modern yang mendukung deployment di Railway.com. Sistem ini menangani seluruh proses bisnis dari pendaftaran jamaah hingga manajemen pembatalan dengan integrasi pembayaran dan notifikasi email otomatis.
+
+### KARAKTERISTIK UTAMA SISTEM:
+- **Bahasa:** PHP 8.1+ dengan MySQL Database
+- **Framework:** Native PHP dengan PDO untuk database
+- **Deployment:** Railway.com (Production) & XAMPP (Development)
+- **Arsitektur:** MVC Pattern dengan separation of concerns
+- **File Management:** Railway persistent storage untuk uploads
+- **Email System:** SMTP integration dengan Gmail/custom providers
+
+---
+
+## ANALISIS DIAGRAM BERDASARKAN STANDAR UML 2.5
+
+Berdasarkan referensi dari uml-diagrams.org, diagram UML standar menggunakan desain hitam-putih yang sangat minimalis. Namun, untuk proyek MIW ini, saya telah mengimplementasikan desain yang lebih modern dengan:
+
+### PERBEDAAN DENGAN STANDAR UML:
+1. **Standar UML:** Hitam-putih, kotak sederhana, garis standar
+2. **MIW Diagrams:** Menggunakan warna, gradien, dan tema AWS Orange untuk visual yang lebih menarik
+
+---
+
+## 🏗️ DIAGRAM KELAS (CLASS DIAGRAM)
+
+### DESKRIPSI:
+Diagram kelas MIW menunjukkan struktur arsitektur sistem yang terbagi dalam 4 package utama dengan 20+ kelas yang saling berinteraksi.
+
+### KOMPONEN UTAMA:
+
+#### 1. PACKAGE KONFIGURASI & KONEKSI
+**Tujuan:** Menangani konfigurasi environment dan koneksi database
+- **ConfigManager:** Deteksi environment (Railway/Local), manajemen konfigurasi
+- **DatabaseConnection:** Koneksi PDO dengan failover dan error handling
+
+#### 2. PACKAGE ENTITAS DATA
+**Tujuan:** Representasi tabel database sebagai objek PHP
+- **DataJamaah:** Data jamaah dengan 15+ atribut termasuk room assignment
+- **DataPaket:** Paket Umroh/Haji dengan pricing bertingkat
+- **DataInvoice:** Sistem invoice dengan tracking pembayaran
+- **DataPembatalan:** Manajemen pembatalan dengan dokumen pendukung
+
+#### 3. PACKAGE PENGELOLA BISNIS (BUSINESS MANAGERS)
+**Tujuan:** Logic bisnis dan proses kompleks
+- **PaketManager:** CRUD paket dengan validasi harga dan ketersediaan
+- **JamaahManager:** Manajemen jamaah dengan file upload dan room assignment
+- **PaymentManager:** Proses pembayaran, verifikasi, dan status tracking
+- **EmailManager:** Template email dan notifikasi otomatis
+- **FileUploadManager:** Upload dengan Railway volume integration
+
+#### 4. PACKAGE PENGENDALI APLIKASI (CONTROLLERS)
+**Tujuan:** Interface antara UI dan business logic
+- **FormController:** Handling form submission dengan validasi
+- **AdminController:** Panel admin dengan multiple views
+- **InvoiceController:** Generate PDF/HTML invoice
+- **ManifestController:** Export Excel dengan formatting
+
+### RELASI ANTAR KELAS:
+- **Composition:** ConfigManager → DatabaseConnection (strong dependency)
+- **Association:** Controllers → Managers (loose coupling)
+- **Inheritance:** Specialized managers extend base functionality
+- **Dependency:** File managers depend on environment detection
+
+### INOVASI DALAM DESAIN:
+1. **Environment Detection Pattern:** Otomatis switch antara Railway dan Local
+2. **File Upload Strategy:** Abstraction untuk berbagai storage systems
+3. **Email Template System:** Reusable dengan parameter substitution
+
+---
+
+## 🗄️ DIAGRAM DATABASE
+
+### DESKRIPSI:
+Skema database yang dinormalisasi dengan 4 tabel utama dan relasi yang well-defined untuk mendukung operasi CRUD yang efisien.
+
+### STRUKTUR TABEL:
+
+#### 1. TABLE DATA_JAMAAH (Primary Entity)
+```
+- nik (PK): National ID sebagai unique identifier
+- nama, jenis_kelamin, tempat_lahir, tanggal_lahir: Biodata dasar
+- alamat, no_telp, email: Kontak information
+- pak_id (FK): Reference ke data_paket
+- type_room_pilihan: Quad/Triple/Double room preference
+- payment_status: Pending/Partial/Complete/Verified
+- payment_total, payment_remaining: Financial tracking
+- room_prefix: Hotel grouping (MED/MEK)
+- medinah_room_number, mekkah_room_number: Specific room assignments
+- room_relation: Family/group room relationship
+- created_at: Audit trail
+```
+
+#### 2. TABLE DATA_PAKET (Package Definition)
+```
+- pak_id (PK): Auto-increment package identifier
+- jenis_paket: Umroh/Haji classification
+- currency: IDR/USD support
+- program_pilihan: Program variant (Regular/VIP/Premium)
+- tanggal_keberangkatan: Departure date
+- base_price_quad/triple/double: Tiered pricing structure
+- hotel_medinah: Madinah accommodation
+```
+
+#### 3. TABLE DATA_INVOICE (Financial Records)
+```
+- invoice_id (PK): Unique invoice number
+- nik (FK): Link to jamaah
+- invoice_data: JSON stored payment details
+- created_at: Invoice generation timestamp
+```
+
+#### 4. TABLE DATA_PEMBATALAN (Cancellation Management)
+```
+- id (PK): Cancellation record identifier
+- nik (FK): Jamaah being cancelled
+- reason: Cancellation reason
+- refund_amount: Financial calculation
+- status: Processing workflow state
+- created_at: Cancellation request time
+```
+
+### RELASI DATABASE:
+- **data_jamaah.pak_id → data_paket.pak_id:** Package assignment
+- **data_invoice.nik → data_jamaah.nik:** Invoice ownership
+- **data_pembatalan.nik → data_jamaah.nik:** Cancellation tracking
+
+### INDEKS DAN OPTIMASI:
+- Primary keys untuk unique identification
+- Foreign key constraints untuk referential integrity
+- Composite indexes pada sering query (nik + pak_id)
+- JSON indexing untuk invoice_data searches
+
+---
+
+## 🌐 DIAGRAM DEPLOYMENT
+
+### DESKRIPSI:
+Arsitektur deployment multi-environment yang mendukung development local dengan XAMPP dan production di Railway.com dengan Docker containerization.
+
+### ENVIRONMENT ARCHITECTURE:
+
+#### 1. LOCAL DEVELOPMENT (XAMPP)
+```
+Client Browser ↔ Apache/PHP 8.1 ↔ MySQL Database
+                      ↓
+                File System (./uploads/)
+```
+
+**Karakteristik:**
+- **Web Server:** Apache dengan mod_rewrite
+- **Database:** MySQL 8.0+ dengan phpMyAdmin
+- **File Storage:** Local directory structure
+- **Email:** Gmail SMTP dengan hardcoded credentials
+- **Development Tools:** Error display enabled, debug mode
+
+#### 2. RAILWAY PRODUCTION PLATFORM
+```
+Internet ↔ Railway Load Balancer ↔ Docker Container (PHP-Apache)
+                                        ↓
+                                Railway MySQL Service
+                                        ↓
+                                Railway Volume (/app/uploads/)
+```
+
+**Karakteristik:**
+- **Container:** PHP 8.1-Apache dengan custom Dockerfile
+- **Database:** Railway MySQL dengan automatic connection variables
+- **File Storage:** Railway persistent volume (endearing-volume)
+- **Email:** Environment-based SMTP configuration
+- **Scaling:** Auto-scaling dengan health checks
+- **SSL:** Automatic HTTPS termination
+
+#### 3. DOCKER CONTAINERIZATION
+```
+Docker Desktop:
+├── takaruma7/miw:latest (Application)
+├── phpmyadmin (Database Management)
+└── mysql:8.0 (Database Service)
+```
+
+### DEPLOYMENT STRATEGIES:
+
+#### RAILWAY DEPLOYMENT FLOW:
+1. **Git Push:** Code changes pushed to GitHub
+2. **Build Trigger:** Railway detects changes and starts build
+3. **Docker Build:** Custom Dockerfile with PHP extensions
+4. **Dependency Install:** Composer install with optimization
+5. **Health Check:** /health.php endpoint verification
+6. **Traffic Switch:** Zero-downtime deployment
+
+#### FILE UPLOAD ARCHITECTURE:
+- **Local:** `./uploads/` dengan subdirectories
+- **Railway:** `/app/uploads/` dengan persistent volume
+- **Backup Strategy:** Railway volume snapshots
+- **Security:** File type validation dan size limits
+
+### NETWORK CONFIGURATION:
+- **Railway Internal:** mysql.railway.internal untuk database
+- **External Access:** Custom domain dengan SSL
+- **API Endpoints:** RESTful structure untuk admin operations
+- **Load Balancing:** Railway automatic distribution
+
+---
+
+## 🔄 SEQUENCE DIAGRAMS (PROCESS FLOWS)
+
+### 1. SEQUENCE: REGISTRATION PROCESS
+
+#### DESKRIPSI:
+Alur pendaftaran jamaah dari form submission hingga penyimpanan database dengan upload dokumen pendukung.
+
+#### AKTOR DAN KOMPONEN:
+- **Jamaah (Actor):** Calon jamaah yang mendaftar
+- **Web Browser:** User interface
+- **FormController:** Handler form processing
+- **FileUploadManager:** Pengelola upload dokumen
+- **JamaahManager:** Business logic jamaah
+- **Database:** Penyimpanan data persistens
+- **EmailManager:** Sistem notifikasi
+
+#### ALUR PROSES:
+```
+1. Jamaah → Browser: Buka form pendaftaran
+2. Browser → FormController: Submit form data + documents
+3. FormController → FileUploadManager: Validate dan upload files
+4. FileUploadManager → Railway Volume: Store documents
+5. FormController → JamaahManager: Process jamaah data
+6. JamaahManager → Database: INSERT data_jamaah
+7. JamaahManager → EmailManager: Trigger confirmation email
+8. EmailManager → SMTP Service: Send notification
+9. FormController → Browser: Return success response
+10. Browser → Jamaah: Display confirmation page
+```
+
+#### VALIDASI DAN ERROR HANDLING:
+- File type validation (PDF, JPG, PNG, DOC)
+- File size limits (10MB per file)
+- Required field validation
+- Duplicate NIK prevention
+- Database transaction rollback pada error
+
+### 2. SEQUENCE: PAYMENT VERIFICATION
+
+#### DESKRIPSI:
+Proses verifikasi pembayaran oleh admin dengan update status dan notifikasi otomatis.
+
+#### ALUR PROSES:
+```
+1. Admin → AdminController: Access payment verification page
+2. AdminController → PaymentManager: Fetch pending payments
+3. PaymentManager → Database: Query payment records
+4. Admin → AdminController: Select payment untuk verify
+5. AdminController → PaymentManager: Update payment status
+6. PaymentManager → Database: UPDATE payment_status
+7. PaymentManager → EmailManager: Trigger status notification
+8. EmailManager → Jamaah: Send payment confirmation email
+9. PaymentManager → InvoiceController: Generate updated invoice
+10. InvoiceController → PDF Generator: Create receipt
+```
+
+#### BUSINESS RULES:
+- Only pending payments dapat diverifikasi
+- Payment verification memerlukan admin authentication
+- Automatic invoice generation setelah verification
+- Email notification dengan invoice attachment
+
+### 3. SEQUENCE: ROOM MANAGEMENT
+
+#### DESKRIPSI:
+Manajemen assignment kamar hotel Madinah dan Mekkah dengan tracking occupancy dan relasi keluarga.
+
+#### ALUR PROSES:
+```
+1. Admin → AdminController: Access room management
+2. AdminController → JamaahManager: Get jamaah by package
+3. JamaahManager → Database: Query jamaah data
+4. Admin → AdminController: Assign room numbers
+5. AdminController → JamaahManager: Validate room assignment
+6. JamaahManager → Database: UPDATE room_numbers
+7. JamaahManager → ManifestController: Update roomlist
+8. ManifestController → Excel Generator: Export updated manifest
+```
+
+#### ROOM ASSIGNMENT LOGIC:
+- Quad rooms: 4 persons maximum
+- Triple rooms: 3 persons maximum  
+- Double rooms: 2 persons maximum
+- Family relation tracking untuk group assignments
+- Hotel prefix validation (MED untuk Madinah, MEK untuk Mekkah)
+
+### 4. SEQUENCE: PACKAGE MANAGEMENT
+
+#### DESKRIPSI:
+Pengelolaan paket Umroh/Haji oleh admin dengan pricing multi-tier dan hotel assignments.
+
+#### ALUR PROSES:
+```
+1. Admin → AdminController: Create/Edit package
+2. AdminController → PaketManager: Validate package data
+3. PaketManager → Database: CRUD operations pada data_paket
+4. PaketManager → JamaahManager: Check existing bookings
+5. PaketManager → AdminController: Return operation result
+6. AdminController → Admin: Display success/error message
+```
+
+#### PACKAGE FEATURES:
+- Multi-currency support (IDR/USD)
+- Tiered pricing (Quad/Triple/Double)
+- Date-based availability management
+- Hotel integration dengan room types
+
+### 5. SEQUENCE: CANCELLATION PROCESS
+
+#### DESKRIPSI:
+Proses pembatalan perjalanan dengan upload dokumen, approval workflow, dan refund calculation.
+
+#### ALUR PROSES:
+```
+1. Jamaah → FormController: Submit cancellation request
+2. FormController → FileUploadManager: Upload supporting documents
+3. FormController → CancellationManager: Process cancellation
+4. CancellationManager → Database: INSERT data_pembatalan
+5. CancellationManager → EmailManager: Notify admin
+6. Admin → AdminController: Review cancellation
+7. AdminController → CancellationManager: Approve/Reject
+8. CancellationManager → RefundCalculator: Calculate refund amount
+9. CancellationManager → EmailManager: Notify jamaah decision
+10. EmailManager → Jamaah: Send final notification
+```
+
+#### CANCELLATION BUSINESS RULES:
+- Refund amount calculation berdasarkan timing
+- Required documents untuk cancellation proof
+- Admin approval workflow
+- Automatic email notifications untuk semua stakeholders
+
+---
+
+## CUSTOMIZATION OPTIONS UNTUK UML DIAGRAMS
+
+Berdasarkan referensi uml-diagrams.org yang menggunakan styling hitam-putih basic, berikut adalah opsi kustomisasi yang telah saya implementasikan dan yang bisa ditambahkan:
+
+### CURRENT STYLING (Yang Sudah Diterapkan):
+```plantuml
+!theme aws-orange
+title Diagram dengan Warna dan Tema Modern
+```
+
+### OPSI KUSTOMISASI LANJUTAN:
+
+#### 1. COLOR SCHEMES:
+```plantuml
+' Tema Hijau Islamic
+!define PRIMARY_COLOR #228B22
+!define SECONDARY_COLOR #32CD32
+!define ACCENT_COLOR #FFD700
+
+' Tema Corporate Blue
+!define PRIMARY_COLOR #1E3A8A
+!define SECONDARY_COLOR #3B82F6
+!define ACCENT_COLOR #F59E0B
+```
+
+#### 2. CUSTOM STYLING PER ELEMENT:
+```plantuml
+skinparam class {
+    BackgroundColor #E8F4FD
+    BorderColor #1E3A8A
+    FontColor #1F2937
+    FontSize 12
+    FontName Arial
+}
+
+skinparam package {
+    BackgroundColor #F3F4F6
+    BorderColor #6B7280
+    FontStyle bold
+}
+```
+
+#### 3. MODERN VISUAL ENHANCEMENTS:
+```plantuml
+' Shadows dan 3D effects
+skinparam shadowing true
+skinparam packageStyle rectangle
+skinparam roundCorner 15
+
+' Custom colors untuk different types
+skinparam class {
+    BackgroundColor<<Entity>> #FFE4E1
+    BackgroundColor<<Manager>> #E1F5FE
+    BackgroundColor<<Controller>> #F3E5F5
+    BackgroundColor<<Utility>> #E8F5E8
+}
+```
+
+### IMPLEMENTASI KUSTOMISASI:
+Untuk menerapkan styling custom pada diagram MIW, saya dapat:
+
+1. **Modify Existing Diagrams:** Update .puml files dengan color schemes baru
+2. **Create Themed Variants:** Buat versi dengan tema berbeda (Corporate, Islamic, Modern)
+3. **Export New Versions:** Generate PNG dengan styling yang di-customize
+
+---
+
+## RECOMMENDATIONS UNTUK IMPROVEMENT
+
+### 1. DIAGRAM ENHANCEMENTS:
+- **Add Activity Diagrams:** untuk business process flows
+- **Create Component Diagrams:** untuk arsitektur modular
+- **Develop Use Case Diagrams:** untuk requirements specification
+
+### 2. STYLING IMPROVEMENTS:
+- **Islamic Theme:** Hijau-emas untuk branding Umroh/Haji
+- **Corporate Theme:** Biru-abu untuk professional look
+- **Modern Gradient:** Gradien dan shadows untuk visual appeal modern
+
+### 3. DOCUMENTATION ADDITIONS:
+- **API Documentation:** dengan sequence diagrams untuk endpoints
+- **Error Handling Flows:** dengan exception scenarios
+- **Performance Optimization:** dengan timing constraints
+
+---
+
+**Generated by:** GitHub Copilot  
+**System Analysis:** MIW Travel Management System  
+**Reference:** https://www.uml-diagrams.org/uml-25-diagrams.html  
+**Date:** August 3, 2025

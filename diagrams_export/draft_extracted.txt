@@ -1,0 +1,1479 @@
+PERANCANGAN SISTEM INFORMASI MANAJEMEN JAMAAH HAJI DAN UMROH BERBASIS WEBSITE DI PT. MADINAH IMAN WISATA CABANG BANDUNG
+
+SKRIPSI
+Diajukan sebagai salah satu syarat kelulusan pada Program Studi Sistem
+Informasi Jenjang S1 (Strata Satu) Fakultas Teknik dan Ilmu Komputer
+
+Oleh:
+MUHAMMAD AGUNG LAKSANA
+10519130
+
+/
+
+PROGRAM STUDI SISTEM INFORMASI
+FAKULTAS TEKNIK DAN ILMU KOMPUTER
+UNIVERSITAS KOMPUTER INDONESIA
+BANDUNG
+2024LEMBAR PENGESAHAN
+
+
+PERNYATAAN KEASLIAN
+
+
+KATA PENGANTAR
+
+
+DAFTAR ISI
+
+KATA PENGANTAR	i
+DAFTAR ISI	ii
+DAFTAR GAMBAR	v
+DAFTAR TABEL	vi
+DAFTAR SIMBOL	vii
+BAB I  PENDAHULUAN	1
+1.1.	Latar Belakang Penelitian	1
+1.2.	Identifikasi dan Rumusan Masalah	5
+1.2.1.	Identifikasi Masalah	5
+1.2.2.	Rumusan Masalah	6
+1.3.	Maksud dan Tujuan Penelitan	7
+1.3.1.	Maksud Penelitian	7
+1.3.2.	Tujuan Penelitian	7
+1.4.	Kegunaan Penelitian	8
+1.5.	Batasan Masalah	8
+1.6.	Lokasi dan Waktu Penelitian	9
+1.6.1.	Lokasi Penelitian	9
+1.6.2.	Waktu Penelitian	9
+1.7.	Sistematika Penulisan	10
+BAB II  LANDASAN TEORI	12
+2.1.	Penelitian Terdahulu	12
+2.2.	Pengertian Sistem	14
+2.3.	Karakteristik Sistem	14
+2.4.	Pengertian Informasi	16
+2.5.	Pengertian Sistem Informasi	16
+2.6.	Pengertian Website	17
+2.7.	XAMPP	17
+2.8.	PHP	18
+2.9.	HTML	18
+2.10.	CSS	18
+2.11.	JavaScript	19
+2.12.	MySQL	19
+2.13.	Visual Studio Code (VSCode)	19
+2.14.	Pengertian Pendaftaran	20
+2.15.	Pengertian Travel	20
+2.16.	Pengertian Umroh	20
+2.17.	Pengertian Haji	20
+2.17.1.	Pengertian Haji Ifrad	21
+2.17.2.	Pengertian Haji Qiran	21
+2.17.3.	Pengertian Haji Tamattu’	21
+BAB III  OBJEK DAN METODE PENELITIAN	22
+3.1.	Objek Penelitian	22
+3.1.1.	Sejarah Singkat Perusahaan	22
+3.1.2.	Visi dan Misi Perusahaan	23
+3.1.3.	Struktur Organisasi Perusahaan	23
+3.1.4.	Deskripsi Tugas	24
+3.2.	Metode Penelitian	28
+3.2.1.	Desain Penelitian	28
+3.2.2.	Jenis dan Metode Pengumpulan Data	28
+3.2.2.1.	Sumber Data Primer	29
+3.2.2.2.	Sumber Data Sekunder	30
+3.2.3.	Metode Pendekatan dan Pengembangan Sistem	30
+3.2.3.1.	Metode Pendekatan Sistem	31
+3.2.3.2.	Metode Pengembangan Sistem	31
+3.2.3.3.	Alat Bantu Analisis dan Perancangan	32
+a.	Use Case Diagram	32
+b.	Skenario Use Case	32
+c.	Activity Diagram	33
+d.	Database Diagram	33
+e.	Class Diagram	33
+f.	Sequence Diagram	34
+g.	Deployment Diagram	34
+3.2.4.	Pengujian Software	35
+3.3.	Analisis Sistem yang Berjalan	35
+3.3.1.	Use Case diagram	40
+3.3.1.1.	Definisi aktor dan deskripsinya	41
+3.3.1.2.	Definisi Use Case dan deskripsinya	42
+3.3.1.3.	Skenario Use Case	42
+3.3.2.	Activity diagram	47
+3.3.3.	Evaluasi sistem yang sedang berjalan	50
+BAB IV  HASIL DAN PEMBAHASAN	51
+DAFTAR PUSTAKA	74
+
+DAFTAR GAMBAR
+
+Gambar 3.1 Struktur organisasi perusahaan	24
+Gambar 3.2 Business Use Case PT. Madinah Iman Wisata	40
+Gambar 3.3 Activity Diagram Pendaftaran MIW	47
+Gambar 3.4 Activity Diagram Pembayaran MIW	48
+Gambar 3.5 Activity Diagram Pembatalan MIW	49
+Gambar 3.6 Activitiy Diagram Keberangkatan MIW	49
+
+
+
+DAFTAR TABEL
+
+Tabel 1.1 Waktu Penelitian	9
+Tabel 2.1 Penelitian Terdahulu 1 [5]	12
+Tabel 2.2 Penelitian Terdahulu 2 [6]	13
+Tabel 3.1 Tabel Aktor dan deskripsinya	41
+Tabel 3.2 Tabel Definisi Use Case	42
+Tabel 3.4 Skenario Use Case Pendaftaran	43
+Tabel 3.5 Skenario Use Case Pembayaran	44
+Tabel 3.1 Skenario Use Case Pembatalan	45
+Tabel 3.2 Skenario Use Case Keberangkatan	46
+Tabel 3.3 Evaluasi sistem yang berjalan	50
+
+
+
+
+DAFTAR SIMBOL
+
+Simbol Use Case Diagram [1]
+NoSimbolNamaKeterangan
+/
+Subject, Sistem BoundarySubject adalah batasan sistem yang sedang dianalisis, sebagai cakupan design sistem yang berjalan.
+/
+ActorActor adalah entitas eksternal sistem yang berjalan yang berinteraksi dengan subject
+
+
+/
+Use Case
+Use Case adalah proses dalam alur object yang menghasilkan tujuan atau kebutuhan sistem
+
+
+/
+Association
+Association adalah hubungan interaksi atau komunikasi antara actor dan Use Case
+
+
+/
+Inlcude
+Include adalah relasi antara Use Case yang menunjukkan bahwa satu Use Case tersebut memiliki proses lanjut dengan Use Case berikutnya
+
+
+Simbol Business Use Case Diagram [1] [2]
+NoSimbolNamaKeterangan/
+Subject, Sistem BoundarySubject adalah batasan sistem yang sedang dianalisis, sebagai cakupan design sistem yang berjalan.
+
+
+/
+Business Actor
+Actor adalah entitas eksternal sistem bisnis yang berjalan yang berinteraksi dengan subject
+
+
+/
+Business Use Case
+Business Use Case adalah proses dalam alur bisnis yang menghasilkan tujuan atau kebutuhan bisnis
+
+
+/
+Business Worker
+Business Worker adalah entitas kolaborator milik perusahaan yang bertanggung jawab sebuah proses bisnis
+
+
+/
+Association
+Association adalah hubungan interaksi atau komunikasi antara actor dan Use Case
+
+
+/
+
+Inlcude
+Include adalah relasi antara Use Case yang menunjukkan bahwa satu Use Case tersebut memiliki proses lanjut dengan Use Case berikutnya
+
+
+/
+Extend
+Extend adalah relasi antara Use Case yang menunjukkan bahwa satu Use Case tersebut memiliki proses opsional lanjut dengan Use Case berikutnya
+
+
+Simbol Activity Diagram [1]
+NoSimbolNamaKeterangan
+
+Activity
+Activity adalah suatu batasan kegiatan dengan parameter tertentu yang digambarkan sebagai rangkaian tindakan yang berjalan secara terkoordinasi
+
+
+
+Swimlane/
+Activity Partition
+Swimlane atau Activity Partition adalah sebagian pihak dari Activity yang mempresentasikan unit organisasi atau business actors
+
+
+
+Initial Node
+Initial Node adalah awal mulainya sebuah kegiatan atau Activity 
+
+
+
+Action
+Action adalah entitas proses atau sebuah aksi yang menghasilkan sebuah hasil dari pihak atau Swimlane
+
+
+
+Flow of Execution
+Flow of Execution adalah hubungan antara dua aktivitas yang memiliki relasi lanjut dari aktivitas sebelumnya dan berperan sebagai alur tujuan hasil dari proses sebelumnya
+
+
+
+Decision Node
+Decision Node adalah node yang mengatur keputusan alur untuk mendukung kondisi aktivitas
+
+
+
+Fork Node
+Fork Node adalah node yang memisahkan aliran masuk menjadi beberapa aliran bersamaan
+
+
+
+Join Node
+Join Node adalah node menyatukan aliran masuk untuk menyinkronkan aliran masuk bersamaan. 
+
+
+
+
+Activity Final Node
+Activity Final Node adalah akhir dari semua alur dalam suatu aktivitas setelah tercapai dan mengakhiri semua tindakan aktif.
+
+
+Simbol Sequence Diagram [1] [3]
+NoSimbol
+Nama
+Keterangan
+
+
+/
+Sequence Diagram
+Sequence Diagram adalah batasan diagram yang menggambarkan pertukaran pesan antara lifeline.
+
+
+/
+Lifeline
+Lifeline adalah elemen yang berperan sebagai individu yang mewakili satu entitas dalam berinteraksi
+
+
+/
+Boundary
+Boundary adalah batasan sebuah sistem atau unsur perangkat lunak
+
+
+/
+Entity
+Entity adalah cakupan suatu entitas dalam sebuah sistem
+
+
+/
+Gate
+Gate adalah hubungan pesan di luar Sequence Diagram denan pesan yang ada di dalam Sequence Diagram
+
+
+/
+Execution
+Execution adalah interaksi suatu periode saat mengeksekusi tindakan, mengirimkan pesan ke individu lain, dan menunggu pesan balasan dari individu lain.
+
+
+/
+Destruction
+Destruction adalah pesan penghancuran komposisi pada objek pada lifeline
+
+
+/
+Syncrhonous Call
+Syncrhonous Call adalah operasi mengirim pesan dan menunda Execution sambil menuggu respon
+
+
+/
+Return/Reply Message
+Return Message adalah operasi respon pesan balik sebuah Execution
+
+
+/
+Create Message
+Create Message adalah operasi pesan membuat Lifeline baru 
+
+
+/
+Assyncrhonous Call
+Assyncrhonous Call adalah operasi mengirim pesan
+
+
+/
+Interaction Use
+Interaction Use adalah interaksi pengguna yang memungkinkan penggunaan interaksi lain
+
+
+Simbol Class Diagram [1]
+NoSimbolNamaKeterangan
+/
+ClassClass adalah gambaran batasan sekumpulan Objects yang memiliki fitur yakni mengandung atribut dan operasi
+/
+ObjectObject adalah suatu individu berstatus dan hubungan dengan objek lain, serta memiliki nilai buat objek lain
+/
+AssociationAssociation adalah relasi antara Class atau Object yang bisa terhubung secara logika atau fisik
+
+
+/
+Generalization
+Generalization adalah relasi terarah dengan Class atau Object tertentu
+
+
+Simbol Deplotment Diagram [1]
+NoSimbolNamaKeterangan
+/
+Deployment DiagramDeployment Diagram adalah batasan gambaran arsitektur sistem kerja perangkat lunak
+/
+Node/
+Deployment TargetNode atau Deployment Target adalah sumber daya komputasi Artefacts untuk di proses
+/
+Environment ExecutionEnvironment Execution adalah Node eksekusi dalam lingkungan untuk komponen tertentu dimana artefak dapat di eksekusi
+
+
+/
+Communication Path
+Communication Path adalah relasi antara Node untuk saling menukar pesan
+
+
+/
+Deployment
+Deployment adalah relasi alokasi sebuah Artifact kepada Node
+
+
+/
+Deployment Specification
+Deployment Specification adalah Artifact yang menentukan  serangkaian properti penyebaran yang menentukan parameter eksekusi Artifact
+
+
+/
+Artifact
+Artifact adalah suatu yang berperan sebagai entitas berfisik, sebuah informasi yang digunakan atau akan digunakan oleh perangkat lunak
+
+
+
+
+BAB I PENDAHULUAN
+
+Latar Belakang Penelitian
+Teknologi Informasi telah menjadi suatu hal yang selalu terkait dalam keseharian kita. Kegiatan keseharian yang sedang berjalan selalu didampingi oleh jalannya teknologi yang dapat menyimpan, mengolah, bahkan memberi informasi dari berbagai sumber yang dibuat oleh manusia lain dari berbagai tempat di dunia ini. Dengan adanya teknologi, banyak fasilitas yang bersifat otomatis yang beroperasi pada hal-hal yang sebelumnya bersifat manual, seperti penerapan teknologi yang diterapkan oleh perusahaan-perusahaan untuk meningkatkan layanan mereka.
+Dalam dunia bisnis, Teknologi Informasi menjadi kebutuhan yang penting untuk diimplementasikan dalam proses bisnisnya. Hal ini dikarenakan kemampuan sistem informasi yang efisien dan mampu mengoptimalisasikan pekerjaan karyawan serta konsumen yang terlibat dalam layanan perusahaan yang menggunakan teknologi tersebut. Dalam bisnis pariwisata, pengelolaan administrasi, transaksi, manajemen, dan komunikasi admin terhadap klien, membutuhkan sistem yang mendukung proses bisnis secara real-time, serta akurat.
+PT. Madinah Iman Wisata (PT. MIW) adalah sebuah perusahaan yang menyediakan jasa travel haji dan umroh untuk siapapun yang ingin menunaikan ibadah haji dan umroh secara komprehensif [4]. Perusahaan ini sudah memiliki legalitas dan perizinan perusahaan untuk memberangkatkan Jamaah haji dan umroh ke tanah suci. Dalam kasus penelitian ini, tempat penelitian yang diteliti adalah Madinah Iman Wisata cabang Bandung yang berletak di jalan Turangga, Kota Bandung. Cabang ini menjadi pusat koordinasi Jawa Barat dengan Mitra Syiarnya, serta Mitra Syiar yang berperan sebagai kolaborator dalam marketing MIW, alias Mitra Syiar. Cabang MIW Bandung berfungsi untuk mendukung proses pendaftaran, pengumpulan dokumen, pembayaran, pemasaran, dan pelayanan informasi bagi calon Jamaah terutama di daerah Bandung. 
+Calon Jamaah yang ingin mendaftarkan program haji dan umroh ke MIW harus berkonsultasi terlebih dulu kepada Mitra Syiar. Perusahaan ini sangat mengandalkan Mitra Syiar dalam marketing dikarenakan pendekatan pada calon Jamaah wajib bagi perusahaan untuk mengidentifikasi kemampuan calon jamaah. Berikutnya calon tersebut dapat mengisi formulir pendaftaran program haji dan umroh MIW, serta jadwal keberangkatan yang tersedia dalam paket. Teknis pendaftaran umroh dapat diwakilkan oleh Mitra Syiar, sedangkan untuk haji wajib bagi pendaftar untuk menyerahkan formulir pendaftaran ke Administrasi Cabang MIW. Mitra Syiar wajib melakukan closing, sebuah proses dokumentasi pendaftaran calon jamaah. Hal yang sering ditemukan dalam lapangan adalah terjadinya double closing dimana terdapat lebih dari satu Mitra Syiar MIW melakukan closing lebih pada Jamaah tersebut. Hal ini diperlukan musyawarah antara para pihak MIW untuk menentukan closing yang pertama dikarenakan Mitra Syiar wayang melakukan closing akan dicantum nama Mitra Syiar di dalam kwitansi. Staf Administrasi akan menginput data jamaah dari formulir pendaftaran Haji/Umroh, beserta dokumen terkait seperti Kartu Tanda Penduduk, Kartu Keluarga, dan Paspor, ke dalam template Excel manifest untuk kemudian dikirimkan via email ke Pusat MIW sebagai kelengkapan pendataan Jamaah. 
+Setelah jamaah mendaftarkan paket program Haji/Umroh di MIW, berikutnya jamaah melakukan pembayaran bisa secara tunai atau transfer. Calon jamaah akan diarahkan untuk membayar DP (Down Payment) terlebih dahulu. Untuk setiap proses pembayaran akan diberikan Kwitansi kepada jamaah. Kwitansi akan menjadi dokumen bukti pembayaran Jamaah mengenai pembayaran paket, kamar hotel, serta jumlah Jamaah dalam pembayaran paket tersebut. Kwitansi juga akan menjadi riwayat pembayaran calon Jamaah apapun bentuk metode pembayarannya. Mitra Syiar yang terlibat dalam pembayaran DP wajib tercantum dalam kwitansi. Setelah pembayaran DP, jamaah akan diberikan perlengkapan Haji/Umroh.
+Adapun pembatalan pendaftaran Haji dan Umrah dari pihak Jamaah dimulai dari potongan biaya berdasarkan waktu pembatalan. Force majeure seperti bencana alam atau kebijakan pemerintah memungkinkan penjadwalan ulang atau pengembalian dana setelah dipotong biaya yang dikeluarkan. Jamaah yang meninggal atau sakit dapat digantikan ahli waris sesuai ketentuan. Proses pengembalian dana mengikuti aturan Kementerian Agama, dengan pencairan maksimal lima hari kerja setelah diterima. Biaya administrasi juga berlaku untuk pindah PIHK (Penyelenggara Ibadah Haji Khusus) sesuai waktu pengajuan. Akan tetapi, ketentuan dan persyaratan pembatalan ini hanya tercantum sebagian di formulir pendaftaran dan khusus untuk paket Haji/Umroh masing-masing. Ketentuan lainnya yang tidak terkait paket tersebut tidak tercantum di formulir maupun di situs web perusahaan.
+Sebulan sebelum keberangkatan, pihak Cabang mulai memproses persiapan keberangkatan dimulai dari menghubungi Jamaah untuk melunaskan pembayaran program Haji/Umroh, serta dokumen-dokumen Jamaah untuk diproses pembuatan Visa Jamaah. Pada hari keberangkatan, pihak Cabang akan memfasilitasi keberangkatan jamaah dari Bandung ke bandara Soekarno Hatta untuk kumpul keberangkatan seluruh jamaah PT. MIW. Dari sini, penangan jamaah dari pihak Cabang Bandung diserahkan kepada pihak Pusat MIW yang sudah ada di Bandara untuk menangani program Haji/Umroh Jamaah. Adapun penyerahan data dari pihak MIW cabang Bandung hanyalah daftar hadir keberangkatan untuk diserahkan kepada Tour Leader dari pihak pusat MIW.
+Dengan penelitian ini, PT. MIW Cabang Bandung dapat mengembangkan sistem informasi yang dapat meningkatkan efisiensi proses administrasi cabang terutama dalam proses pendaftaran dan pembayaran. Sistem informasi ini dikembangkan dengan merancang aplikasi berbasis website sehingga mempermudah penggunaannya oleh karyawan MIW. Manfaat lain dari sistem informasi ini adalah proses administrasi dapat berkolaborasi dengan proses lain pada Cabang tersebut secara terkoordinir dan lebih terpusat dalam waktu nyata. Adapun keuntungan lain adalah sistem informasi yang bersifat otomatis dapat mempermudah kinerja karyawan, serta mengurangi tenaga kerja karyawan.
+Dengan latar belakang diatas, penelitian ini ditujukan untuk memenuhi solusi permasalahan tersebut. Dengan mengembangkan sebuah sistem informasi berbasis website yang dapat menggantikan sebuah sistem layanan yang masih bergantungan pada kinerja manusia. Adapun manfaat lain dari penelitian ini untuk menjadi bahan referensi, terutama dalam rangka perancangan sistem informasi di lingkungan perusahaan travel haji dan umroh. Maka dari ini, penelitian ini diberi judul “SISTEM INFORMASI MANAJEMEN JAMAAH HAJI DAN UMROH BERBASIS WEBSITE DI PT. MADINAH IMAN WISATA CABANG BANDUNG”.
+
+Identifikasi dan Rumusan Masalah
+Identifikasi Masalah
+Berikut adalah identifikasi masalah yang dapat di temukan dalam PT. Madina Iman Wisata:
+Proses pendaftaran dilakukan dengan cara mencatat di formulir pendaftaran sehingga calon jamaah yang mendaftarkan diri harus mendatangi cabang atau menghubungi Mitra Syiar, dan terjadinya double closing.
+Proses pembayaran yang menggunakan Kwitansi dibuat oleh template Excel sehingga data pembayaran yang kurang aman dan rentan redudansi data.
+Proses pembatalan yang belum jelas dan terpisah sehingga terjadinya kurang keakuratan dan memakan waktu lama dalam proses pembatalan
+Proses keberangkatan yang kurang teintegrasi komunikasi dengan pusat sehingga menggunakan WhatsApp dan email untuk attachtment.
+
+Rumusan Masalah
+Berdasarkan latar belakang dan identifikasi masalah yang telah diuraikan, maka rumusan masalah dalam penelitian ini adalah sebagai berikut:
+Bagaimana merancang sistem pendaftaran calon jamaah Haji dan Umrah yang terintegrasi secara digital untuk menghindari double closing dan mempermudah proses pendaftaran tanpa harus datang langsung ke cabang atau Mitra Syiar?
+Bagaimana membangun sistem pembayaran digital yang aman, terstruktur, dan meminimalkan risiko redundansi data untuk mendukung pengelolaan keuangan yang lebih efisien?
+Bagaimana meningkatkan kejelasan dan efisiensi dalam proses pembatalan untuk mengurangi kesalahan dan waktu yang dibutuhkan?
+Bagaimana mengintegrasikan proses komunikasi keberangkatan dengan sistem pusat agar tidak lagi bergantung pada platform terpisah seperti WhatsApp dan email untuk pengiriman lampiran?
+
+Maksud dan Tujuan Penelitan
+Maksud Penelitian
+Maksud dari penelitian ini adalah untuk membangun sistem informasi yang dapat mengoptimalkan operasional dalam PT. MIW terutama pada bagian administrasi yang bersangkutan dengan proses pendaftaran dan pembiayaan operasional Jamaah haji dan umroh. Bentuk sistem informasi yang ditujukan adalah berbasis website.
+
+Tujuan Penelitian
+Berikut adalah tujuan penelitian yang dapat digunakan dalam perancangan sistem informasi PT. Madina Iman Wisata:
+Mengembangkan sistem pendaftaran calon jamaah Haji dan Umrah yang terintegrasi secara digital untuk mempermudah proses pendaftaran, mengurangi potensi kesalahan administrasi seperti double closing, dan memberikan kemudahan akses tanpa perlu mendatangi cabang atau Mitra Syiar.
+Merancang dan membangun sistem pembayaran digital yang aman, efisien, serta mampu meminimalkan redundansi data guna meningkatkan keamanan dan keandalan dalam pengelolaan transaksi pembayaran calon jamaah.
+Meningkatkan kejelasan dan efisiensi proses pembatalan dengan merancang sistem yang terintegrasi untuk meminimalkan kesalahan dan mempercepat waktu penyelesaian.
+Mengintegrasikan proses komunikasi keberangkatan dengan sistem pusat untuk memastikan kelancaran pengelolaan informasi tanpa bergantung pada platform terpisah seperti WhatsApp dan email.
+
+Kegunaan Penelitian
+Kegunaan penelitian ini diharapkan dapat memberi kontribusi dalam pengembangan sistem informasi berbasis web terutama untuk membantu pengelolaan administrasi dan transaksi dalam sebuah perusahaan, serta menjadi referensi bagi penelitian selanjutnya. Penelitian ini diharapkan dapat diterapkan oleh PT. Madina Iman Wisata (PT. MIW) Cabang Bandung untuk meningkatkan efisiensi dan efektivitas operasional perusahaan, pengelolaan data Jamaah, optimal dalam kerjaan administrasi, serta meningkatkan keamanan data dan kualitas pelayanan kepada Jamaah haji dan umroh.
+
+Batasan Masalah
+Berikut adalah batasan masalah yang diterapkan dalam perancangan PT. Madina Iman Wisata
+Sistem informasi ini diutamakan berjalan di Cabang PT. MIW kantor Bandung dan tidak digunakan untuk cabang lain.
+Hak akses manajemen administrasi dari sistem informasi hanya diberikan kepada staf administrasi, staf keuangan, dan Direktur Cabang MIW Bandung.
+Akses pendaftaran dan pembayaran diutamakan untuk Calon Jamaah.
+
+Lokasi dan Waktu Penelitian
+Lokasi Penelitian
+Lokasi penelitian dilakukan di PT. Madinah Iman Wisata yang berlokasi di Jl. R.A.A. Marta Negara No.16, Turangga, Kec. Lengkong, Kota Bandung, Jawa Barat 40264, Indonesia. Berikut dibawah ini gambaran dari lokasi penelitian.
+/
+Gambar 1.1 Lokasi Penelitian
+
+Waktu Penelitian
+Berikut adalah durasi waktu penelitian beserta kegiatannya:
+Waktu Penelitian
+No
+Kegiatan
+2024
+2025
+
+
+
+September
+Oktober
+November
+Desember
+Januari
+
+
+
+1
+2
+3
+4
+1
+2
+3
+4
+1
+2
+3
+4
+1
+2
+3
+4
+1
+2
+3
+4
+
+1.
+Analisis Kebutuhan
+
+
+
+Observasi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Wawancara
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Dokumentasi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2.
+Perancangan
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3.
+Implementasi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4.
+Pengujian
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sistematika Penulisan
+Sstematika penulisan ini mejelaskan mengenai informasi pada setiap bab secara umum mengenai pembahasan yang ada pada skripsi ini.
+BAB I PENDAHULUAN
+Bab ini berisi mengenai gambaran umum pada penelitian seperti latar belakang masalah, maksud dan tujuan, menentukkan batasan masalah, memaparkan waktu dan tempat penelitian dilakukan, dan sistematika penulisan.
+BAB II LANDASAN TEORI
+Bab ini menjelaskan teori-teori yang akan digunakan pada penelitian. Teori-teori ini digunakan sebagai referensi untuk menjelaskan yang terkait dengan laporan pada skripsi.
+BAB III OBJEK DAN METODE PENELITIAN
+Bab ini menjelaskan tetang objek penelitian yang menjelaskan sejarah singkat instansi atau tempat yang dilakukan penelitian. Dan menjelaskan mengenai metode penelitian yang digunakan pada perancangan website yang mencangkup gambaran awal sistem dan sistem pengujian yang dilakukan.
+BAB IV HASIL DAN PEMBAHASAN
+Bab ini berisi tentang hasil akhir dan menjelaskan apa yang dilakukan pada penelitian yang di mulai dari perancangan pada sistem, database, Antarmuka sistem, arsitektur jaringan, pengujian sistem, dan implementasi sistem.
+BAB V KESIMPULAN DAN SARAN
+Bab ini berisi tentang kesimpulan yang dapat di ambil dari akhir penelitian yang dilakukan dan saran pengabangan dari website yang sudah dirancang untuk dapat dikembangkan.
+
+BAB II LANDASAN TEORI
+
+Penelitian Terdahulu
+Penelitian ini menggunakan beberapa penelitian terdahulu untuk mengambil referensi dan beberapa hal yang menjadi acuan penulisan dalam penelitian ini. Ada beberapa perbedaan dan persamaan antara penelitian yang digunakan oleh penelitian ini, serta dengan penelitian sebelumnya. Berikut adalah perbandingannya:
+Penelitian Terdahulu 1 [5]
+NoNama PenelitiTri Oktapiah, Novrini Hasti1
+Tahun Penelitian2020
+Judul PenelitianSistem Informasi Reservasi Paket Wisata Berbasis Web
+Tujuan PenelitianRuang lingkup pada penelitian ini adalah pelayanan pemesanan paket wisata serta pada perancangan sistem informasi ini berbasis desktop, dengan menggunakan aplikasi netbeans menggunakan database mysql dan menggunakan bahasa java. Penelitian ini mencakup proses bisnis terlibat pembatalan, pembayaran, dan aplikasi yang dirancang berbasis web.
+
+
+Metode Penelitian
+Metode penelitian yang digunakan adalah metode deskriptif dimana peneliti menggambarkan suatu peristiwa dan kondisi yang terjadi pada masa sekarang.
+
+
+Kesimpulan Penelitian
+Sistem informasi memudahkan pihak perusahaan dan pelanggan dalam melakukan reservasi pada paket wisata dengan memberi kemudahan dalam mencari data reservasi, penyimpanan data terintegrasi, dan dengan proses pembuatan laporan
+
+
+Persamaan 
+Keuda penelitian ini bertujuan untuk mengimplementasikan sistem informasi berbasis web yang dikembangan dengan metode penelitian Prototype, serta kedua tempat penelitian adalah perusahaan yang bergerak dalam bidang travel. 
+
+
+Perbedaan
+Jenis travel tempat penelitian ini khusus Haji dan Umroh sehingga tidak menggunakan sistem tiket. Permasalahan utama dalam penelitian ini difokuskan kepada bagian administrasi terutama pada pendaftaran dan pembayaran.
+
+
+Penelitian Terdahulu 2 [6]
+NoNama PenelitiLusi Melian, Rani Puspita Dhaniawaty, Annisa Paramitha Fadillah, Chandra Hidayat2
+Tahun Penelitian2023
+Judul Penelitiane-Exchange Riyals sebagai Sistem Informasi Penukaran Uang bagi Jamaah Haji dan Umrah Pasca Pandemi Covid-19
+Tujuan PenelitianMerancang aplikasi e-Exchange Riyals sebagai sistem informasi berbasis website yang dapat memberikan kemudahan mengkonversikan mata uang dan menghitung penukaran mata uang secara real-time dengan transaksi secara online bagi calon Jemaah.
+
+
+Metode Penelitian
+Penelitian menggunakan metode deskriptif, berjenis kuantitatif, diperoleh dari wawancara dan observasi, serta metode pengembangan SDLC dengan model Waterfall
+
+
+Kesimpulan Penelitian
+Berdasarkan pengujian Black Box testing, aplikasi ini membantu calon pemesan untuk mendapatkan informasi, dapat mengkonversikan sesuai kebutuhan secara real-time, dapat melakukan pemesanan secara online, dan dapat membantu bagian keuangan untuk mengetahui ketersediaan sehingga aplikasi e-Exchange Riyals dapat mengatasi masalah dan tujuan dari penelitian ini.
+
+
+Persamaan 
+Kedua penelitian ini ditujukan untuk merancang sistem informasi berbasis web yang berinteraksi dengan jamaah (client)
+
+
+Perbedaan
+Penelitian ini dtujukan untuk merancang sistem informasi untuk penukaran uang riyal menggunakan metode pengembangan SDLC model waterfall.
+
+
+Pengertian Sistem
+Sistem adalah komponen tau lemen yang disatukan untuk mempermudah aliran informasi materi sehingga tercapai target atau tujuan tertentu. Sistem dapat memahami seseorang dalam sekumpulan unsur elemen yang terhubung dan saling terkait dalam berproses secara bersamaan untuk mencapai tujuan tertentu. Sistem juga dapat dipahami sebagai sesuatu yang saling bergantungan untuk mencapai sesuatu secara totalitas. Sistem secara pengertian adalah susunan dari pandangan, teori, dan lain-lain [7].
+
+Karakteristik Sistem
+Sebuah sistem memliki karakter yang menjadi ciri-ciri atau atribut agar berfungsi secara efektif. Berikut adalah karakter-karakter yang umum dari sebuah sistem [7]:
+Komponen (Component)
+Sebuah sistem berfungsi dalam lingkungan yang juga ada lingkungan sistem lainnya, sehinggan beberapa bagian sistem saling berinteraksi sesama lain dalam membentuk kesatuan. Juka sebuah sistem termasuk dari sistem lain yang besar, maka sistem tersebut termasuk subsistem.
+Batasan sistem (Sistem Boundary)
+Batasan dari sebuah sistem adalah membatasi diri dengan lingkungan lainnya.
+Lingkungan (Environment)
+Lingkungan sebuah sistem adalah batas sekitar sistem tersebut yang dapat mempengaruhi operasi sistem tersebut sehingga bentuk lingkungannya dapat mempengaruhi sistem terebut dari sifat yang menguntungkan atau merugikan.
+Penghubung antar Komponen (Interface)
+Sebuah sistem memiliki perantara atau penghubung untuk sebuah subsitem dengan subsistem yang lain. Ini adalah Interface, sesuatu yang digunakan untuk memasukkan dan mengeluarkan antar subsistem-subsistem tersebut, sehingga menjadi suatu kesatuan.
+Masukan (Input)
+Sebuah masukan kedalam sistem berbentuk data. Masukan tersebut menjadi bahan yang dapat dioperasikan dalam bentuk masukkan sinyal. Hal ini dinamakan input. Adapun data tersebut diproses menjadi sebuah hasil sehingga mendapatkan keluaran.
+Pengolahan (Processing)
+Proses pengolahan sebuah sistem merubahkan suatu input menjadi hasil, yakni output yang bentuknya sesuai dengan tujuan sistem. 
+Tujuan dan Sasaran (Goal and Objective)
+Sistem memiliki sebuah tujuan untuk operasi dari sistem tersebut ada gunanya sehingga sistem tersebut terarah dan terkendali.
+Keluaran (Output)
+Hasil sebuah sisem berupa informasi untuk sistem lain yang berkaitan dengan proses selanjutnya sebagai masukan pada sistem lain tersebut atau sebagai keluaran akhir.
+Mekanisme Pengembalian dan Umpan Balik (Control Mechanism and Feedback)
+Mekanisme pengendalian ada pada sistem agar terwujud sebuah umpan balik. Hal ini digunakan untuk mengatur sistem berjalan sesuai tujuan.
+
+Pengertian Informasi
+Informasi adalah data atau fakta yang dibentuk dari sekumpulan pesan terproses sehingga menghasilkan sesuatu yang dapat dipahami oleh manusia yang menerima informasi. Adapun pemahaman Informasi adalah pesan yang dapat ditafsirkan maupun dalam bentuk symbol, tanda, atau sinyal yang bisa dicatat ataupun dapat direkam. Informasi bisa dikatakan sebagai pengetahuan yang didapatkan dari beberapa masukan penerima informasi seperti pembelajaran, pengalaman, dan instruksi. Informasi digunakan untuk pengetahuan pada umumnya [7].
+
+Pengertian Sistem Informasi
+Sistem Informasi dapat dipahami sebagai kombinasi antara fasilitas seperti alat teknologi atau media, dengan pengendalian. Pengendalian ini bisa dalam bentuk jaringan komunikasi, proses transaksi, manajemen dan penentu keputusan. Semua ini memberi hasil yang tepat. Sistem Informasi memberi informasi sesuai yang diperlukan oleh orang yang membutuhkannya secara tepat, serta dalam bentuk, jumlah, dan waktu yang tepat penerima informasi. Hal ini akan memberikan manfaaat bagi pengguna informasi terutama pengguna dalam perusahaan yang menggunakan sistem informasi tersebut. Fungsi sistem informasi ada beberapa jenis mulai dari transaksi, proses, manajemen, informasi yang terartur, alat bantu penentuan keputusan, komunikasi, serta alat bantu perkantoran.[8].
+
+Pengertian Website
+Webstire adalah sebuah situs yang ada dalam web yang terdiri dari beberapa halaman web terkait dalam sebuah domain. Isi dalam website berkonten teks, video, gambar, audio, dan berbagai lain bentuk lampiran yang dapat masuk dalam website. Setiap website memiliki tujuan penggunaanya masing-masing untuk digunakan dalam perangkat yang dapat mengakses website melalui link URL (Uniform Resource Locator) dengan koneksi internet dan aplikasi web browser [9].
+
+XAMPP
+XAMPP merupakan sebuah software instalasi web server yang bersifat terbuka untuk umum Bahasa pemogramannya. Menggunakan XAMPP dapat menyediakan instalasi software yang dapat mendukung web server. Adapun web server yang tersedia adalah Apache, MySQL, PHPMyAdmin, dan FileZilla.  [10].
+
+PHP
+Hypertext Processor, alias PHP, adalah bahasa pemograman yang didesain untuk pengembangan web dan bisa digunakan untuk Bahasa pemograman umum. PHP digunakan secara gratis untuk umum [11].
+
+HTML
+HTML atau Hypertext Markup Language, adalah script pemograman yang mengatur dan menyediakan informasi dalam dunia internet. Informasi yang dibawa bergerak dari satu tempat ke tempat lain. HTML dikembangkan oleh tim Berners-Lee pada tahun 1990 dan masih berkembang sampai jaman sekarang. Hal ini dikarenakan fasilitas yang diberi memberi kemampuan yang sangat maju dalam bidang teknologi [11].
+
+CSS
+Bahasa Pemograman yang bertujuan untuk mengatur dan menghias gaya tampilan halaman website dan layoutnya sehingga menjadi menarik dan rapih. CSS dapat dimasukkan kedalam HML untuk mendefinisikan gaya bentuk halaman HTML nya. Adapun hal lain yang dapat digunakan CSS dapat terkait dengan PHP dan HTML[11].
+
+JavaScript
+JavaScript adalah Bahasa pemograman yang sering digunakan dalam pengembangan website, bahkan game dan aplikasi. Memahami Javascript dapat membuat halaman website menarik. Hal ini dikarenakan kemampuan JavaScript dapat berinterakrif dengan konten-konten yang bersifat dinamis [12].
+
+MySQL
+MySQL adalah alat bantu website yang berjalan dalam DBMS (Database Management Sistem). Hal ini menjadi alat bantu yang mendukung multiuser atau pengguna yang banyak. SQL adalah Bahasa permintaan database yang dapat membuat dan memanipulasi data dalam database. SQL juga digunakan dalam tugas-tugas seperti melakukan penyimpanan data secara sinkron yang merujuk pada konsep DBMS [11].
+
+Visual Studio Code (VSCode)
+Visual Studio Code adalah editor Bahasa pemograman yang dikembangkan untuk melakukan debugging, pengendalian git dari GitHub, penyelesaian kode cerdas, snippet, dan refaktoring code. Penggunan dapat mengubah tema, preferensi, dan menginstal ekstensi yang berhuBungan dengan fitur VSCode sehingga menambah fungsionalitas [13].
+
+Pengertian Pendaftaran
+Pendaftaran adalah proses, cara, pembuatan daftar yang isinya mengenai nama, alamat, dan hal sebagainya dalam daftar. Pendaftaran juga merupakan pencatatan identitas pendaftar dalam sebuah penyimpanan media yang dapat digunakan dalam proses pendaftaran [14].
+
+Pengertian Travel
+Travel adalah perjalanan seorang dari suatu tempat ke tempat lain dengan mengandung unsur strategi, tantangan, pengetahuan, dan tujuan yang dapat menempuh suatu kurun waktu yang cukup lama. Adapun durasinya bisa berskala durasi mulai dari seminggu, atau bahkan bertahun-tahun [15].
+
+Pengertian Umroh
+Umroh adalah kegiatan seoarng muslim yang berpergian menuju baitullah untuk melaksanakan tawaf, dan sa’I. Ibadah ini hukumnya sunnah mu’akkadah dan dijalankan dengan ketentuan-ketentuan yang memenuhi syarat, rukun tertentu [16].
+
+Pengertian Haji
+Haji adalah rukun Islam kelima, yakni perjalanan ke Ka'bah di Mekkah pada bulan-bulan haji (Syawal hingga awal Dzulhijjah) untuk menjalankan sebuah ibadah khusus. Kegiatan utama haji meliputi thawaf, sa’i, wukuf di Arafah, mabit di Muzdalifah, dan melontar jumrah di Mina. Ibadah ini merupakan bentuk pengabdian rohani kepada Allah SWT [17]. Berikut adalah macam-macam haji:
+
+Pengertian Haji Ifrad
+Haji Ifrad adalah haji yang dikerjakan hanya dari miqat saja da ketika membaca talbiyyah, Jamaah menggucapkan labbaika bi haj dan mengerjakannya tetap dalam keadaan ihram hingga selesai ibadah haji [17].
+
+Pengertian Haji Qiran
+Haji Qiran adalah pelaksanaan haji dengan ihram dan umrah secara bersamaan dimulai dari miqat atau niat ihram untuk umroh lalu memasuki niat untuk Haji. Haji ini dinamakan Qiran dikarenakan Jamaah melakukan ihram dengan niat untuk menunaikan ibadah haji dan umrah secara bersamaan dengan melafazkan niat Labbaikallahumma Hajjatun wa U’mrah [17].
+
+Pengertian Haji Tamattu’
+Haji Tamattu’ adalah haji yang pelaksanaan ibadah haji dan umrah di bulan haji yang sama dengan mendahulukan ibadah umrah dengnan mengenakan pakaian ihram di miqat dan hanya berniat melaksanakan ibadah umrah. Jika ibadah umrahnya telah selesai maka Jamaah mengenakan pakaian ihram Kembali untuk melaksanakan haji [17].
+
+BAB III OBJEK DAN METODE PENELITIAN
+
+Objek Penelitian
+Objek penelitian dalam penelitian ini adalah bagian administrasi dalam perusahaan PT. Madinah Iman Wisata yang beralamat di Jl. R.A.A. Martanegara No.16, Turangga, Kec. Lengkong, Kota Bandung.
+
+Sejarah Singkat Perusahaan
+Pertama berdirinya PT. Madinah Iman Wisata pada 11 Februari 2000. Perusahaan ini sedang mengalami pengalihan dan pengembangan oleh manajemen baru pada tanggal 19 Februari 2016. Unggulnya perusahaan ini adalah pengalamannya yang telah berjalan 20 tahun terutama dalam memberangkatkan Jemaah haji dan umroh. PT. Madinah Iman Wisata selalu istiqomah dalam menjaga kepuasan dan kepercayaan Jamaahnya dalam melaksanakan ibadah. Perusahaan ini juga dikenal dengan berkat manajemen pelayanannya dan pemasaran yang efektif sehingga mudah menjalin kerja sama dengan pihak-pihak untuk mengembangkan dan menyediakan fasilita baik bagi Jamaahnya dalam menjalankan ibadahnya. PT. Madinah Iman Wisata telah memiliki izin resmi dengan SK Umroh No. U.215 2021 dan SK Haji No. 319 2021 [18]. 
+
+Visi dan Misi Perusahaan
+Berikut adalah Visi dan Misi PT. Madinah Iman Wisata:
+Visi:
+Menjadi Penyelenggara Haji, Umroh dan Wisata Halal, yang Profesional, Aman, Mudah dan Amanah
+Misi:
+Memberikan pelayanan dan bimbingan secara komprehensif, agar Jamaah memiliki kesiapan dan pemahaman akan ibadah haji dan umroh.
+Pelaksanaan ibadah haji & umroh maupun wisata yang berlandaskan dengan tuntunan Rasullulah Muhammad SAW.
+Menginspirasi masyarakat untuk mengoptimalkan perjalanannya.
+
+Struktur Organisasi Perusahaan
+Berikut adalah Struktur Organisasi di PT. Madinah Iman Wisata cabang Turangga:
+/
+Struktur organisasi perusahaan
+(Sumber : PT. Madinah Iman Wisata)
+
+Deskripsi Tugas
+Berikut adalah deskripsi tugas-tugas karyawan PT. Madina Iman Wisata sesuai struktur Organisasi diatas.
+Direktur Cabang
+Direktur Cabang dalam perusahaan ini mengawasi seluruh kegiatan cabang operasional PT. MIW. Direktur bertanggung jawab atas manajemen yang sedang berjalan yakni operasional keseluruhan kegiatan dalam cabang tersebut. Cakupan keseluruhan yang dimaksud adalah kegiatan tim, anggaran biayam, menentukan paket haji & umroh, pengelolaan finansial perusahaan, dan pengembangan perusahaan.
+Direktur Operasional
+Direktur Operasional bertanggung jawab atas pengelolaan tim yang beroperasional terhadap distribusi perlengkapan Jamaah, memonitor pemeliharaan aset kantor, menyusun Rencana Anggaran Biaya (RAB) untuk keberangkatan dan kepulangan Jamaah, memastikan kelancaran keberangkatan hingga kepulangan Jamaah, mendukung kegiatan program pemasaran, berpartisipasi dalam perancangan konsep paket keberangkatan Jamaah, serta rekrutmen sumber daya manusia sesuai kebutuhan operasional.
+Direktur Marketing
+Direktur Marketing bertanggung jawab pada bagian marketing cabang tersebut dengan mengawasi dan membantu menentukan paket umroh, menyusun RAB kegiatan terkait pemasaran, pengembangan tim, memastikan tercapainya target paket, perencanaan strategi pemasaran, bekerja sama dengan pihak eksternal terkait pemasaran perusahaan, dan menyusun SOP untuk kantor perwakilan.
+Staf Public Relation
+Staf Public Relation bertanggung jawab dalam perluasan pasar umrah dan haji, komunikasi dan koordinasi dengan pihak eksternal yang terkait dengan bisnis perusahaan, serta mendukung Divisi Manasik, Pembimbing, dan Divisi Marketing Executive.
+Dewan Manasik dan Dewan Pembimbing
+Dewan Manasik
+Dewan Manasik bertanggung jawab dalam menyusun program kegiatan manasik, perlengkapan manasik, membuat teori dan praktik terkait manasik, serta teknis kepergian dan kepulangan haji & umroh, menyusun RAB manasik, mengadakan pelatihan untuk pengembangan program manasik, serta mendukung kegiatan Dewan Pembimbing, manasik mandiri Mitra Syiar, dan pelepasan keberangkatan Jamaah.
+Dewan Pembimbing
+Dewan Pembimbing bertanggung jawab dalam kegiatan bimbingan Jamaah, dengan menentukan pembimbing serta timnya, menyusun pelatihan untuk pengembangan tim pembimbing, membuat SOP tim pembimbing, dan menyusun kuisioner untuk mengukur kepuasan Jamaah.
+Staf Marketing Operasional
+Staf Marketing Operasional bertugas dengan promosi seperti flyer, brosur, spanduk, media promo paket, menyusun rencana perjalanan keberangkatan Jamaah, mendukung kegiatan marketing, perlengkapan dan penanganan keberangkatan Jamaah, serta mendukung kebutuhan Mitra Syiar.
+Staf Marketing Executive
+Staf Marketing Eksekutif bertugas dalam merancang program kerja untuk perwakilan, mengunjungi ke setiap daerah yang berpotensi pengembangan perwakilan, serta membantu Mitra Syiar terkait pengetahuan produk kepada calon Jamaah, memberikan dukungan pada Mitra Syiar sesuai dengan kebutuhan, dan menjaga citra bisnis perusahaan agar tetap positif.
+Staf Admin
+Staf Admin bertugas mengumpulkan dan menyusun dokumen terkait keberangkatan Jamaah, memahami produk perusahaan, ketersediaan alat tulis kantor, mendukung kegiatan manasik dan kelengkapan Jamaah, manifest keberangkatan, menyusun penjadwalan meeting management, serta mengurus dokumen Jamaah yang berhubungan dengan pihak eksternal.
+Staf Keuangan
+Staf Keuangan bertugas dalam pembuatan laporan keuangan, mengurus dokumen keuangan, rekap data duduk keberangkatan, mendukung kegiatan pemasaran, operasional, dan manasik, rekapitulasi tabungan Jamaah, bekerja sama dengan pihak eksternal terkait keuangan, koordinasi pembiayaan keberangkatan Jamaah, serta uang kas kecil.
+Staf OB
+Staf OB bertanggung jawab terhadap kebersihan kantor, menyusun jadwal kegiatan secara berkala, membantu inventarisasi aset kantor, memberikan dukungan kepada staf front office dalam melayani Jamaah yang datang ke kantor sesuai kebutuhan, serta mendukung kegiatan marketing, operasional, dan manasik, dan membuat laporan jumlah stok perlengkapan Jamaah secara berkala.
+
+Metode Penelitian
+Metode penelitian yang digunakan dalam penelitian ini akan dijelaskan sebagai berikut:
+
+Desain Penelitian
+Desain penelitian ini menggunakan studi kasus secara deskriptif. Hal ini dikarenakan desain penelitian yang mengenal situasi tempat penelitian secara spesifik, memahami masalahnya secara komprehensif, serta dapat mengidentifikasi solusi. Studi kasus juga memberi fleksibilitas dalam metode pengumpulan data dan pendekatan analisis sehingga dapat menyesuaikan dengan proses pengembangan sistem.
+
+Jenis dan Metode Pengumpulan Data
+Adapun pengumpulan data yang dilakukan dalam penelitian sebagai berikut.
+
+Sumber Data Primer
+Sumber data primer adalah data yang diperoleh secara langsung dari sumbernya. Pengumpulan data Primer merupakan penting dikarenakan data tersebut dihasilkan langsung dari sumber masalah yang diteliti sehingga akurat dan sesuai dengan permasalahan penelitian [19]. Dalam kasus penelitian ini adalah PT. Madina Iman Wisata dimana sumber data penelitian menggunakan beberapa teknik berikut:
+Observasi
+Proses observasi penelitian pada PT. MIW dimulai dari pengamatan langsung terhadap objek penelitian yakni kantor PT. MIW Cabang Bandung keberadaan objek terutama pada bagian administrasi cabang tersebut. Dilihat juga struktur organisasi seperti apa di MIW cabang Bandung, serta fasilitas cabang yang digunakan oleh kayawan MIW.
+Wawancara
+Wawancara dilakukan kepada pihak Cabang MIW dimulai dari Direktur Cabang membuka wawancara penelitian. Berikutnya di wawancara karyawan-karyawan MIW cabang Bandung yang terlibat dengan proses administrasi secara langsung, yakni staf Markops (Marketing Operasional), staf Keuangan, dan staf Administrasi. Wawancara dengan Karyawan dimulai dari Karyawam MIW menjelaskan mengenai flow process Cabang MIW (alur kerja perusahaan). Berikutnya dipertanyakan mengenai proses pendaftaran, pembayaran, pembatalan, serta keberangkatan. Pelaksanaan wawancara dilakukan secara kondusif sehingga tidak mengganggu kerja karyawan yang ketat. Oleh pihak MIW diperbolehkan berkomunikasi diluar jam kerja melalui WhatsApp.
+
+Sumber Data Sekunder
+Data Sekunder adalah data yang ditemukan secara tidak langsung. Hal ini dikarenakan penemuan data tersebut diperoleh tidak dengan pihak lembaga atau perusahaan secara langsung, seperti menemukan data yang terkait perusahaan dari penelitian terdahulu. Adapun Data Sekunder yang diperoleh dalam penelitian ini adalah menggunakan sumber dari studi Literatur.
+Studi Literatur adalah metode untuk mengatasi masalah dengan menelusuri sumber tulisan yang telah ada sebelumnya. Istilah ini sering juga disebut sebagai studi pustaka, yang mencakup serangkaian kegiatan terkait pengumpulan data dari pustaka, membaca, mencatat, dan mengolah bahan penelitian. Studi pustaka merupakan kajian teoritis serta referensi dan literatur ilmiah yang berkaitan dengan budaya, nilai, dan norma yang ada dalam konteks sosial yang sedang diteliti [20].
+
+Metode Pendekatan dan Pengembangan Sistem
+Metode pendekatan dan pengembangan sistem dalam penelitian ini yang digunakan adalah sebagai berikut.
+
+Metode Pendekatan Sistem
+Metode pendekatan yang digunakan dalam penelitian ini adalah pendekatan berorientasi objek. Hal ini dikarenakan penelitian ini yang berfokus pada perancangan sistem informasi administrasi berbasis web yang melibatkan pengelolaan data Jamaah, serta kwitansi untuk semua jenis pembayaran. Dalam kasus ini, entitas yang dimaksud seperti Jamaah, staf keuanga, dan staf administrasi sebagai objek yang memiliki data dan fungsi spesifik. Pendekatan ini dapat menciptakan struktur sistem yang lebih fleksibel, mudah diperluas, dan dapat diatur sesuai tujuan penelitian. Sistem dapat dikembangkan untuk menyederhanakan pengelolaan data, mengurangi kesalahan manual, dan meningkatkan efisiensi operasional, terutama dalam menangani proses pendaftaran, dan pencatatan pembayaran, serta pengamanan data Jamaah. 
+
+Metode Pengembangan Sistem
+Pembuatan prototipe dimulai dengan pengembang perangkat lunak dan pengguna. Tim pengembang, yakni mereka karyawan PT. MIW Cabang Bandung. Pertemuan dengan para pihak untuk merumuskan tujuan utama dari perangkat lunak yang akan dibuat, mengidentifikasi semua spesifikasi kebutuhan yang sudah ada, serta menjelaskan area yang perlu didalami lebih lanjut dalam tahap pengembangan berikutnya [21].
+
+Alat Bantu Analisis dan Perancangan
+Alat bantu analaisis yang digunakan dalam penelitian ini untuk merancang sistem informasi adalah sebagai berikut:
+Use Case Diagram
+Use Case adalah rangkaian aktivitas yang saling terkait dan membentuk sistem secara teratur, di mana setiap aktivitas dilakukan atau diawasi oleh aktor. Diagram Use Case merupakan representasi grafis yang menunjukkan aktor, Use Case, serta interaksi di antara mereka dalam suatu sistem. Meskipun tidak menjelaskan detail penggunaan setiap Use Case, diagram ini memberikan gambaran umum mengenai hubungan antara aktor, Use Case, dan sistem, serta memperlihatkan fungsi-fungsi yang ada dalam sistem tersebut [22].
+Skenario Use Case
+Skenario Use Case menggambarkan alur proses interaksi antara aktor dan sistem, yang mencakup skenario normal dan alternatif. Skenario normal terjadi ketika sistem berjalan sesuai rencana tanpa adanya kesalahan, sedangkan skenario alternatif menggambarkan situasi ketika sistem tidak berjalan dengan lancar karena terjadi kesalahan atau masalah. Baik skenario normal maupun alternatif dapat terdiri dari lebih dari satu langkah, dan alur dari skenario-skenario ini menjadi dasar dalam pembuatan diagram sequence yang memetakan urutan interaksi dalam sistem tersebut [23].
+Activity Diagram
+Activity diagram adalah sebuah diagram yang digunakan untuk memodelkan proses bisnis dan urutan aktivitas dalam suatu sistem. Diagram ini menggambarkan alur kerja atau workflow dari satu aktivitas ke aktivitas lainnya, atau dari aktivitas menuju status tertentu. Fungsinya adalah untuk memberikan gambaran jelas mengenai aktivitas yang terjadi dalam sebuah sistem tanpa perlu melihat kode program atau tampilan antarmuka. Diagram ini mirip dengan flowchart dalam hal pemodelan alur kerja dan urutan proses yang terjadi [22].
+Database Diagram
+Database Diagram adalah representasi visual dari kumpulan data yang tersimpan secara sistematis di dalam komputer dan dapat diolah atau dimanipulasi menggunakan perangkat lunak atau aplikasi. Basis data ini dirancang dengan spesifikasi yang mencakup tipe data, struktur data, serta batasan-batasan yang mengatur bagaimana data tersebut disimpan dan diakses, sehingga dapat menghasilkan informasi yang berguna [24].
+Class Diagram
+Class Diagram menggambarkan struktur sistem dengan mendefinisikan kelas-kelas yang akan digunakan untuk membangun sistem tersebut. Setiap kelas memiliki atribut dan method atau operasi. Atribut adalah variabel-variabel yang dimiliki oleh suatu kelas, sedangkan method atau operasi merupakan fungsi-fungsi yang dapat dijalankan oleh kelas tersebut. Diagram ini membantu dalam memahami bagaimana setiap kelas saling berinteraksi dan berperan dalam sistem secara keseluruhan.[22].
+Sequence Diagram
+Sequence diagram merupakan salah satu jenis diagram dalam UML yang berfungsi untuk menggambarkan interaksi dinamis antara sejumlah objek dalam sebuah sistem berdasarkan urutan waktu. Diagram ini menunjukkan bagaimana pesan dikirim antar objek serta bagaimana objek tersebut berinteraksi satu sama lain. Sequence diagram memvisualisasikan peristiwa yang terjadi pada titik-titik tertentu selama eksekusi sistem, memberikan gambaran yang jelas mengenai aliran komunikasi dan proses dalam sistem tersebut [22].
+Deployment Diagram
+Deployment diagram adalah representasi visual yang menggambarkan tugas-tugas konkret dari setiap node atau perangkat lunak yang terlibat dalam sebuah jaringan sistem. Diagram ini menampilkan seluruh node dalam jaringan beserta hubungan antar node, termasuk proses-proses yang terjadi di dalamnya. Deployment diagram digunakan untuk memvisualisasikan, menspesifikasikan, dan mendokumentasikan proses yang berlangsung dalam pengembangan sistem perangkat lunak berbasis Object Oriented [25].
+Pengujian Software
+Pengujian perangkat lunak adalah proses untuk menguji program guna menemukan kesalahan atau cacat sebelum program digunakan oleh pengguna. Dalam proses ini, digunakan metode pengujian black box yang berfokus pada mencari kesalahan dan cacat pada aspek fungsional sistem, tanpa melihat kode internal program tersebut.
+
+Analisis Sistem yang Berjalan
+Analisis sistem yang berjalan adalah deskripsi dari sistem yang sedang beroperasi saat ini, yang memungkinkan identifikasi kelebihan dan kekurangannya. Dalam PT. MIW, hal ini dinamakan sebagai Flow Process Perusahaan. Dengan analisis ini, perencanaan sistem baru menjadi lebih mudah karena didasarkan pada pemahaman yang jelas tentang bagaimana sistem saat ini bekerja [26]. Berikut adalah sistem yang berjalan di PT. MIW:
+Proses dimulai dari konsep paket haji dan umrah oleh Pusat MIW, serta Direktur Cabang, Direktur Cabang Marketing, serta Direktur Operasional yang ikut terlibat dalam pembuatan paket. Adapun Cabang dapat mengajukan atau request konsep paket kepada pusat, akan tetapi penetuan konsep paket tetep hanya pihak Pusat yang berwenang. Paket ini mencakup rincian layanan dan jadwal keberangkatan yang akan ditawarkan kepada calon Jamaah untuk periode tertentu.
+Setelah paket selesai dirancang, langkah berikutnya adalah pembuatan flyer oleh staf marketing operasional. Flyer ini mengandung informasi ringkas tentang paket haji dan umrah. Flyer ini ditujukan sebagai alat bantu Mitra Syiar serta menjadi bahan promosi kepada calon Jamaah.
+Flyer akan didistribusikan kepada Mitra Syiar. Mereka adalah pihak eksteranal (bukan karyawan marketing MIW secara langsung) yang bertugas sebagai pensyiar program paket haji dan umroh MIW. Mitra Syiar diberi pelatihan mengenai flow process perusahaan secara detil. Pihak ini juga memiliki formulir pendaftaran terutama buat program umroh.
+Calon Jamaah yang tertarik pada program haji dan umroh hendaknya berkonsultasi dulu kepada Mitra Syiar atau pihak MIW secara langsung ataupun secara online via WhatsApp. Pihak marketing akan menjelaskan secara rinci alur program haji atau umroh secara rincian detil paket haji atau umroh sesuai flyer yang tersedia
+Perwakilan wajib melakukan pendekatan pada Jamaah untuk mengeanalisis dan mengidentifikasi tujuan Jamaah, kebutuhan Jamaah, serta kemampuan Jamaah maupun secara fisik dan finansial. Hal ini ditujukan untuk Mitra Syiar dapat menawarkan atau merekomendasi paket haji dan umroh sesuai kemauan Jamaah.
+Calon Jamaah memilih program paket haji atau umroh serta jadwal keberangkatan kepada Mitra Syiar. Mitra Syiar akan memberi opsi pembayaran DP (jumlah sesuai ketentuan paket) secara cash atau transfer ke rekening MIW. Adapun masih belum sanggup dengan metode tersebut, perwakilan akan mensarankan metode tabungan atau pembiayaan (Amitra). Setiap ada transaksi masukan pembayaran ke dalam rekening MIW akan diberikan Kwitansi.
+Calon Jamaah yang sudah memilih paket haji atau umroh, memilih jadwal keberangkatannya, serta membayar DP dapat di closing oleh Mitra Syiar. Proses closing ini adalah proses dokumentasi pendaftaran bahwa pihak MIW berhasil menarik konsumen dan calon Jamaah bertekad mengikuti program haji atau umroh MIW.
+Calon Jamaah akan diarahkan untuk mengisi formulir pendaftaran program haji atau umroh oleh Mitra Syiar. Adapun Jamaah yang sanggup mendaftarkan secara daring melalui WhatsApp akan diwawancara oleh pihak MIW untuk memenuhi formulir pendaftaran. Khusus pendaftaran haji, pihak MIW akan diberikan softfile formulir pendaftaran haji ke calon Jamaah yang nantinya akan dikirimkan ke cabang terdekat. Hal ini dikarenakan persyaratan pendaftaran haji yang harus bersifat fisik. Adapun berkas seperti paspor paling telat sebulan sebelum keberangkatan dikumpulkan ke Cabang.
+Pihak Administrasi akan menerima data calon Jamaah dari formulir pendaftaran untuk manifest sebagai template pendataan Jamaah untuk diterima oleh pihak Pusat MIW. Adapun pemberian berkas dokumen Jamaah paling telat sebulan sebelum keberangkatan.
+Berikutnya Jamaah akan diberikan perlengkapan untuk haji dan umroh. Perlengkapan penting berkaitan seperti koper, tas, atribut identitas Jamaah MIW, serta buku do’a dapat diberikan kepada Jamaah terutama bahan kain batik wajib terlebih dahulu dikarenakan bahan buat atribut batik.
+Sebulan sebelum keberangkatan, Jamaah wajib melunaskan pembayaran paket, dan menyerahkan berkas dokumen terutama paspor ke pusat MIW. Cabang akan memproses semua berkas Jamaah serta pembiayaan program haji umroh Jamaah.
+Sekitar 14-7 hari sebelum keberangkatan Jamaah wajib melaksanakan manasik. MIW cabang Bandung menyelenggarakan manasik akbar gratis di Masjid Agung Trans Studio Mall setiap awal bulan. Di proses ini, Jamaah akan diberikan perlengkapan syal serta koper (jika belum diberikan). Kehadiran dan distribusi perlengkapan akan dicatat dalam daftar kehadiran program paket haji umroh tersebut. Ditambah dengan pembelian paket internet International Roaming dari tiga provider: Telkomsel, Indosat, Tri.
+Keberangkatan untuk cabang Bandung akan diarahkan Jamaah untuk berkumpul di Masjid Agung Trans Studio Bandung minimal sembilan jam sebelum keberangkatan. Jamaah diperbolehkan menuju langsung ke titik pusat kumpul, yakni Bandara Internasional Soekarno Hatta dengan syarat empat jam sebelum keberangkatan. Hal ini dikarenakan penyerahan tanggung jawab handling Jamaah kepada pihak pusat MIW di Bandara untuk diproses berkas dokumen serta keberangkatan Jamaah. Jamaah nanti akan diabsensi dengan daftar hadir keberangkatan. Dari sini, tanggung jawab handling serta operasional MIW Cabang Bandung sudah berhenti.
+Mitra Syiar yang berhasil melakukan closing akan mendapatkan fee dari hasil closing Jamaah tersebut sesuai program haji atau umroh yang telah ditawarkan. Setiap program terdapat fee tertentu.
+Kepulangan Jamaah wajib untuk Kembali ke Bandung. Kepulangan akan di absensi Jamaahnya dengan daftar hadir kepulangan. Adapun hal lain terkait kepulangan adalah souvenir tambahan yakni air zam-zam dari pihak MIW.
+
+Use Case diagram
+Berikut adalah Use Case diagram yang menggambarkan hubungan Jamaah dengan Sistem Infromasi yang akan diterapkan:
+/
+
+
+
+Business Use Case PT. Madinah Iman Wisata
+Seperti yang tergambarkan dalam Use Case diagram yang memvisualisasikan proses bisnis haji dan umrah di PT. MIW, setiap aktor dalam sistem memiliki peran dan tanggung jawab yang berbeda-beda pada setiap tahapannya. Berikut adalah tabel yang menjelaskan aktor-aktor beserta proses yang terlibat, diikuti dengan deskripsi masing-masing proses secara lebih rinci untuk menggambarkan alur operasional yang terjadi di PT. MIW.
+Definisi aktor dan deskripsinya
+Berikut adalah tabel definisi aktor dengan deskripsi simbol aktor yang digunakan oleh Business Use Case Diagram PT. Madinah Iman Wisata:
+Tabel Aktor dan deskripsinya
+NO
+Aktor
+Deskripsi
+
+
+Jamaah
+
+Individu yang ingin melaksanakan ibadah haji atau umrah melalui PT. MIW. Mereka adalah pengguna utama sistem dan berinteraksi langsung dengan sistem untuk melakukan pendaftaran, pembayaran, dan mengikuti proses manasik.
+
+
+Mitra Syiar
+Individu eksternal perusahaan yang membantu marketing MIW secara langsung atau tidak langsung dan mengajak, membawa, membimbing atau mewakilkan pendaftaran Jamaah.
+
+
+Staf Admin
+Melakukan tugas-tugas administratif terkait pendaftaran Jamaah, seperti verifikasi data, pembuatan dokumen perjalanan, dan koordinasi dengan pihak-pihak terkait.
+
+
+Staf Keuangan
+Bertanggung jawab dalam mengelola keuangan PT. MIW, termasuk menerima pembayaran dari Jamaah, melakukan rekonsiliasi bank, dan membuat laporan keuangan.
+
+
+Pusat MIW
+Pihak utama perusahaan travel haji umroh yang bertanggung jawab atas semua operasional Madinah Iman Wisata
+
+
+
+Definisi Use Case dan deskripsinya
+Berikut adalah tabel definisi Use Case dengan deskripsi simbol Use Case yang digunakan oleh Business Use Case Diagram PT. Madinah Iman Wisata:
+Tabel Definisi Use Case
+No
+Use Case
+Deskripsi
+
+
+Pendaftaran
+Proses di mana Jamaah mendaftar ke dalam sistem dengan memberikan data jamaah dan memilih paket Haji/Umroh
+
+
+Pembayaran
+Proses serta metode pembayaran DP dan pelunasan paket haji atau umrah Jamaah
+
+
+Pembatalan
+Proses pembatalan paket Haji/Umroh Jamaah dari pihak Jamaah
+
+
+Keberangkatan
+Proses melengkapi dokumen keberangkatan Jamaah serta mendistribusikan perlengkapan Jamaah
+
+
+Skenario Use Case
+Skenario Use Case akan memberikan gambaran rinci tentang bagaimana setiap aktor berinteraksi dengan sistem dalam setiap tahap proses di PT. MIW. Ini membantu memastikan bahwa prosedur yang diimplementasikan berjalan sesuai dengan perencanaan, dan sistem siap menangani berbagai kondisi yang mungkin terjadi. Berikut adalah table Skenario Use Case yang menggambarakan interaksi antar aktor di PT. MIW:
+
+
+Skenario Use Case Pendaftaran
+Berikut adalah tabel Skenario Use Case Pendaftaran yang menjelaskan prosedur pendaftaran yang diimplementasikan dalam PT. Madinah Iman Wisata:
+Identifikasi
+
+Nama Use Case
+Pendaftaran
+
+Tujuan
+Untuk mendaftarkan Jamaah ke program haji atau umrah MIW
+
+Aktor
+Jamaah, Staf Administrasi, Pusat MIW
+
+Deskripsi
+Proses di mana Jamaah mendaftar ke dalam sistem dengan memberikan data personal dan memilih paket Haji/Umroh
+
+Skenario Utama
+
+Kondisi Awal
+Calon Jamaah tertarik mengikuti program Haji/Umroh MIW
+
+Mitra Syiar
+Jamaah
+Staf Administrasi
+Pusat MIW
+
+Konsultasi Jamaah paket program Haji/Umroh
+
+
+
+
+
+Menentukan paket Haji/Umroh
+
+
+
+
+Menghubungi/Mendatangi Staf Administrasi MIW cabang Bandung untuk mendaftar
+
+
+
+
+
+Memberikan formulir pendaftaran Haji/Umroh
+
+
+
+Mengisi formulir pendaftaran Haji/Umroh
+
+
+
+
+
+Menerima formulir pendaftaran dan membuat manifest
+
+
+
+
+Mengirim manifest via email
+
+
+
+
+
+Menerima manifest
+
+
+
+Skenario Use Case Pembayaran
+Berikut adalah tabel Skenario Use Case Pembayaran yang menjelaskan prosedur pembayaran yang diimplementasikan dalam PT. Madinah Iman Wisata:
+Identifikasi
+
+Nama Use Case
+Pembayaran
+
+Tujuan
+Untuk pembiayaan operasional program haji dan umroh
+
+Aktor
+Jamaah, Staf Administrasi, Staf Keuangan
+
+Deskripsi
+Proses serta metode pembayaran DP dan pelunasan paket haji atau umrah Jamaah
+
+Skenario Utama
+
+Kondisi Awal
+Calon Jamaah sudah mengisi formulir pendaftaran
+
+Jamaah
+Staf Administrasi
+Staf Keuangan
+
+Memilih metode pembayaran (cash/transfer)
+
+
+
+Membayar DP
+
+
+
+
+
+Menyetorkan DP ke rekening perusahaan
+
+
+Membuat Kwitansi
+
+
+Menerima Kwitansi
+
+
+
+
+Follow up Jamaah
+
+
+Membayar pelunasan
+
+
+
+
+
+Menyetorkan biaya pelunasan ke rekening perusahaan
+
+
+Membuat Kwitansi
+
+
+Menerima Kwitansi
+
+
+
+
+
+Skenario Use Case Pembatalan
+Berikut adalah tabel Skenario Use Case Pembatalan yang menjelaskan prosedur pembatalan yang diimplementasikan dalam PT. Madinah Iman Wisata:
+Identifikasi
+
+Nama Use Case
+Pembatalan
+
+Tujuan
+Untuk membatalakan program Haji/Umroh Jamaah
+
+Aktor
+Jamaah, Staf Administrasi, Staf Keuangan
+
+Deskripsi
+Proses pembatalan paket Haji/Umroh Jamaah dari pihak Jamaah
+
+Skenario Utama
+
+Kondisi Awal
+Jamaah sepakat akan melakukan pembatalan pada program Haji/Umroh paket yang diikuti/dijalani
+
+Jamaah
+Staf Administrasi
+Staf Keuangan
+
+Menghubungi staf administasi untuk pembatalan
+
+
+
+
+Memproses data Jamaah dan menghitung denda sesuai persyaratan paket
+
+
+Membayar denda pembatalan
+
+
+
+
+
+Menyetorkan pembiayaan denda 
+
+
+Membuat Kwitansi 
+
+
+Menerima Kwitansi
+
+
+
+
+
+
+Skenario Use Case Keberangkatan
+Berikut adalah tabel Skenario Use Case Keberangkatan yang menjelaskan prosedur keberangkatan yang diimplementasikan dalam PT. Madinah Iman Wisata:
+Identifikasi
+
+Nama Use Case
+Keberangkatan
+
+Tujuan
+Untuk melengkapi semua dokumen Jamaah dan perlengkapan Jamaah
+
+Aktor
+Jamaah, Staf Administrasi, Pusat MIW
+
+Deskripsi
+Proses melengkapi dokumen keberangkatan Jamaah serta mendistribusikan perlengkapan Jamaah
+
+Skenario Utama
+
+Kondisi Awal
+Satu bulan sebelum jadwal keberangkatan
+
+Jamaah
+Staf Administrasi
+Pusat MIW
+
+
+Menghubungi Jamaah untuk melengkapi berkas Haji/Umroh
+
+
+Melengkapi berkas Haji/Umroh
+
+
+
+
+Scan berkas dan melengkapi manifest 
+
+
+
+Mempaketkan berkas paspor untuk dikirm ke pusat 
+
+
+
+
+Menerima berkas paspor dan manifest
+
+
+
+Memproses Visa Jamaah
+
+
+
+Mengirim perlengkapan untuk diterima Cabang
+
+
+Mendistribusikan perlengkapan Jamaah
+
+
+Mendatangi tempat keberangkatan pada waktu keberangkatan
+
+
+
+Activity diagram
+Berikut adalah bentuk Activity Diagram dari hasil Use Case yang terjadi di PT. MIW:
+
+Activity Diagram Pendaftaran MIW
+
+Activity Diagram Pembayaran MIW
+
+Activity Diagram Pembatalan MIW
+
+Activitiy Diagram Keberangkatan MIW
+
+Evaluasi sistem yang sedang berjalan
+Menganalisis sistem yang berjalan ditujukan untuk memberi gambaran dan memahami bagaimana sistem kerja perusahaan (flow process) dalam mengelola Jamaah haji dan umroh. Evaluasi ini memberi manfaat mengidentifikasi kelemahan sistem yang sedang berjalan. Berikut adalah solusi yang bisa diberi sebagai balasan dari permasalahan dari kelemahan sistem yang berjalan:
+
+Evaluasi sistem yang berjalan
+No.
+Permasalahan
+Solusi
+
+
+Proses pendaftaran dilakukan dengan cara mencatat di formulir pendaftaran sehingga calon jamaah yang mendaftarkan diri harus mendatangi cabang atau menghubungi Mitra Syiar, dan terjadinya double closing.
+Dibutuhkan sistem informasi berbasis website secara online untuk menggantikan sistem pendaftaran dengan metode mencata sehingga tidak terjadi double closing dan rentan redudansi data.
+
+
+Proses pembayaran yang menggunakan Kwitansi dibuat oleh template Excel sehingga data pembayaran yang kurang aman dan rentan redudansi data.
+Dibutuhkan sistem informasi berbasis web sehingga pengelolaan data jamaah serta penyimpanan jamaah terpusat dan tidak menggunakan laptop atau smartphone masing-masing
+
+
+
+
+BAB IV HASIL DAN PEMBAHASAN
+
+Perancangan Sistem
+Tahap perancangan sistem merupakan tahapan lanjutan dari analisis sistem yang sedang berjalan di PT. Madina Iman Wisata (PT. MIW). Pada perancangan ini, diharapkan terbentuk suatu sistem informasi terkomputerisasi yang dirancang untuk menggantikan proses administrasi yang berjalan, sehingga dapat meningkatkan efisiensi dan mengurangi permasalahan administrasi. Perancangan ini menjelaskan arah sistem yang akan dibangun sebelum tahap pemrograman dilakukan.
+
+Tujuan perancangan sistem
+Perancangan sistem ini ditujukan untuk memenuhi kebutuhan perusahaan pada MIW Cabang Bandung sesuai dengan rancang desain sistem yang diusulkan. Sistem Informasi ini diharapkan dapat bermanfaat bagi perusahaan dan digunakan untuk memenuhi kebutuhan pihak MIW Cabang Bandung terutama pada pihak yang berhubungan dengan administrasi
+
+Gambaran umum sistem yang diusulkan
+Sistem informasi ini secara gambaran menggantikan sistem yang berjalan menjadi sistem yang terpusat proses administrasinya yang terkomputerisasi sehingga otomatis dalam mengolah data Jamaah. Sistem informasi ini dapat mempercepat proses pendaftaran, pembayaran, dan dapat membantu informasi pihak operasional dalam proses keberangkatan Jamaah.
+
+Perancangan sistem yang diusulkan
+Pada tahapan ini akan menjelaskan prosedur percangan sistem yang diusulkan pada sistem informasi berbasis website pada PT. Madinah Iman Wisata Cabang Bandung.
+
+Use Case diagram 
+Use Case diagram menggambarkan relasi antara actor yang melakukan prosedur sistem serta fungsi sistem. Berikut adalah Use Case diagram yang menggambarkan jalannya sistem informasi berbasis website PT. MIW Cabang Bandung. Berikut adalah Use Case diagram sistem informasi berbasis website yang di implementasikan di PT. MIW Cabang Bandung:
+/
+
+
+Use Case Diagram Website PT. MIW Cabang Bandung
+Definisi actor dan deskripsinya
+Berikut adalah tabel definisi simbol aktor dengan deskripsi yang digunakan dalam Use Case Diagram Pendaftaran PT. Madinah Iman Wisata:
+Tabel Use Case dan deskripsinya
+NO
+Aktor
+Deskripsi
+
+
+Jamaah
+
+Individu yang ingin menunaikan program haji/umroh MIW melalui registrasi system pendaftaran daring.
+
+
+Staf Admin
+Melakukan tugas-tugas administratif terkait pendaftaran Jamaah, seperti verifikasi data, pembuatan dokumen perjalanan, dan membuat manifest
+
+
+Definisi Use Case dan deskripsinya
+Berikut adalah tabel definisi Use Case dengan deskripsi yang digunakan dalam Use Case Diagram Pendaftaran PT. Madinah Iman Wisata:
+Tabel Aktor dan deskripsinya
+No
+Use Case
+Deskripsi
+
+
+Paket
+Proses di mana Admin menginput data paket ke dalam sistem.
+
+
+Pendaftaran
+Proses di mana Jamaah mendaftar ke dalam sistem dengan memberikan data jamaah dan memilih paket Haji/Umroh secara online
+
+
+Pembatalan
+Proses pembatalan paket Haji/Umroh Jamaah dari pihak Jamaah secara online
+
+
+Keberangkatan
+Proses keberangkatan Jamaah serta perlengkapan Jamaah
+
+
+Skenario Use Case
+Skenario Use Case Paket dan deskripsinya
+Identifikasi
+
+Nama Use Case
+Paket
+
+Tujuan
+Untuk membuat data Paket ke dalam sistem MIW
+
+Aktor
+Admin, System
+
+Deskripsi
+Proses dimana Admin membuat dan submit data paket program haji/umroh ke dalam database sistem
+
+Skenario Utama
+
+Kondisi Awal
+Calon Jamaah tertarik mengikuti program Haji/Umroh MIW
+
+Jamaah
+System
+
+Memasuki halaman admin_paket dan menambahkan paket baru
+
+
+Mengisi harga paket dalam modal “Add New Package” 
+
+
+Mengisi detail nomor hotel dan HCN dalam modal “Add New Package”
+
+
+Mengupload data paket ke dalam database
+
+
+
+Menyeter data paket ke dalam database
+
+
+Activity Diagram
+Berikut adalah bentuk Activity Diagram dari hasil Use Case yang terjadi di PT. MIW:
+Activity Diagram Paket
+Diagram alir ini menggambarkan proses pembuatan paket Haji/Umrah. Proses ini hanya dapat digunakan oleh seorang Admin. Proses ini bertujuan untuk mengisi data paket yang telah disepakati oleh Pusat MIW. Tugas Admin dalam aktifias ini adalah mengisi data paket baru dalam sistem. Berikut adalah diagram Activity Diagram Paket:
+
+Activity Diagram Pembuatan Paket Website Sistem MIW
+Activity Diagram Pendaftaran
+Diagram ini menggambarkan alur pendaftaran jamaah Haji/Umroh. Proses ini dimulai dengan memasuki halaman website MIW dan memasuki halaman pendaftaran untuk mengajukan registrasi program Haji/Umroh yang telah disediakan paket Haji/Umroh oleh pihak MIW. Berikut adalah Activity Diagram Pendaftaran.
+
+Activity Diagram Pendaftaran Jamaah ke dalam Sistem MIW
+Activity Diagram Pembatalan
+Diagram ini menggambarkan proses request pembatalan dalam Sistem MIW. Proses ini dimulai dari Jamaah memasuki halaman formulir pembatalan. Jamaah akan mengisi formulir serta mengupload kwitansi dan bukti bayar. Berikutnya admin melanjuti ke proses penghapusan data serta nontifikasi pembatalan diterima.
+
+Activitiy Diagram Request Pembatalan Sistem MIW
+Activity Diagram Keberangkatan
+Diagram ini menggambarkan keberangkatan atau pembuatan manifest. Dalam proses ini, orang yang terlibat dalam Activity ini, dan dapat mengakses bagian sistem MIW ini hanyalah Admin. Proses ini ditujukan untuk menghasilkan produk akhir dari sistem MIW ini, yakni manifest. Berikut adalah Activity Diagram Keberangkatan:
+
+
+
+Class Diagram
+Diagram ini menyajikan skema basis data terstruktur untuk sistem manajemen perjalanan Haji/Umrah, yang menguraikan entitas utama dan relasinya. Komponen inti meliputi Paket (program perjalanan dengan harga berdasarkan tipe kamar), Jamaah (data jemaah mencakup informasi pribadi, dokumen, dan pembayaran), Manifest (penugasan kelompok dengan alokasi kamar), dan Pembatalan (permintaan pembatalan beserta perhitungan pengembalian dana). Skema menggunakan enumerasi untuk nilai terstandarisasi (mis., JenisPaket, StatusPembayaran) serta metode untuk alur kerja operasional (contoh: unggahDokumen(), hitungPengembalian()). Relasi antar-entitas bersifat eksplisit (contoh: Manifest menghubungkan Paket dengan Jamaah), dan mekanisme validasi tertanam (e.g., verifikasi pembayaran, pemeriksaan dokumen). Desain ini menekankan integritas data, pelacakan keuangan, dan kontrol administratif, meskipun beberapa nama atribut memerlukan koreksi tipografi (e.g., "tanggal_keberen@xatan" → "tanggal_keberangkatan").
+
+Class Diagram Sistem MIW
+Sequence Diagram
+Diagram ini menggambarkan sistem pendaftaran berbasis web untuk calon jemaah Haji/Umrah, mencakup antarmuka pengguna dan proses backend. Alur dimulai dengan akses layanan web (pendaftaran, unggah dokumen, pembayaran, dan email), diikuti pengisian formulir beserta dokumen wajib (KTP, KK, paspor). Sistem memproses data pendaftaran, menampilkan halaman sukses, dan menangani pemilihan paket. Operasi backend meliputi pembuatan reservasi jemaah, generasi invoice, pengiriman email konfirmasi, serta penyimpanan metadata dokumen dan data pembayaran. Fitur utama mencakup pembuatan template email otomatis dengan lampiran invoice dan konfirmasi penyimpanan di setiap tahap. Proses ini menekankan interaksi pengguna, persistensi data, dan konfirmasi sistem, meskipun beberapa istilah memerlukan penyempurnaan (mis., "Kıtım" → "Kirim", "aukses" → "sukses").
+
+Sequence Diagram Pendaftaran Sistem MIW
+Diagram ini memaparkan alur permintaan pembatalan terstruktur dalam sistem manajemen ibadah, menggabungkan antarmuka pengguna dengan proses administratif backend. Calon jemaah (Jamash) mengajukan pembatalan melalui portal web dengan mengisi formulir dan mengunggah bukti pembayaran, yang memicu verifikasi data jemaah dan riwayat pembayaran. Sistem menghitung pengembalian dana dan denda, menyimpan metadata pembatalan, dan memberi notifikasi kepada admin untuk persetujuan. Setelah diverifikasi, status diperbarui, email konfirmasi dikirim, dan data jemaah terkait diarsipkan. Alur ini menekankan validasi multi-tahap (input pengguna → verifikasi admin → konfirmasi sistem), rekonsiliasi keuangan otomatis, dan pelacakan status yang persisten. Ketidakkonsistenan terminologi (e.g., "Kıtım" → "Kirim", "lektirim" → "terkirim") dan label ambigu (e.g., "Hepus data" → "Hapus data") memerlukan standardisasi untuk memastikan kejelasan teknis.
+
+Sequence Diagram Pembatalan MIW
+Diagram ini menggambarkan alur kerja dashboard administratif untuk mengelola manifest ibadah, dengan fokus pada alokasi kamar, hubungan mahram (penjaga keluarga), dan fungsi ekspor data. Admin memulai proses dengan mengkueri data jemaah aktif dan detail paket, dilanjutkan dengan penentuan nomor kamar dan pembaruan hubungan mahram, yang divalidasi dan dikonfirmasi secara sistematis. Sistem menyediakan generasi manifest dalam format Excel, mencakup data jemaah dan paket secara lengkap, dengan protokol konfirmasi eksplisit di setiap penyimpanan. Alur ini menekankan penanganan data terstruktur, validasi real-time, dan pemformatan siap ekspor, meskipun referensi siklik ke "Dashboard Admin" di akhir mengindikasikan langkah navigasi kembali atau pelabelan redundan yang memerlukan klarifikasi.
+
+Sequence Diagram Keberangkatan MIW
+Deployment Diagram
+Diagram ini menggambarkan arsitektur sistem manajemen Haji dan Umrah berbasis web. Pengguna mengakses sistem melalui peramban web menggunakan protokol HTTPS, yang terhubung ke server Apache HTTP yang menjalankan berbagai modul aplikasi seperti pendaftaran, pembayaran, manifes, administrasi, dan manajemen dokumen. Modul-modul tersebut berinteraksi dengan basis data MySQL untuk menyimpan data jamaah, paket, pembayaran, dan manifes. Selain itu, terdapat server berkas terpisah untuk menyimpan dokumen penting (misalnya paspor, KTP, bukti pembayaran), yang diakses melalui sistem berkas atau protokol TCP/IP. Sistem ini juga terintegrasi dengan server email (SMTP) untuk pengiriman notifikasi.
+
+Deployment Diagram Sistem MIW
+Perancangan Database Diagram
+Diagram ini menyajikan skema basis data relasional untuk sistem manajemen ibadah Haji/Umrah, mencakup lima tabel inti: data_manifest (alokasi kamar dan hubungan mahram), data_pembatalan (pengajuan pembatalan beserta pelacakan pengembalian dana), data_pembayaran (transaksi pembayaran dan verifikasi), data_jamaah (data biometrik dan kontak jemaah), serta data_paket (konfigurasi paket perjalanan). Setiap tabel memiliki kunci primer (contoh: manifest_id, pak_id), kolom enumerasi untuk nilai terstandarisasi (mis. jenis_paket, status_pembayaran), dan pencatatan timestamp untuk audit (created_at, verified_at). Relasi antar-tabel dibangun melalui kunci asing (contoh: nik yang menghubungkan data jemaah), dengan penekanan khusus pada akuntabilitas keuangan (perhitungan pengembalian di data_pembatalan, saldo pembayaran di data_jamaah). Skema ini menerapkan prinsip normalisasi namun mengandung ketidakkonsistenan terminologi (e.g., tinggl_badan untuk "tinggi badan", bukli_uploaded_at untuk "bukti") yang memerlukan koreksi.
+
+Database Diagram Sistem MIW
+
+Perancangan Antar Muka
+
+Struktur Menu
+
+Perancangan input
+
+Perancangan Kodifikasi
+
+Perancangan Interface input
+
+Perancangan Arsitektur Jaringan
+
+Pengujian
+
+Rencana pengujian
+
+Kasus dan hasil pengujian
+
+Kesimpulan hasil pengujian
+
+Implementasi
+
+Implementasi perangkat lunak
+
+Implementasi perangkat keras
+
+Implementasi basis data
+
+Implementasi antar muka
+
+Implementasi instalasi program
+
+Penggunaan program
+
+
+DAFTAR PUSTAKA
+
+[1]	Unified Modeling Language, “UML 2.5 Diagrams Overview,” uml-diagrams.org. Accessed: Dec. 12, 2024. [Online]. Available: https://www.uml-diagrams.org/uml-25-diagrams.html
+[2]	Empulsys, “From Business Modeling to IT Systems.” Accessed: Dec. 12, 2024. [Online]. Available: https://www.empulsys.com/en/component/content/article/94-frombusiness2systems
+[3]	“Software Engineering Efficiency Learning | Actual Case: Online Elective Course Management System Design - Cloud Community - Huawei Cloud.” Accessed: Dec. 12, 2024. [Online]. Available: https://bbs.huaweicloud.com/blogs/395278
+[4]	“PT Madinah Iman Wisata -Travel Haji & Umroh Terbaik.” Accessed: Dec. 12, 2024. [Online]. Available: https://madinahimanwisata.com/
+[5]	T. Oktapiah and N. Hasti, “SISTEM INFORMASI RESERVASI PAKET WISATA BERBASIS WEB,” Jurnal Teknik Informatika, vol. 12, no. 1, pp. 1–7, Jan. 2020, Accessed: Dec. 12, 2024. [Online]. Available: https://ejurnal.ulbi.ac.id/index.php/informatika/article/view/662
+[6]	L. Melian, R. P. Dhaniawaty, A. P. Fadillah, and C. Hidayat, “e-Exchange Riyals sebagai Sistem Informasi Penukaran Uang bagi Jamaah Haji dan Umrah Pasca Pandemi Covid-19,” Jurnal Teknologi dan Informasi, vol. 13, no. 1, pp. 56–68, Mar. 2023, doi: 10.34010/JATI.V13I1.9215.
+[7]	E. Effendy, E. A. Siregar, P. C. Fitri, and I. A. S. Damanik, “MENGENAL SISTEM INFORMASI MANAJEMEN DAKWAH (PENGERTIAN SISTEM, KARAKTERISTIK SISTEM),” Jurnal Pendidikan dan Konseling (JPDK), vol. 5, no. 2, pp. 4343–4349, Apr. 2023, doi: 10.31004/JPDK.V5I2.14061.
+[8]	A. Selay et al., “Sistem Informasi Penjualan,” Karimah Tauhid, vol. 2, no. 1, pp. 232–237, Feb. 2023, doi: 10.30997/KARIMAHTAUHID.V2I1.7746.
+[9]	S. Al Azhar, “PENGEMBANGAN WEBSITE BERBASIS GOOGLE SITES DALAM MENDUKUNG USAHA KELOMPOK PETERNAK NUSANTARA,” Abdi Jurnal Publikasi, vol. 1, no. 2, pp. 149–153, Dec. 2022, Accessed: Dec. 12, 2024. [Online]. Available: https://jurnal.portalpublikasi.id/index.php/AJP/article/view/36
+[10]	J. A. Rangkoratat, “ANALISIS SISTEM DATABASE DALAM PROSES PENGISIAN AVTUR DI DPPU PATIMURA AMBON,” Journal of Scientech Research and Development, vol. 6, no. 1, pp. 1042–1054, Jul. 2024, doi: 10.56670/JSRD.V6I1.307.
+[11]	Rina Noviana, “PEMBUATAN APLIKASI PENJUALAN BERBASIS WEB MONJA STORE MENGGUNAKAN PHP DAN MYSQL,” Jurnal Teknik dan Science, vol. 1, no. 2, pp. 112–124, Jun. 2022, doi: 10.56127/JTS.V1I2.128.
+[12]	F. Sinlae, L. K. Kalmany, R. Setiaji, and M. Syahrul, “Menjelajahi Dunia Web: Panduan Pemula Untuk Pemrograman Web,” Jurnal Siber Multi Disiplin , vol. 2, no. 2, pp. 107–118, Jul. 2024, doi: 10.38035/JSMD.V2I2.170.
+[13]	M. N. Al Ghazali, A. Azizi, O. S. Khair, and Z. T. S. Kusnandar, “Pengembangan Dashboard Admin Bukupedia,” Jurnal Teknik Indonesia, vol. 3, no. 1, pp. 11–21, May 2024, doi: 10.58860/JTI.V3I1.320.
+[14]	A. Nurhadi and E. Indrayuni, “Sistem Informasi Pendaftaran Vaksinasi Covid-19,” Journal of Information System, Informatics and Computing, vol. 5, no. 2, pp. 453–466, Dec. 2021, doi: 10.52362/JISICOM.V5I2.491.
+[15]	- M. ARI PADLI, “PROSPEK USAHA ANGKUTAN ( TRAVEL ) PASCA MASA PANDEMI COVID-19 DI TEMBILAHAN MENURUT PERSPEKTIF EKONOMI SYARIAH,” May 2022.
+[16]	A. Solikhan, “STRATEGI PEMASARAN PROGRAM UMROH SEBAGAI UPAYA PENINGKATAN JUMLAH JAMAAH UMROH PADA PT JGRUP AMANAH WISATA KABUPATEN CILACAP,” Fenomena , vol. 3, no. 01, pp. 76–90, Nov. 2023, doi: 10.14420/PGHEA639.
+[17]	N. A. Fitrah, “HAJI DAN UMRAH DALAM KAJIAN FIQH,” Sep. 2022.
+[18]	S. H. Kusuma and J. Amin, “MANAJEMEN PELAYANAN IBADAH UMRAH DI PT. MADINAH IMAN WISATA KABUPATEN BOYOLALI,” Jan. 2024, Accessed: Dec. 12, 2024. [Online]. Available: https://eprints.iain-surakarta.ac.id/8897/1/Full%20Teks_191231056.pdf
+[19]	H. Wijoyo, “ANALISIS TEKNIK WAWANCARA (PENGERTIAN WAWANCARA, BENTUK-BENTUK PERTANYAAN WAWANCARA) DALAM PENELITIAN KUALITATIF BAGI MAHASISWA TEOLOGI DENGAN TEMA PEKABARAN INJIL MELALUI PENERJEMAHAN ALKITAB,” Analisis Teknik Wawancara Kualitatif Dalam Konteks Teologi Dengan Tema Pekabaran Injil Melalui Penerjemahan Alkitab, Jan. 2023, Accessed: Dec. 12, 2024. [Online]. Available: https://www.academia.edu/108148609/ANALISIS_TEKNIK_WAWANCARA_PENGERTIAN_WAWANCARA_BENTUK_BENTUK_PERTANYAAN_WAWANCARA_DALAM_PENELITIAN_KUALITATIF_BAGI_MAHASISWA_TEOLOGI_DENGAN_TEMA_PEKABARAN_INJIL_MELALUI_PENERJEMAHAN_ALKITAB
+[20]	M. Rahmawati, G. Rahayuni, and M. A. Riwanto, “Kajian Literatur: Penerapan Gerakan Literasi Sekolah (GLS) Dalam Pembelajaran Di Sekolah Dasar,” Prosiding Seminar Nasional PGSD UST, vol. 4, no. 1, pp. 141–146, Jun. 2023, Accessed: Dec. 12, 2024. [Online]. Available: https://jurnal.ustjogja.ac.id/index.php/sn-pgsd/article/view/15481
+[21]	Vicky C. Mende, Quido C. Kainde, and Ferdinan I. Sangkop, “Virtual Tour Pariwisata Kelurahan Lahendong Berbasis Web Menggunakan Metode Prototyping,” Jurnal Penelitian Rumpun Ilmu Teknik, vol. 2, no. 2, pp. 187–199, May 2023, doi: 10.55606/JUPRIT.V2I2.1963.
+[22]	S. Silvianty, “Sistem Informasi Mobile Absensi Karyawan (SIMABAR) PT. Grand Dwi Mandiri Jakarta,” Jurnal INSAN: Journal of Information System Management Innovation, vol. 2, no. 1, pp. 60–68, 2022, doi: 10.31294/jinsan.v2i1.1309.
+[23]	D. W. PUTRI, “Aplikasi Laundry Berbasis Web (Modul Admin),” 2020, Accessed: Dec. 12, 2024. [Online]. Available: https://repository.telkomuniversity.ac.id/home/catalog/id/162300/slug/aplikasi-laundry-berbasis-web-modul-admin-.html
+[24]	J. Zamzami, “Sistem Informasi Akademik Berbasis Web Di SMAN 1 Banjar,” Sep. 2020, Accessed: Dec. 12, 2024. [Online]. Available: http://elibrary.unikom.ac.id
+[25]	D. A. Pratiwi, A. S. Herniawan, N. Sparingga, R. Ellyza, and R. Putri, “Sistem Informasi Absensi Pegawai Berbasis Web Pada Kantor Camat Kota Kisaran Barat,” JULIKOM : Jurnal Ilmu Komputer, vol. 1, no. 1, pp. 13–20, Oct. 2024, Accessed: Dec. 12, 2024. [Online]. Available: https://journal.penus.or.id/index.php/julikom/article/view/7
+[26]	S. Wahyuni, F. Faisal, and M. M, “ANALISIS SISTEM HASIL PRODUKSI PERTANIAN DENGAN MENGGUNAKAN METODE SIMPLE ADDITIVE WEIGHTING (STUDI KASUS: CV. MAREWA 45),” Jurnal INSYPRO (Information System and Processing), vol. 5, no. 1, May 2020, doi: 10.24252/INSYPRO.V5I1.11676.
+ 
+
+
+
+
+
+
+
+
+
+PERANCANGAN DIAGRAM KELAS HINGGA ARSITEKTUR JARINGAN SISTEM INFORMASI MIW
+
+Perancangan Diagram Kelas Sistem
+Diagram kelas merupakan representasi visual dari struktur sistem yang menggambarkan kelas-kelas, atribut, metode, dan hubungan antar kelas dalam sistem informasi. Dalam konteks sistem informasi manajemen jamaah haji dan umroh PT. Madinah Iman Wisata, diagram kelas dirancang untuk mencerminkan kebutuhan bisnis yang kompleks dan beragam.
+
+Struktur diagram kelas pada sistem ini terbagi menjadi empat paket utama yang masing-masing memiliki tanggung jawab spesifik. Paket pertama adalah Konfigurasi dan Koneksi yang berisi kelas ConfigManager dan DatabaseConnection. Kelas ConfigManager bertugas mengelola konfigurasi sistem secara dinamis dengan kemampuan deteksi lingkungan eksekusi antara environment lokal menggunakan XAMPP dan environment produksi di platform Railway.com. Sementara itu, kelas DatabaseConnection menyediakan abstraksi koneksi database menggunakan PHP Data Objects (PDO) yang mendukung multiple environment dengan implementasi connection pooling dan error handling yang robust.
+
+Paket kedua merupakan Entitas Data yang terdiri dari kelas-kelas yang merepresentasikan model domain bisnis. Kelas DataJamaah berfungsi sebagai entitas utama yang menyimpan informasi lengkap jamaah termasuk data personal, preferensi kamar, status pembayaran, dan assignment kamar hotel. Kelas DataPaket mengelola informasi paket perjalanan dengan sistem pricing bertingkat berdasarkan tipe kamar dan informasi hotel tujuan. Kelas DataInvoice menangani aspek finansial dengan tracking pembayaran dan generasi invoice, sedangkan kelas DataPembatalan mengelola proses pembatalan dengan kalkulasi refund dan approval workflow.
+
+Paket ketiga adalah Pengelola Bisnis yang mengimplementasikan business logic layer sistem. Kelas PaketManager bertanggung jawab atas operasi CRUD paket perjalanan dengan validasi data dan algoritma alokasi kamar. JamaahManager mengelola workflow pendaftaran jamaah, proses upload dokumen, dan verifikasi pembayaran. ManifestManager mengkhususkan diri pada generasi manifest keberangkatan dengan optimasi alokasi kamar dan manajemen hubungan mahram. PaymentManager menangani proses pembayaran dan verifikasi dengan integrasi library TCPDF untuk generasi receipt. FileUploadManager menyediakan layanan upload file dengan validasi dan environment-aware storage.
+
+Paket keempat adalah Pengendali Aplikasi yang berfungsi sebagai application controller layer. AdminController bertindak sebagai controller utama untuk dashboard admin dengan implementasi authentication dan authorization. RegistrationController mengelola proses pendaftaran jamaah dengan koordinasi upload file dan triggering email notification. PembatalanController mengkhususkan diri pada penanganan request pembatalan dengan workflow approval dan kalkulasi refund.
+
+Hubungan antar kelas dalam diagram ini mengimplementasikan beberapa design pattern penting. Repository pattern diterapkan pada setiap entity class untuk abstraksi data access. Manager pattern digunakan untuk memisahkan business logic ke dalam kelas-kelas manager yang terpisah. Factory pattern diimplementasikan pada ConfigManager untuk konfigurasi environment-specific. Strategy pattern diterapkan pada FileUploadManager untuk mendukung berbagai strategi storage.
+
+Perancangan Diagram Database dan Struktur Data
+Diagram database sistem informasi MIW dirancang dengan pendekatan normalisasi yang baik untuk memastikan integritas data dan performa optimal. Struktur database terdiri dari empat tabel utama dengan relasi yang well-defined untuk mendukung operasi bisnis yang kompleks.
+
+Tabel data_paket berfungsi sebagai master data yang menyimpan informasi paket perjalanan. Tabel ini menggunakan primary key pak_id dengan auto-increment dan menyimpan berbagai informasi seperti jenis paket yang dibedakan antara Umroh dan Haji, currency yang mendukung multiple mata uang, program pilihan yang mendeskripsikan varian paket, tanggal keberangkatan, dan struktur pricing bertingkat untuk berbagai tipe kamar. Implementasi JSON data type digunakan untuk menyimpan informasi kompleks seperti alokasi kamar hotel, nomor kamar yang tersedia, dan data Hotel Confirmation Number (HCN).
+
+Tabel data_jamaah merupakan tabel transaksional utama yang menggunakan NIK sebagai primary key dengan foreign key reference ke tabel data_paket. Tabel ini menyimpan informasi personal lengkap jamaah termasuk data identitas sesuai dokumen resmi, informasi kontak, preferensi tipe kamar, informasi mahram untuk jamaah perempuan, assignment kamar final untuk hotel Madinah dan Mekkah, tracking status pembayaran, dan informasi kesehatan yang diperlukan untuk perjalanan. Desain tabel ini mempertimbangkan business rules seperti requirement mahram untuk jamaah perempuan dan validasi format NIK.
+
+Tabel data_invoice mengelola aspek billing dan payment tracking dengan struktur yang mendukung multiple payment per jamaah. Tabel ini menggunakan invoice_id sebagai primary key dengan format 8 karakter dan memiliki foreign key ke tabel jamaah dan paket. Implementasi payment breakdown memungkinkan tracking pembayaran bertahap dari DP hingga pelunasan dengan support untuk sistem diskon dan berbagai metode pembayaran.
+
+Tabel data_pembatalan dirancang untuk mengelola proses pembatalan perjalanan dengan workflow approval. Tabel ini menyimpan kategorisasi alasan pembatalan, referensi dokumen pendukung, kalkulasi refund berdasarkan timing policy, status approval workflow, dan tracking disbursement refund. Relasi one-to-one optional dengan tabel jamaah memastikan integritas data dan historical record maintenance.
+
+Strategi indexing diterapkan untuk optimasi performa query dengan clustered index pada primary key, non-clustered index pada foreign key yang sering digunakan untuk join operations, dan index pada field yang sering digunakan untuk filtering seperti payment_status dan tanggal_keberangkatan. Implementasi referential integrity constraints memastikan konsistensi data dengan appropriate cascade rules dan check constraints untuk validasi enum values.
+
+Perancangan Diagram Deployment dan Arsitektur Infrastruktur
+Diagram deployment menggambarkan distribusi dan eksekusi sistem di berbagai environment mulai dari development lokal hingga production di cloud platform. Arsitektur deployment dirancang dengan pendekatan multi-environment yang mendukung development workflow yang efisien dan deployment production yang scalable.
+
+Environment development lokal menggunakan XAMPP stack dengan konfigurasi Apache HTTP Server sebagai web server, PHP 8.1+ sebagai runtime environment dengan extensions yang diperlukan, MySQL sebagai database instance lokal, dan PhpMyAdmin untuk administrasi database. Struktur file development menggunakan document root di direktori htdocs dengan organisasi folder yang terstruktur untuk uploads, error logs, dan vendor libraries yang dikelola oleh Composer. Integration dengan development tools seperti VS Code dengan extensions untuk PHP, PlantUML, dan Git memastikan development experience yang optimal.
+
+Environment production di Railway.com mengimplementasikan Docker container architecture dengan base image PHP 8.1-Apache official. Runtime configuration menggunakan PHP-FPM dengan Apache mod_php dan process management menggunakan Supervisor untuk service orchestration. Application layer mencakup PHP runtime yang mendukung CLI dan web server mode, built-in server dengan konfigurasi untuk bind ke port yang ditentukan Railway, Composer dependencies dengan optimized autoloader, dan environment variables untuk configuration management yang secure.
+
+Storage layer production mengimplementasikan persistent volume untuk direktori uploads yang mounted ke path /app/uploads/, error logging dengan persistent storage di /app/error_logs/, temporary storage di /tmp/ untuk operasi seperti PDF generation, dan static assets yang di-serve langsung oleh web server untuk performa optimal. Database service menggunakan Railway MySQL sebagai managed service dengan koneksi melalui internal network, automated backup, dan built-in performance monitoring.
+
+Network architecture dirancang dengan layer yang terpisah untuk optimal security dan performance. Client access layer mengimplementasikan HTTPS protocol dengan SSL/TLS encryption, responsive design untuk support mobile dan desktop, session management menggunakan PHP sessions dengan security considerations, dan CSRF protection dengan token-based form security. Application layer menangani request processing dengan Apache mod_rewrite untuk URL routing, PHP request lifecycle dengan bootstrap dan routing yang proper, custom error handling, dan comprehensive logging untuk application dan access logs.
+
+Data access layer mengimplementasikan PDO abstraction untuk database-agnostic access, connection pooling untuk efficient resource usage, transaction management dengan ACID compliance, dan query optimization menggunakan prepared statements. Integration dengan external services mencakup SMTP service untuk email notifications dengan TLS encryption, file storage strategy yang berbeda antara filesystem untuk development dan persistent volumes untuk production, backup strategy dengan cloud storage integration, dan optional CDN untuk static asset delivery.
+
+Scalability considerations mencakup horizontal scaling dengan Railway auto-scaling berdasarkan CPU dan memory usage, load balancing yang ditangani otomatis oleh platform, session sharing menggunakan database-backed sessions, dan shared persistent volumes untuk file storage. Performance optimization diimplementasikan melalui PHP OPcache untuk bytecode caching, database indexing untuk query performance, image optimization untuk uploaded documents, dan gzip compression untuk mengurangi bandwidth usage.
+
+Monitoring dan maintenance system menggunakan Railway built-in metrics, centralized error tracking, application health endpoints untuk monitoring, dan automated serta manual backup strategy. Health check endpoints diimplementasikan untuk memastikan application availability dan integration dengan Railway monitoring system untuk proactive issue detection.
+
+Perancangan Diagram Sequence dan Workflow Proses Bisnis
+Diagram sequence menggambarkan interaksi temporal antara objek-objek dalam sistem untuk menyelesaikan skenario use case tertentu. Dalam sistem informasi MIW, lima diagram sequence utama dirancang untuk merepresentasikan workflow bisnis kritikal yang mencakup seluruh customer journey dari pendaftaran hingga penanganan pembatalan.
+
+Sequence diagram proses pendaftaran jamaah menggambarkan workflow kompleks yang melibatkan multiple actors dan sistem components. Proses dimulai dengan jamaah mengakses halaman pendaftaran melalui web browser, diikuti dengan loading data paket yang tersedia dari database, dan presentasi form pendaftaran dengan dropdown options yang dinamis. Phase data entry mencakup pengisian form data pribadi, upload dokumen yang diperlukan seperti KTP, KK, Paspor, dan foto, dengan implementasi client-side validation untuk format data dan validasi ukuran serta tipe file. Phase submission processing melibatkan POST request ke server, server-side validation dan sanitization, file upload processing dengan unique naming convention, database transaction untuk insert data, email notification generation, dan redirect ke confirmation page. Business rules yang diimplementasikan mencakup validasi uniqueness NIK, checking availability paket, file type restrictions, format validation untuk email dan nomor telepon.
+
+Sequence diagram verifikasi pembayaran admin menggambarkan workflow approval yang kritikal untuk cash flow management. Proses dimulai dengan admin login ke dashboard dan display pending payments list, diikuti dengan selection jamaah untuk review dan loading payment details dari database. Phase payment review mencakup review uploaded payment proof, kalkulasi package price berdasarkan room type, input actual payment amount, dan validasi payment terhadap package cost. Phase verification process melibatkan update payment status di database, kalkulasi remaining balance, receipt generation menggunakan TCPDF, email notification ke jamaah, dan dashboard refresh dengan updated status. Integration points mencakup TerbilangConverter untuk konversi amount ke terbilang, invoice template untuk standardized receipt format, email template dengan professional design, dan audit trail untuk payment verification logging.
+
+Sequence diagram pengelolaan kamar dan manifest menggambarkan proses kompleks room allocation dan manifest generation. Workflow dimulai dengan admin access ke manifest management, display available packages, selection package untuk manifest, dan loading jamaah list dengan room preferences. Phase room assignment mencakup system analysis available rooms versus preferences, algorithm suggestion untuk room assignments, manual adjustment oleh admin, real-time validation room capacity, dan enforcement mahram relationship requirements. Phase manifest export melibatkan final room assignment validation, export ke Excel format menggunakan PhpSpreadsheet, application manifest template, file download generation, dan print-ready format creation. Room allocation algorithm mengimplementasikan priority berdasarkan registration order, family grouping optimization, mahram requirement compliance, room type preference matching, dan hotel capacity constraints.
+
+Sequence diagram pengelolaan paket perjalanan menggambarkan administrative workflow untuk package management. Proses mencakup navigation ke package management, loading existing packages, display package list dengan CRUD options, dan form modal preparation. Phase package creation atau edit melibatkan pengisian package form, konfigurasi pricing tier untuk Quad, Triple, dan Double rooms, input hotel information, setup room allocation, dan management HCN data. Phase package processing mencakup form validation dan sanitization, creation JSON data structure, database transaction execution, cache invalidation, dan UI refresh dengan updated data. Data validation rules mencakup date validation untuk future dates only, price validation untuk positive numbers, hotel capacity consistency, room number format validation, dan currency validation.
+
+Sequence diagram proses pembatalan perjalanan menggambarkan workflow yang melibatkan multiple stakeholders dengan approval process yang structured. Proses dimulai dengan jamaah access cancellation form, diikuti dengan submission cancellation request dengan supporting documents. Phase admin review mencakup evaluation cancellation request, document verification, refund calculation berdasarkan policy, dan approval atau rejection decision. Phase notification dan finalization melibatkan email notification ke semua stakeholders, refund processing jika approved, database update dengan final status, dan audit trail maintenance. Business rules yang diimplementasikan mencakup refund calculation berdasarkan timing, required supporting documents, approval workflow dengan proper authorization, dan maintenance historical records untuk audit purposes.
+
+LAMPIRAN
+KONTAK PENULIS DAN KONTRIBUTOR PENELITIAN
+Informasi korespondensi penulis dan contributor penelitian adalah sebagai berikut:
+PENULIS
+Nama Lengkap Mahasiswa	: Muhammad Agung Laksana
+NIM	: 10519130
+e-Mail yang aktif	: drakestates@gmail.com
+Kode Prodi PDDIKTI	: -
+
+KONTRIBUTOR
+Nama Lengkap Dosen	: Rani Puspita Dhaniawaty, S.Kom., M.Kom
+NIP	: 4127.70.26.116
+NIDN/NIDK	: 0409048901
+e-Mail yang aktif	: ranipuspita@email.unikom.ac.id////////////////////
+/////
+//////
+///
+//
+
+////////
+

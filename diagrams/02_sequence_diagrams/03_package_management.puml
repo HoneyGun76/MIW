@@ -1,0 +1,140 @@
+@startuml sequence_manajemen_paket
+!include ../uml_black_white_style.puml
+
+' Strict black and white UML 2.5 standard design
+skinparam monochrome true
+skinparam shadowing false
+skinparam handwritten false
+skinparam backgroundColor White
+
+title Sequence Diagram - Manajemen Paket Travel
+
+actor "Admin" as Admin
+participant "Admin Paket" as AdminPaket
+participant "Paket Controller" as PaketCtrl
+participant "Input Validator" as Validator
+participant "Database" as DB
+participant "JSON Handler" as JSONsequence_manajemen_paket
+!include ../uml_black_white_style.puml
+title Sequence Diagram - Manajemen Paket Travel
+
+actor "Admin" as Admin
+participant "Admin Paket" as AdminPaket
+participant "Paket Controller" as PaketCtrl
+participant "Input Validator" as Validator
+participant "Database" as DB
+participant "JSON Handler" as JSON
+
+Admin -> AdminPaket: Akses halaman manajemen paket
+activate AdminPaket
+
+AdminPaket -> DB: SELECT semua paket
+activate DB
+DB --> AdminPaket: List data_paket
+deactivate DB
+
+AdminPaket --> Admin: Tampilkan daftar paket
+deactivate AdminPaket
+
+== Menambah Paket Baru ==
+
+Admin -> AdminPaket: Klik "Add New Package"
+activate AdminPaket
+
+AdminPaket --> Admin: Tampilkan modal form
+deactivate AdminPaket
+
+Admin -> PaketCtrl: Submit data paket baru
+activate PaketCtrl
+
+PaketCtrl -> Validator: Validasi input data
+activate Validator
+Validator -> Validator: Cek jenis_paket, tanggal
+Validator -> Validator: Validasi harga kamar
+Validator -> Validator: Validasi hotel info
+Validator --> PaketCtrl: Data valid
+deactivate Validator
+
+PaketCtrl -> JSON: Generate room numbers
+activate JSON
+JSON -> JSON: Create room prefixes\n(Q1, Q2, T1, D1, dst)
+JSON --> PaketCtrl: Room numbers array
+deactivate JSON
+
+PaketCtrl -> JSON: Generate HCN data
+activate JSON
+JSON -> JSON: Create HCN struktur
+JSON --> PaketCtrl: HCN JSON
+deactivate JSON
+
+PaketCtrl -> DB: INSERT data_paket
+activate DB
+DB -> DB: Simpan paket baru
+DB --> PaketCtrl: pak_id baru
+deactivate DB
+
+PaketCtrl --> Admin: Paket berhasil ditambahkan
+deactivate PaketCtrl
+
+== Edit Paket ==
+
+Admin -> AdminPaket: Klik "Edit" pada paket
+activate AdminPaket
+
+AdminPaket -> DB: SELECT paket by pak_id
+activate DB
+DB --> AdminPaket: Data paket detail
+deactivate DB
+
+AdminPaket -> JSON: Parse JSON fields
+activate JSON
+JSON -> JSON: Parse room_numbers
+JSON -> JSON: Parse HCN data
+JSON -> JSON: Parse hotel rooms
+JSON --> AdminPaket: Data terparse
+deactivate JSON
+
+AdminPaket --> Admin: Tampilkan form edit
+deactivate AdminPaket
+
+Admin -> PaketCtrl: Submit perubahan
+activate PaketCtrl
+
+PaketCtrl -> Validator: Validasi perubahan
+activate Validator
+Validator --> PaketCtrl: Data valid
+deactivate Validator
+
+PaketCtrl -> DB: UPDATE data_paket
+activate DB
+DB -> DB: Update paket
+DB --> PaketCtrl: Update berhasil
+deactivate DB
+
+PaketCtrl --> Admin: Paket berhasil diupdate
+deactivate PaketCtrl
+
+== Hapus Paket ==
+
+Admin -> PaketCtrl: Hapus paket (dengan konfirmasi)
+activate PaketCtrl
+
+PaketCtrl -> DB: DELETE FROM data_paket
+activate DB
+DB -> DB: Hapus paket
+DB --> PaketCtrl: Delete berhasil
+deactivate DB
+
+PaketCtrl --> Admin: Paket berhasil dihapus
+deactivate PaketCtrl
+
+note over Admin, JSON
+    Fitur Manajemen Paket:
+    1. CRUD operations untuk paket
+    2. Auto-generate room numbers
+    3. HCN (Hotel Confirmation Number) management
+    4. Multi-currency support (IDR/USD)
+    5. Room type pricing (Quad/Triple/Double)
+end note
+
+@enduml
