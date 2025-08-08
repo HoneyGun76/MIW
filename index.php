@@ -3,8 +3,12 @@
  * MIW Travel Management System - Main Entry Point
  * 
  * This is the main landing page for the MIW Travel Management System
- * Railway Deployment Ready
+ * Railway Deployment Ready - Redirects to new MIW-style landing page
  */
+
+// Redirect to the new MIW-style landing page
+header('Location: landing_page.php');
+exit();
 
 require_once 'config.php';
 
