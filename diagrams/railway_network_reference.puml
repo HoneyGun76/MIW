@@ -1,0 +1,44 @@
+@startuml Railway Network Architecture - Reference Style
+!theme plain
+skinparam backgroundColor white
+skinparam defaultFontColor black
+skinparam linetype ortho
+
+' Client devices
+computer "User Browser\nClient" as Client
+computer "Admin Panel\nInternal" as Admin
+computer "Mobile Client\nVendor" as Mobile
+
+' External services
+computer "Gmail SMTP\nExternal Service" as SMTP
+
+' Internet cloud  
+cloud "Internet" as Internet
+
+' Railway infrastructure
+cloud "Railway Platform" as Railway {
+    computer "Load Balancer\nSSL Termination" as LB
+    computer "Web Container\nPHP Application" as WebApp
+    database "MySQL Database" as DB
+    storage "File Storage" as Files
+}
+
+' Development
+computer "GitHub Repository" as GitHub
+computer "Railway CLI" as CLI
+
+' Network connections
+Client --> Internet : HTTPS
+Admin --> Internet : HTTPS  
+Mobile --> Internet : HTTPS
+
+Internet --> LB : HTTPS
+LB --> WebApp : HTTP
+WebApp --> DB : SQL
+WebApp --> Files : File I/O
+WebApp --> SMTP : SMTP TLS
+
+GitHub --> CLI : Deploy
+CLI --> Railway : Update
+
+@enduml

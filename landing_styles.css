@@ -1,0 +1,651 @@
+/* 
+ * MIW Landing Page Styles
+ * Exact replica of miw.co.id styling
+ */
+
+/* CSS Variables for color scheme */
+:root {
+    --tcb-color-4: #39a3d1;
+    --tcb-color-9: #ffcc29;
+    --tcb-color-11: #1a1a1a;
+    --tcb-color-3: #f5f5f5;
+    --g-regular-weight: 400;
+    --g-bold-weight: 700;
+}
+
+/* Reset and Base Styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #fff;
+}
+
+/* Status Badge */
+.status-badge {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.status-badge .badge {
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+/* Header Styles */
+#thrive-header {
+    z-index: 10;
+    box-shadow: 0 2px 30px 0 rgba(0,0,0,0.08);
+    background-color: #fff;
+    padding: 10px 20px;
+}
+
+.symbol-section-in {
+    max-width: 100%;
+    padding: 26px 20px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+.tcb-flex-row {
+    display: flex;
+    flex-flow: row;
+    align-items: stretch;
+    justify-content: space-between;
+    margin-top: 0;
+    margin-left: -15px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.tcb-flex-col {
+    flex: 1 1 auto;
+    padding-top: 0;
+    padding-left: 15px;
+    box-sizing: border-box;
+}
+
+.tcb-col {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Logo */
+.tcb-logo img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    width: 100px;
+}
+
+/* Navigation Menu */
+.thrv_widget_menu {
+    --alignment: right;
+    float: right;
+    z-index: 3;
+    position: relative;
+    padding: 0;
+    margin: 0;
+}
+
+.tve_w_menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
+    margin: 0;
+    padding: 0 0 0 1em;
+    list-style-type: none;
+    list-style-image: none;
+    background-color: #fff;
+}
+
+.tve_w_menu.tve_horizontal {
+    z-index: 9;
+    padding: 0;
+}
+
+.tve_w_menu.tve_horizontal li {
+    display: inline-block;
+    position: relative;
+    padding: 5px 15px;
+    max-width: 100%;
+    margin: 0;
+    border: none;
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--tcb-color-4);
+    line-height: 1.8em;
+}
+
+.tve_w_menu li > a {
+    color: var(--tcb-color-4);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    position: relative;
+    text-transform: capitalize;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1.8em;
+}
+
+.tve_w_menu li:hover > a {
+    color: var(--tcb-color-4);
+}
+
+/* Last menu item (CTA button) */
+.tve_w_menu > li:last-child {
+    text-align: center;
+    border: 1px solid var(--tcb-color-4);
+    border-radius: 0;
+    min-width: 110px;
+    margin: 0 0 0 20px;
+    padding: 10px 12px;
+    background: none;
+}
+
+.tve_w_menu > li:last-child > a {
+    color: var(--tcb-color-4);
+    font-size: 14px;
+    line-height: 1.1em;
+    letter-spacing: 1px;
+}
+
+.tve_w_menu > li:last-child:hover {
+    background-color: var(--tcb-color-4);
+}
+
+.tve_w_menu > li:last-child:hover > a {
+    color: #fff;
+}
+
+/* Submenu */
+.tve_w_menu.tve_horizontal > li ul {
+    padding: 0;
+    position: absolute;
+    border: 1px solid #b4b4b4;
+    border-radius: 3px;
+    display: none;
+    z-index: 4;
+    background-color: var(--tcb-color-4);
+    width: calc(100% + 1px);
+    min-width: calc(100% + 1px);
+    margin-left: 0;
+    margin-top: 1px;
+}
+
+.tve_w_menu.tve_horizontal > li:hover > ul {
+    display: block;
+    visibility: visible;
+}
+
+.tve_w_menu li li > a {
+    font-family: "Source Sans Pro";
+    font-size: 18px;
+    color: #fff;
+    font-weight: 400;
+    line-height: 1.7em;
+    text-align: center;
+    padding: 10px;
+    background: linear-gradient(#ef9d43, #ef9d43);
+    border-radius: 5px;
+    margin: 2px;
+}
+
+.tve_w_menu li li:hover > a {
+    background: none;
+    color: var(--tcb-color-11);
+}
+
+/* Mobile Menu */
+.tve-m-trigger {
+    display: none;
+    color: #333;
+}
+
+.tcb-icon-open, .tcb-icon-close {
+    transition: opacity 0.3s;
+}
+
+.tve-triggered-icon .tcb-icon-open {
+    display: none;
+}
+
+.tve-triggered-icon .tcb-icon-close {
+    display: block;
+}
+
+/* Hero Section */
+.hero-section {
+    position: relative;
+    box-sizing: border-box;
+    min-height: 566px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    box-sizing: border-box;
+    transition: box-shadow 0.5s;
+    overflow: hidden;
+    filter: grayscale(0%) brightness(100%) contrast(100%) blur(6px) sepia(0%) invert(0%) saturate(100%) hue-rotate(0deg);
+    background-image: url('miw_logo.png');
+    background-size: cover;
+    background-position: 50% 50%;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+}
+
+.hero-title {
+    font-family: 'Nunito';
+    font-weight: 800;
+    font-size: 50px;
+    color: #f5f5f5;
+    padding-top: 146px;
+    margin: 0;
+    padding-bottom: 0;
+}
+
+.hero-subtitle {
+    font-family: 'Nunito';
+    font-weight: 700;
+    font-size: 25px;
+    color: #f5f5f5;
+    padding-bottom: 33px;
+    margin-bottom: 0;
+}
+
+.hero-description {
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.highlight-text {
+    background-color: var(--tcb-color-11);
+    color: #f5f5f5;
+    padding: 10px;
+}
+
+/* CTA Button */
+.tcb-button-link {
+    letter-spacing: 2px;
+    background: linear-gradient(var(--tcb-color-9), var(--tcb-color-9));
+    border-radius: 5px;
+    padding: 18px;
+    background-color: transparent;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.tcb-button-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    color: #fff;
+    text-decoration: none;
+}
+
+.booking-notice {
+    font-size: 14px;
+    margin-top: -21px;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+/* Content Section */
+.content-section {
+    padding: 60px 0;
+}
+
+.content-title {
+    text-align: left;
+}
+
+.highlight-bg {
+    color: var(--tcb-color-4);
+    background-color: var(--tcb-color-9);
+    padding: 5px 10px;
+}
+
+/* Styled List */
+.tcb-styled-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.thrv-styled-list-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.tcb-styled-list-icon {
+    margin-right: 15px;
+    color: var(--tcb-color-4);
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+.tcb-styled-list-icon-text {
+    flex: 1;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.description-text {
+    font-size: 20px;
+    color: var(--tcb-color-11);
+    line-height: 1.6;
+    margin-top: 20px;
+}
+
+/* Why Section */
+.why-section {
+    padding: 40px 0;
+    background-color: #f8f9fa;
+}
+
+.section-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+/* Partners Logo */
+.partners-logo {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.partners-logo img {
+    max-width: 412px;
+    height: auto;
+}
+
+/* Benefits Section */
+.benefits-section {
+    padding: 60px 0;
+}
+
+.benefit-icon {
+    text-align: center;
+    font-size: 48px;
+    color: var(--tcb-color-4);
+    margin-bottom: 20px;
+}
+
+.benefit-card {
+    text-align: center;
+    padding: 30px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background: #fff;
+    transition: transform 0.3s ease;
+    height: 100%;
+}
+
+.benefit-card:hover {
+    transform: translateY(-5px);
+}
+
+.benefit-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--tcb-color-11);
+    margin-bottom: 15px;
+}
+
+.benefit-description {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* System Section */
+.system-section {
+    padding: 60px 0;
+    background-color: #f8f9fa;
+}
+
+.service-card {
+    transition: transform 0.3s;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    height: 100%;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Footer */
+.footer-section {
+    background-color: var(--tcb-color-11);
+    color: #f5f5f5;
+    padding: 40px 0 20px;
+}
+
+.footer-section h5 {
+    color: var(--tcb-color-9);
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.footer-section p {
+    margin-bottom: 10px;
+}
+
+.footer-section hr {
+    border-color: #444;
+    margin: 30px 0 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 1023px) {
+    .symbol-section-in {
+        padding-left: 40px;
+        padding-right: 30px;
+        padding: 26px 40px 22px;
+    }
+    
+    .tcb-flex-row {
+        flex-flow: row;
+    }
+    
+    .tve-m-trigger {
+        display: block;
+        color: var(--tcb-color-4);
+    }
+    
+    .tve_w_menu {
+        padding: 14px 40px;
+    }
+    
+    .tve_w_menu > li:last-child {
+        margin-left: 0;
+        padding-top: 0;
+        margin-top: 33px;
+    }
+    
+    .tve_w_menu > li {
+        line-height: 1.4em;
+        padding: 1px;
+        margin-top: 5px;
+    }
+}
+
+@media (max-width: 767px) {
+    .tcb-flex-row {
+        flex-flow: wrap;
+    }
+    
+    .tcb-flex-col {
+        flex-basis: 134px;
+    }
+    
+    .symbol-section-in {
+        padding-left: 20px;
+        padding-right: 10px;
+        padding: 16px 20px 12px;
+    }
+    
+    .tve_w_menu {
+        padding: 8px 14px 14px;
+    }
+    
+    .hero-title {
+        font-size: 32px;
+    }
+    
+    .hero-subtitle {
+        padding-bottom: 28px;
+        margin-bottom: 0;
+        line-height: 1.45em;
+        font-size: 20px;
+    }
+    
+    .hero-description {
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    
+    .tcb-flex-row {
+        flex-direction: column;
+    }
+    
+    .content-section .tcb-flex-row {
+        flex-direction: column;
+    }
+    
+    .benefits-section .tcb-flex-row {
+        flex-direction: column;
+    }
+    
+    .benefits-section .tcb-flex-col {
+        margin-bottom: 30px;
+    }
+}
+
+@media only screen and (max-width: 774px) {
+    .tve-m-trigger {
+        border-radius: 4px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: var(--tcb-color-4);
+        display: inline-block;
+        float: right;
+        font-size: 33px;
+        height: 30px;
+        line-height: 30px;
+        margin: 0;
+        padding: 8px;
+        text-align: center;
+        text-decoration: none;
+        width: 33px;
+        box-sizing: content-box;
+    }
+    
+    .tve_w_menu.tve_horizontal {
+        background-color: #fff;
+        max-height: 0;
+        overflow: hidden;
+        position: absolute;
+        transition: max-height 0.3s;
+        z-index: 9999;
+        top: 50px;
+        min-width: 250px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .tve_w_menu.tve_horizontal.tve-m-expanded {
+        transition: max-height 0.3s;
+        border: 1px solid #b4b4b4;
+        min-height: 200px;
+        overflow-y: scroll;
+        top: 49px;
+        max-height: 400px;
+    }
+    
+    .tve_w_menu.tve_horizontal > li {
+        display: block;
+        width: 100%;
+    }
+    
+    .tve_w_menu.tve_horizontal > li > a {
+        padding: 12px 15px;
+        display: block;
+        background-color: #fff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .tve_w_menu.tve_horizontal > li ul {
+        display: block;
+        position: static;
+        border: 0;
+    }
+}
+
+/* Animation Effects */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.benefit-card,
+.service-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Smooth transitions */
+* {
+    transition: all 0.3s ease;
+}
+
+a {
+    transition: color 0.3s ease;
+}
+
+.tcb-button-link,
+.service-card,
+.benefit-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}

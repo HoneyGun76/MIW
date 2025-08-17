@@ -1,0 +1,168 @@
+@startuml Railway Network Architecture - MIW Travel System
+!theme plain
+skinparam backgroundColor white
+skinparam defaultFontColor black
+skinparam linetype ortho
+skinparam arrow {
+    Color black
+    FontColor black
+}
+skinparam note {
+    BackgroundColor white
+    BorderColor black
+    FontColor black
+}
+
+' Define components
+package "Internet" {
+    [User Browser] as UserBrowser
+    [Admin Dashboard] as AdminBrowser
+    [Mobile Clients] as MobileClients
+}
+
+package "External Services" {
+    [Gmail SMTP\nsmtp.gmail.com:587\nTLS Encrypted] as SMTP
+    [Payment Gateway\n(Future Integration)\nHTTPS API] as PaymentGW
+}
+
+cloud "Railway Cloud Platform" {
+    
+    package "Railway Load Balancer\n& SSL Termination" {
+        [Railway Edge\nHTTPS/TLS] as RailwayEdge
+    }
+    
+    package "Web Service Container\n(PHP 8.1-Apache)" {
+        [MIW Application\nPort: $PORT] as WebApp
+        [Health Check\n/health.php] as HealthCheck
+        [File Upload Handler\nRailwayFileManager] as FileHandler
+        
+        package "Application Components" {
+            [Landing Page] as Landing
+            [Registration Forms\n(Haji/Umroh)] as Forms
+            [Admin Dashboard] as AdminPanel
+            [Document Management] as DocMgmt
+            [Invoice Generation] as Invoice
+            [Email Service] as EmailSvc
+        }
+    }
+    
+    package "MySQL Database Service" {
+        database "Railway MySQL\nManaged Database" as MySQL {
+            [data_paket] as TablePaket
+            [pendaftar_haji] as TableHaji
+            [pendaftar_umroh] as TableUmroh
+            [file_metadata] as TableFiles
+            [deployment_logs] as TableLogs
+            [analytics_events] as TableAnalytics
+        }
+    }
+    
+    package "Persistent Volume\n/app/uploads/" {
+        folder "Document Storage" {
+            [documents/] as DocFolder
+            [payments/] as PayFolder
+            [photos/] as PhotoFolder
+            [cancellations/] as CancelFolder
+        }
+    }
+    
+    package "Monitoring & Diagnostics" {
+        [Railway Dashboard\nHealth Monitoring] as RailwayMonitor
+        [RailwayDiagnostics\nReal-time Analytics] as Diagnostics
+        [Deployment Manager\nRollback Control] as DeployMgr
+    }
+}
+
+package "Development Environment" {
+    [GitHub Repository\nVersion Control] as GitHub
+    [Railway CLI\nDeployment Tool] as RailwayCLI
+    [Local XAMPP\nDevelopment] as LocalDev
+}
+
+' Network connections
+UserBrowser --> RailwayEdge : HTTPS Requests
+AdminBrowser --> RailwayEdge : Admin Access\nHTTPS
+MobileClients --> RailwayEdge : Mobile Access\nHTTPS
+
+RailwayEdge --> WebApp : Internal\nHTTP/HTTPS
+
+WebApp --> MySQL : Database Queries\nInternal Network\nEnvironment Variables:\nDB_HOST, DB_USER, DB_PASS
+WebApp --> DocFolder : File Storage\nPersistent Volume
+WebApp --> PayFolder : Payment Documents
+WebApp --> PhotoFolder : Profile Photos
+WebApp --> CancelFolder : Cancellation Forms
+
+WebApp --> SMTP : Email Sending\nSMTP TLS\nPort 587
+WebApp --> PaymentGW : Payment Processing\n(Future)\nHTTPS API
+
+HealthCheck --> RailwayMonitor : Health Status\nJSON Response
+WebApp --> Diagnostics : Performance Metrics\nReal-time Data
+WebApp --> DeployMgr : Deployment Status\nAnalytics
+
+GitHub --> RailwayCLI : Git Push\nAuto Deployment
+RailwayCLI --> WebApp : Deploy\nrailway up
+LocalDev --> GitHub : Code Push\nDevelopment
+
+' Internal application flow
+Landing --> Forms : User Registration
+Forms --> DocMgmt : Document Upload
+DocMgmt --> FileHandler : File Processing
+AdminPanel --> Invoice : Generate Invoice
+EmailSvc --> SMTP : Send Notifications
+
+' Database relationships
+Forms --> TableHaji : Store Haji Data
+Forms --> TableUmroh : Store Umroh Data
+Forms --> TablePaket : Package Selection
+FileHandler --> TableFiles : File Metadata
+WebApp --> TableLogs : System Logging
+WebApp --> TableAnalytics : Traffic Analytics
+
+note top of RailwayEdge
+    **Railway Platform Features:**
+    • Automatic SSL/TLS termination
+    • Load balancing & CDN
+    • DDoS protection
+    • Auto-scaling containers
+    • Global edge locations
+end note
+
+note right of MySQL
+    **Database Configuration:**
+    • Managed MySQL service
+    • Auto-scaling storage
+    • Automated backups
+    • Connection pooling
+    • UTF8MB4 charset
+    • InnoDB engine with foreign keys
+end note
+
+note bottom of DocFolder
+    **Persistent Storage:**
+    • Railway volume: /app/uploads/
+    • Survives container restarts
+    • Organized subdirectories
+    • File metadata in database
+    • Max file size: 10MB
+    • Supported: PDF, JPG, PNG
+end note
+
+note left of WebApp
+    **Environment Detection:**
+    • RAILWAY_ENVIRONMENT
+    • RAILWAY_PROJECT_ID
+    • Auto-config switching
+    • Development vs Production
+    • Dynamic path resolution
+end note
+
+note bottom of SMTP
+    **Email Configuration:**
+    • Gmail SMTP server
+    • TLS encryption
+    • App-specific passwords
+    • Environment variables
+    • Notification templates
+end note
+
+@enduml

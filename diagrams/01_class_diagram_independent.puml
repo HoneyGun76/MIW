@@ -1,0 +1,240 @@
+@startuml MIW_Travel_Class_Diagram_Independent
+
+!theme aws-orange
+title Diagram Kelas Mandiri - Sistem Manajemen Perjalanan MIW Travel
+
+' Independent Classes - Classes that don't have direct relationships in the current system
+package "Utilitas Mandiri" {
+    class DiagnosticManager {
+        -$conn: PDO
+        --
+        +checkSystemHealth(): array
+        +checkDatabaseStatus(): array
+        +checkFilePermissions(): array
+        +analyzeErrors(): array
+        +generateReport(): string
+        +logSystemEvent(event: string): void
+        +clearOldLogs(): void
+        +exportDiagnosticReport(): string
+    }
+}
+
+package "Helper Classes" {
+    class ValidationHelper {
+        --
+        +validateNIK(nik: string): boolean
+        +validateEmail(email: string): boolean
+        +validatePhone(phone: string): boolean
+        +validateDate(date: string): boolean
+        +sanitizeInput(input: string): string
+        +checkPasswordStrength(password: string): int
+    }
+
+    class SecurityHelper {
+        --
+        +hashPassword(password: string): string
+        +verifyPassword(password: string, hash: string): boolean
+        +generateCSRFToken(): string
+        +verifyCSRFToken(token: string): boolean
+        +sanitizeFilename(filename: string): string
+        +validateFileType(filename: string, allowedTypes: array): boolean
+    }
+
+    class DateTimeHelper {
+        --
+        +formatIndonesianDate(date: DateTime): string
+        +calculateAge(birthDate: Date): int
+        +addBusinessDays(date: Date, days: int): Date
+        +getIndonesianDayName(date: Date): string
+        +isWeekend(date: Date): boolean
+        +formatDuration(seconds: int): string
+    }
+
+    class CurrencyHelper {
+        --
+        +formatIDR(amount: decimal): string
+        +formatUSD(amount: decimal): string
+        +convertCurrency(amount: decimal, from: string, to: string): decimal
+        +parseAmountFromString(text: string): decimal
+        +addThousandSeparator(number: decimal): string
+    }
+}
+
+package "Configuration Helpers" {
+    class LoggingHelper {
+        -$logFile: string
+        -$logLevel: string
+        --
+        +logInfo(message: string): void
+        +logWarning(message: string): void
+        +logError(message: string): void
+        +logDebug(message: string): void
+        +rotateLogs(): void
+        +clearOldLogs(days: int): void
+        +getLogEntries(level: string, limit: int): array
+    }
+
+    class ConfigHelper {
+        --
+        +loadConfiguration(file: string): array
+        +saveConfiguration(config: array, file: string): boolean
+        +getConfigValue(key: string, default: mixed): mixed
+        +setConfigValue(key: string, value: mixed): void
+        +validateConfiguration(config: array): boolean
+        +mergeConfigurations(config1: array, config2: array): array
+    }
+
+    class CacheHelper {
+        -$cacheDir: string
+        -$defaultTTL: int
+        --
+        +set(key: string, value: mixed, ttl: int): boolean
+        +get(key: string): mixed
+        +delete(key: string): boolean
+        +clear(): boolean
+        +exists(key: string): boolean
+        +getExpiration(key: string): DateTime
+        +cleanup(): void
+    }
+}
+
+package "Report Generators" {
+    class PDFReportGenerator {
+        -$templatePath: string
+        -$outputPath: string
+        --
+        +generateJamaahReport(data: array): string
+        +generatePaymentReport(data: array): string
+        +generateManifestReport(data: array): string
+        +setTemplate(templatePath: string): void
+        +addWatermark(text: string): void
+        +setPageOrientation(orientation: string): void
+        +exportToPDF(content: string, filename: string): boolean
+    }
+
+    class ExcelReportGenerator {
+        -$templatePath: string
+        -$outputPath: string
+        --
+        +generateJamaahSpreadsheet(data: array): string
+        +generateFinancialReport(data: array): string
+        +generateStatisticsReport(data: array): string
+        +addChart(type: string, data: array): void
+        +formatCells(range: string, format: array): void
+        +applyFilters(worksheet: object): void
+        +exportToExcel(data: array, filename: string): boolean
+    }
+
+    class CSVExporter {
+        --
+        +exportToCSV(data: array, filename: string): boolean
+        +importFromCSV(filename: string): array
+        +validateCSVFormat(filename: string, expectedHeaders: array): boolean
+        +parseCSVLine(line: string): array
+        +escapeCSVField(field: string): string
+    }
+}
+
+package "Third Party Integrations" {
+    class SMSGateway {
+        -$apiKey: string
+        -$endpoint: string
+        --
+        +sendSMS(to: string, message: string): boolean
+        +checkDeliveryStatus(messageId: string): string
+        +getBalance(): decimal
+        +validatePhoneNumber(phone: string): boolean
+        +formatMessage(template: string, data: array): string
+    }
+
+    class PaymentGateway {
+        -$merchantId: string
+        -$secretKey: string
+        -$endpoint: string
+        --
+        +createPaymentLink(amount: decimal, description: string): string
+        +verifyPaymentCallback(data: array): boolean
+        +getPaymentStatus(transactionId: string): string
+        +processRefund(transactionId: string, amount: decimal): boolean
+        +getTransactionHistory(dateFrom: Date, dateTo: Date): array
+    }
+
+    class WhatsAppAPI {
+        -$apiToken: string
+        -$baseURL: string
+        --
+        +sendMessage(phone: string, message: string): boolean
+        +sendDocument(phone: string, documentPath: string): boolean
+        +sendTemplate(phone: string, templateName: string, params: array): boolean
+        +getMessageStatus(messageId: string): string
+        +createGroup(name: string, participants: array): string
+    }
+}
+
+package "Background Services" {
+    class EmailQueueService {
+        -$queueFile: string
+        -$batchSize: int
+        --
+        +addToQueue(email: array): void
+        +processQueue(): void
+        +retryFailedEmails(): void
+        +getQueueStatus(): array
+        +clearQueue(): void
+        +scheduleEmail(email: array, sendTime: DateTime): void
+    }
+
+    class BackupService {
+        -$backupPath: string
+        -$retention: int
+        --
+        +createDatabaseBackup(): string
+        +createFilesBackup(): string
+        +restoreFromBackup(backupFile: string): boolean
+        +scheduleBackup(interval: string): void
+        +cleanOldBackups(): void
+        +verifyBackupIntegrity(backupFile: string): boolean
+    }
+
+    class MaintenanceService {
+        --
+        +optimizeDatabase(): void
+        +cleanTemporaryFiles(): void
+        +updateSystemStatistics(): void
+        +checkSystemHealth(): array
+        +performSecurityScan(): array
+        +scheduleMaintenance(time: DateTime): void
+    }
+}
+
+note top of DiagnosticManager
+  Kelas ini berdiri sendiri dan tidak
+  memiliki relasi langsung dengan
+  kelas lain dalam sistem
+end note
+
+note top of ValidationHelper
+  Helper classes yang bersifat
+  utility dan dapat digunakan
+  secara independen
+end note
+
+note top of PDFReportGenerator
+  Report generators yang dapat
+  bekerja dengan data dari
+  berbagai sumber tanpa coupling
+end note
+
+note top of SMSGateway
+  Third party integrations yang
+  dapat dikonfigurasi secara
+  terpisah dari sistem utama
+end note
+
+note top of EmailQueueService
+  Background services yang
+  berjalan secara asynchronous
+  dan mandiri
+end note
+
+@enduml

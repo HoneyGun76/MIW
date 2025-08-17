@@ -127,13 +127,40 @@ DIAGRAM AKTIVITAS (ACTIVITY DIAGRAMS)
     Detail:
     Activity diagram kompleks untuk proses pembatalan yang mencakup evaluasi aturan bisnis, perhitungan finansial, workflow persetujuan, dan pemrosesan refund. Menampilkan jalur berbeda berdasarkan waktu pembatalan dan jenis paket.
 
+DIAGRAM SEKUENSIAL BERDASARKAN ACTIVITY DIAGRAM
+------------------------------------------------
+
+19. Package Management Sequence (05_package_management_sequence.puml)
+    Ringkasan: Menampilkan interaksi antar komponen dalam proses manajemen paket.
+    
+    Detail:
+    Diagram ini menggambarkan interaksi antara Admin, admin_paket.php, paket_functions.php, dan Database dalam proses pengelolaan paket. Mencakup pengambilan data paket, penambahan paket baru dengan validasi HCN, pengolahan informasi hotel, dan kalkulasi ketersediaan kamar. Menunjukkan alur lengkap dari tampilan daftar paket hingga penyimpanan data paket baru ke database.
+
+20. Registration Process Sequence (06_registration_sequence.puml)
+    Ringkasan: Menampilkan alur lengkap proses pendaftaran jamaah dari awal hingga konfirmasi.
+    
+    Detail:
+    Diagram sekuensial yang mendetailkan proses pendaftaran jamaah mulai dari akses website, pengisian formulir, validasi data, upload dokumen, hingga notifikasi email. Melibatkan interaksi antara Jamaah, form registrasi, submit handler, upload handler, database, dan email service. Mencakup validasi NIK unik, penanganan upload file, dan pengiriman email konfirmasi.
+
+21. Cancellation Process Sequence (07_cancellation_sequence.puml)
+    Ringkasan: Menampilkan proses pembatalan booking dari permintaan jamaah hingga persetujuan admin.
+    
+    Detail:
+    Diagram yang menggambarkan alur pembatalan yang melibatkan Jamaah, form pembatalan, handler pembatalan, dan admin dashboard. Mencakup validasi data pembatalan, upload bukti pembayaran, notifikasi email, dan proses review admin dengan dua kemungkinan keputusan (approve/reject). Menunjukkan penanganan data pembatalan dan penghapusan data jamaah jika disetujui.
+
+22. Manifest Export Sequence (08_manifest_export_sequence.puml)
+    Ringkasan: Menampilkan proses export manifest jamaah menjadi format Excel.
+    
+    Detail:
+    Diagram yang mendetailkan proses export manifest dimulai dari admin mengakses roomlist, memilih paket, hingga mengunduh file manifest. Melibatkan pengambilan data paket dan jamaah dari database, kalkulasi kelengkapan dokumen, pemrosesan data jamaah, dan generasi file Excel. Menunjukkan penanganan error untuk paket yang tidak ditemukan.
+
 RINGKASAN SISTEM
 ==================
 Sistem MIW Travel adalah aplikasi web berbasis PHP untuk manajemen perjalanan umroh dan haji yang terintegrasi dengan database MySQL dan di-deploy pada platform Railway.com. Sistem mendukung proses bisnis lengkap dari registrasi jamaah hingga export manifest dengan fitur seperti manajemen dokumen, verifikasi pembayaran, penanganan pembatalan, dan pelaporan administratif.
 
-Total Diagram: 18 diagram UML yang terdiri dari:
+Total Diagram: 22 diagram UML yang terdiri dari:
 - 3 Class Diagrams (struktur sistem)
-- 7 Sequence Diagrams (interaksi komponen)
+- 11 Sequence Diagrams (interaksi komponen)
 - 1 Database Diagram (skema data)
 - 1 Deployment Diagram (arsitektur infrastruktur)
 - 1 Use Case Diagram (kebutuhan fungsional)
@@ -144,63 +171,129 @@ Standar: UML 2.5 dengan gaya hitam-putih untuk keperluan akademis dan dokumentas
 PERANCANGAN KODIFIKASI SISTEM
 ==========================================
 
-Sistem MIW Travel mengimplementasikan struktur kodifikasi berbasis PHP procedural yang terorganisir dengan pola modular untuk memudahkan maintenance dan pengembangan. Berikut adalah penjelasan perancangan kodifikasi dari sistem yang telah di-deploy di Railway.com:
+Perancangan kodifikasi dilakukan untuk mempermudah identifikasi status dari setiap proses yang terjadi dalam sistem. Status ini digunakan sebagai penanda kondisi terkini dari data, seperti proses perjanjian kerja sama, pemesanan layanan, maupun transaksi pembayaran. Kodifikasi ini memudahkan sistem dalam menampilkan informasi yang sesuai dan membantu dalam memahami alur proses secara lebih jelas.
 
-1. **Struktur File**
-   - **File Konfigurasi**: Sistem menggunakan `config.php` sebagai file konfigurasi utama dengan kemampuan deteksi environment otomatis untuk Railway dan pengembangan lokal
-   - **File Modul**: Dikelompokkan berdasarkan fungsi seperti `paket_functions.php`, `email_functions.php`, `file_handler.php`
-   - **File Tampilan**: Menggunakan pola PHP dengan HTML embedded seperti `admin_dashboard.php`, `form_umroh.php`
-   - **File JavaScript**: Terpisah untuk fungsi interaktif seperti `manifest_scripts.js`, `roomlist_scripts.js`, `paket_scripts.js`
-   - **File CSS**: Terpisah seperti `styles.css`, `admin_styles.css`, `invoice_styles.css`
+1. Kodifikasi Status Jamaah
+Tabel 1.1 Perancangan Kodifikasi Pada Tabel Jamaah
++----+-------------------+----------------------------------------+
+| No | Nilai             | Keterangan                             |
+|    | Kodifikasi        |                                        |
++----+-------------------+----------------------------------------+
+| 1. | pending           | Jamaah telah mendaftar namun belum    |
+|    |                   | melakukan verifikasi dokumen dan      |
+|    |                   | pembayaran                             |
++----+-------------------+----------------------------------------+
+| 2. | verified          | Jamaah telah diverifikasi dokumen     |
+|    |                   | dan data personalnya oleh admin       |
++----+-------------------+----------------------------------------+
+| 3. | paid              | Jamaah telah melakukan pembayaran     |
+|    |                   | dan pembayaran telah dikonfirmasi     |
++----+-------------------+----------------------------------------+
+| 4. | departed          | Jamaah telah berangkat melaksanakan   |
+|    |                   | ibadah haji/umroh sesuai jadwal       |
++----+-------------------+----------------------------------------+
 
-2. **Pola Koneksi Database**
-   - Implementasi koneksi database terpusat menggunakan PDO (PHP Data Objects)
-   - Deteksi environment otomatis untuk Railway.com dan lokal
-   - Penggunaan prepared statements untuk keamanan dari SQL injection
-   - Pengelolaan transaksi atomik untuk operasi kompleks
+2. Kodifikasi Status Paket
+Tabel 1.2 Perancangan Kodifikasi Pada Tabel Paket
++----+-------------------+----------------------------------------+
+| No | Nilai             | Keterangan                             |
+|    | Kodifikasi        |                                        |
++----+-------------------+----------------------------------------+
+| 1. | aktif             | Paket tersedia untuk pendaftaran      |
+|    |                   | dan dapat dipilih oleh jamaah         |
++----+-------------------+----------------------------------------+
+| 2. | nonaktif          | Paket tidak tersedia untuk            |
+|    |                   | pendaftaran (sudah penuh/expired)     |
++----+-------------------+----------------------------------------+
 
-3. **Struktur Kode**
-   - **Fungsi Modular**: Kode diorganisir dalam fungsi-fungsi dengan tanggung jawab spesifik
-   - **Error Handling**: Menggunakan try-catch untuk penanganan error dan logging
-   - **Validasi Input**: Implementasi validasi client-side dan server-side
-   - **Abstraksi Database**: Fungsi helper untuk operasi umum database
+3. Kodifikasi Status Pembatalan
+Tabel 1.3 Perancangan Kodifikasi Pada Tabel Pembatalan
++----+-------------------+----------------------------------------+
+| No | Nilai             | Keterangan                             |
+|    | Kodifikasi        |                                        |
++----+-------------------+----------------------------------------+
+| 1. | pending           | Permintaan pembatalan sedang          |
+|    |                   | diproses dan menunggu persetujuan     |
++----+-------------------+----------------------------------------+
+| 2. | approved          | Permintaan pembatalan disetujui       |
+|    |                   | dan proses refund dapat dilakukan     |
++----+-------------------+----------------------------------------+
+| 3. | rejected          | Permintaan pembatalan ditolak         |
+|    |                   | berdasarkan kebijakan perusahaan      |
++----+-------------------+----------------------------------------+
 
-4. **Pengelolaan Aset dan Upload**
-   - Sistem file terstruktur untuk upload dokumen jamaah
-   - Validasi tipe file dan batasan ukuran
-   - Organisasi file berdasarkan kategori dan jenis dokumen
+4. Kodifikasi Status Pembayaran
+Tabel 1.4 Perancangan Kodifikasi Pada Tabel Payment
++----+-------------------+----------------------------------------+
+| No | Nilai             | Keterangan                             |
+|    | Kodifikasi        |                                        |
++----+-------------------+----------------------------------------+
+| 1. | pending           | Bukti pembayaran telah diupload       |
+|    |                   | dan menunggu verifikasi admin         |
++----+-------------------+----------------------------------------+
+| 2. | verified          | Pembayaran telah diverifikasi         |
+|    |                   | dan dikonfirmasi oleh admin           |
++----+-------------------+----------------------------------------+
+| 3. | rejected          | Pembayaran ditolak karena bukti       |
+|    |                   | tidak valid atau tidak sesuai         |
++----+-------------------+----------------------------------------+
 
-5. **Struktur Deployment**
-   - Optimisasi untuk Railway.com dengan konfigurasi khusus
-   - Penggunaan environment variables untuk konfigurasi sensitif
-   - Docker containerization untuk konsistensi environment
-   - Health checks untuk pemantauan sistem
+5. Kodifikasi Status Perkawinan
+Tabel 1.5 Perancangan Kodifikasi Pada Tabel Status Perkawinan
++----+-------------------+----------------------------------------+
+| No | Nilai             | Keterangan                             |
+|    | Kodifikasi        |                                        |
++----+-------------------+----------------------------------------+
+| 1. | Belum Kawin       | Jamaah belum menikah (status lajang)  |
++----+-------------------+----------------------------------------+
+| 2. | Kawin             | Jamaah sudah menikah                   |
++----+-------------------+----------------------------------------+
+| 3. | Cerai Hidup       | Jamaah bercerai dan mantan pasangan   |
+|    |                   | masih hidup                            |
++----+-------------------+----------------------------------------+
+| 4. | Cerai Mati        | Jamaah bercerai karena pasangan       |
+|    |                   | meninggal dunia (janda/duda)          |
++----+-------------------+----------------------------------------+
 
-6. **Penanganan Sesi dan Keamanan**
-   - Penggunaan session untuk manajemen state
-   - Sanitasi input untuk mencegah XSS
-   - Prepared statements untuk mencegah SQL injection
-   - Validasi hak akses untuk fungsi administratif
+6. Kodifikasi Status Kelengkapan Dokumen
+Tabel 1.6 Perancangan Kodifikasi Pada Status Kelengkapan Dokumen
++----+-------------------+----------------------------------------+
+| No | Nilai             | Keterangan                             |
+|    | Kodifikasi        |                                        |
++----+-------------------+----------------------------------------+
+| 1. | Complete          | Semua dokumen (100%) telah diupload   |
+|    |                   | dan lengkap                            |
++----+-------------------+----------------------------------------+
+| 2. | Almost Complete   | Dokumen hampir lengkap (80-99%)       |
+|    |                   | tinggal beberapa dokumen              |
++----+-------------------+----------------------------------------+
+| 3. | In Progress       | Dokumen dalam proses pengumpulan      |
+|    |                   | (50-79%) sebagian telah diupload      |
++----+-------------------+----------------------------------------+
+| 4. | Incomplete        | Dokumen belum lengkap (<50%)          |
+|    |                   | masih banyak yang harus diupload      |
++----+-------------------+----------------------------------------+
 
-7. **Integrasi Pihak Ketiga**
-   - Integrasi email service untuk notifikasi
-   - Library Excel untuk export manifest
-   - Bootstrap dan jQuery untuk UI
+7. Kodifikasi Jenis Kelamin
+Tabel 1.7 Perancangan Kodifikasi Pada Jenis Kelamin
++----+-------------------+----------------------------------------+
+| No | Nilai             | Keterangan                             |
+|    | Kodifikasi        |                                        |
++----+-------------------+----------------------------------------+
+| 1. | L                 | Laki-laki                              |
++----+-------------------+----------------------------------------+
+| 2. | P                 | Perempuan                              |
++----+-------------------+----------------------------------------+
 
-8. **Kodifikasi Database**
-   - Skema relasional dengan normalisasi yang tepat
-   - Indeks untuk optimisasi query
-   - Foreign key constraints untuk integritas referensial
-   - Kode prefiks tabel untuk kategorisasi (seperti `data_jamaah`, `data_paket`, `data_manifest`)
+8. Kodifikasi Jenis Perjalanan
+Tabel 1.8 Perancangan Kodifikasi Pada Jenis Perjalanan
++----+-------------------+----------------------------------------+
+| No | Nilai             | Keterangan                             |
+|    | Kodifikasi        |                                        |
++----+-------------------+----------------------------------------+
+| 1. | umroh             | Perjalanan ibadah umroh                |
++----+-------------------+----------------------------------------+
+| 2. | haji              | Perjalanan ibadah haji                 |
++----+-------------------+----------------------------------------+
 
-9. **Penanganan Manifest dan Roomlist**
-   - Sistem kodifikasi kamar dengan prefiks dan nomor
-   - Pengelolaan relasi antar jamaah dalam satu paket
-   - Tracking kelengkapan dokumen dengan status persentase
 
-10. **Struktur Logging dan Monitoring**
-    - Log error terstruktur untuk troubleshooting
-    - Penanganan batasan eksekusi untuk operasi berat
-    - Timestamp untuk tracking perubahan data
-
-Struktur kodifikasi ini mendukung skalabilitas, maintainability, dan keamanan aplikasi dalam mengelola seluruh siklus hidup layanan travel haji dan umroh dari pendaftaran hingga keberangkatan.
