@@ -331,7 +331,73 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		</style>
 
 	</head>
-		<body class="wp-singular page-template-default page page-id-6698 wp-theme-astra tve_lp"style="" data-css="tve-u-184a77262c3"> 				<div class="wrp cnt bSe" style="display: none">
+		<body class="wp-singular page-template-default page page-id-6698 wp-theme-astra tve_lp"style="" data-css="tve-u-184a77262c3">
+		
+		<!-- Clean Bootstrap Navigation -->
+		<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+			<div class="container">
+				<a class="navbar-brand" href="beranda.php">
+					<img src="https://miw.co.id/wp-content/uploads/2025/08/logo-miw.jpg" height="50" alt="MIW Logo" class="img-fluid">
+				</a>
+				
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav ms-auto">
+						<li class="nav-item">
+							<a class="nav-link fw-semibold" href="beranda.php">Beranda</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active fw-semibold" href="umroh.php">Ibadah Umroh</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link fw-semibold" href="haji.php">Ibadah Haji</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link fw-semibold" href="profil.php">Tentang Kami</a>
+						</li>
+						<li class="nav-item ms-3">
+							<a class="btn btn-outline-primary btn-sm px-3" href="#kontak">Konsultasi</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		
+		<!-- Add Bootstrap CSS if not already included -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+		
+		<style>
+		body {
+			padding-top: 80px; /* Account for fixed navbar */
+		}
+		.navbar-brand img {
+			max-height: 50px;
+		}
+		.nav-link {
+			color: #2c3e50 !important;
+			font-size: 16px;
+			margin: 0 10px;
+			transition: color 0.3s ease;
+		}
+		.nav-link:hover, .nav-link.active {
+			color: #3498db !important;
+		}
+		.btn-outline-primary {
+			border-color: #3498db;
+			color: #3498db;
+		}
+		.btn-outline-primary:hover {
+			background-color: #3498db;
+			border-color: #3498db;
+			color: white;
+		}
+		</style>
+		
+		 				<div class="wrp cnt bSe" style="display: none">
 			<div class="awr"></div>
 		</div>
 		<div class="tve_wrap_all" id="tcb_landing_page">

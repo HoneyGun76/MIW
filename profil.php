@@ -328,7 +328,42 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		</style>
 
 	</head>
-		<body class="home wp-singular page-template-default page page-id-4248 wp-theme-astra tve_lp tcb-full-header"style="" data-css="tve-u-184a77262c3"> 				<div class="wrp cnt bSe" style="display: none">
+		<body class="home wp-singular page-template-default page page-id-4248 wp-theme-astra tve_lp tcb-full-header"style="" data-css="tve-u-184a77262c3"> 
+
+<!-- Bootstrap Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: relative; z-index: 1000;">
+    <div class="container">
+        <!-- Logo -->
+        <a class="navbar-brand" href="beranda.php">
+            <img src="miw_logo.png" alt="MIW Logo" height="50">
+        </a>
+        
+        <!-- Toggler for Mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- Navigation Links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="beranda.php">Beranda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="umroh.php">Umroh</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="haji.php">Haji</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="profil.php" style="color: #0d6efd;">Profil</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+		<div class="wrp cnt bSe" style="display: none">
 			<div class="awr"></div>
 		</div>
 		<div class="tve_wrap_all" id="tcb_landing_page">
