@@ -407,33 +407,57 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
 <div class="thrive-group-edit-config" style="display: none !important"></div>
-<div data-match-lp-colors="1" class="thrv_wrapper thrv-page-section tve-height-update thrv-lp-block tcb-local-vars-root" data-css="tve-u-18616c88db2" style="" tcb-template-name="Hero Area 02" tcb-template-id="6023d260bbe08164657a1002" data-keep-css_id="1" data-styled-scrollbar="0" data-inherit-lp-settings="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
-	<div class="tve-page-section-out" data-css="tve-u-18616c88db3" style=""></div>
-	<div class="tve-page-section-in tve_empty_dropzone" data-css="tve-u-18616c88db4" style=""><div class="thrv_wrapper thrv-columns" style="--tcb-col-el-width: 1000;" data-css="tve-u-1987de9fd3c"><div class="tcb-flex-row v-2 tcb--cols--1" data-css="tve-u-1987dea03a0" style=""><div class="tcb-flex-col" data-css="tve-u-190b9bbfa42" style=""><div class="tcb-col" style=""><div class="thrv_wrapper thrv-columns" style="--tcb-col-el-width: 1000;" data-css="tve-u-18a3c95385f"><div class="tcb-flex-row v-2 tcb--cols--2 tcb-resized" data-css="tve-u-18a3c9548a8" style=""><div class="tcb-flex-col" data-css="tve-u-1987e00146e" style=""><div class="tcb-col"><a class="tcb-logo thrv_wrapper" data-css="tve-u-18a3c93836a" data-img-style="width: 100%;" data-remove-href="1" class=""><picture><source srcset="https://miw.co.id/wp-content/uploads/2025/08/logo-miw.jpg 128w, https://miw.co.id/wp-content/uploads/2025/08/logo-miw-60x60.jpg 60w" media="(min-width:1024px)"></source><img src="https://miw.co.id/wp-content/uploads/2025/08/logo-miw.jpg" height="128" width="128" alt="madinah iman wisata" style="width: 100%;" class="tve-not-lazy-loaded"></img></picture></a></div></div><div class="tcb-flex-col" data-css="tve-u-196cbed86c5" style=""><div class="tcb-col" style="" data-css="tve-u-18a3c94d62b"><div class="thrv_wrapper thrv_widget_menu tve-custom-menu-upgrade tve-menu-template-light-tmp-first tve-mobile-dropdown tve-regular" data-tve-switch-icon="tablet,mobile" style="" data-css="tve-u-190b9bbe92e"><div class="thrive-colors-palette-config" style="display: none !important"></div>
-<div class="thrive-shortcode-config" style="display: none !important"></div><div class="thrive-shortcode-html thrive-shortcode-html-editable tve_clearfix" ><a class="tve-m-trigger t_tve_horizontal" href="javascript:void(0)"><div class="thrv_wrapper thrv_icon tcb-icon-open" data-not-changeable="true"><svg class="tcb-icon" viewBox="0 0 24 24" data-name="align-justify"><g><g><path class="st0" d="M23,13H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,13,23,13z"/></g><g><path class="st0" d="M23,6.7H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,6.7,23,6.7z"/></g><g><path class="st0" d="M23,19.3H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,19.3,23,19.3z"/></g></g></svg></div><div class="thrv_wrapper thrv_icon tcb-icon-close" data-not-changeable="true"><svg class="tcb-icon" viewBox="0 0 24 24" data-name="close"><path class="st0" d="M13.4,12l7.1-7.1c0.4-0.4,0.4-1,0-1.4s-1-0.4-1.4,0L12,10.6L4.9,3.5c-0.4-0.4-1-0.4-1.4,0s-0.4,1,0,1.4l7.1,7.1 l-7.1,7.1c-0.4,0.4-0.4,1,0,1.4c0.4,0.4,1,0.4,1.4,0l7.1-7.1l7.1,7.1c0.4,0.4,1,0.4,1.4,0c0.4-0.4,0.4-1,0-1.4L13.4,12z"/></svg></div></a><div class="tcb-hamburger-logo"></div><ul id="m-190b9bbe92d" class="tve_w_menu tve_horizontal "><li id="menu-item-6204" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-6204 lvl-0" data-id="6204" data-item-display-desktop="text" ><a href="https://miw.co.id/" class="menu-link "><span class="tve-disabled-text-inner">Beranda</span></a></li>
-<li id="menu-item-6131" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home current-menu-ancestor current-menu-parent menu-item-has-children menu-item-6131 lvl-0" data-id="6131" data-item-display-desktop="text" ><a aria-expanded="false" href="https://miw.co.id" class="menu-link "><span class="tve-disabled-text-inner">Ibadah Umroh</span><span class="tve-item-dropdown-trigger"></span><span role="application" class="dropdown-menu-toggle ast-header-navigation-arrow" tabindex="0" aria-expanded="false" aria-label="Menu Toggle" aria-haspopup="true"></span></a><button class="ast-menu-toggle" aria-expanded="false"><span class="screen-reader-text">Menu Toggle</span><span class="ast-icon icon-arrow"><svg class="ast-arrow-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="26px" height="16.043px" viewBox="57 35.171 26 16.043" enable-background="new 57 35.171 26 16.043" xml:space="preserve">
-                <path d="M57.5,38.193l12.5,12.5l12.5-12.5l-2.5-2.5l-10,10l-10-10L57.5,38.193z" />
-                </svg></span></button>
-<ul class="sub-menu menu-item-6131-ul">
-	<li id="menu-item-6704" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-6698 current_page_item menu-item-6704 lvl-1 tve-state-active" data-id="6704" data-item-display-desktop="text" ><a href="https://miw.co.id/umroh-agustus-4/" class="menu-link tve-state-active"><span class="tve-disabled-text-inner">Umroh Agustus</span></a></li>
-	<li id="menu-item-6705" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6705 lvl-1" data-id="6705" data-item-display-desktop="text" ><a href="https://miw.co.id/umroh-september/" class="menu-link "><span class="tve-disabled-text-inner">Umroh September</span></a></li>
-</ul>
-</li>
-<li id="menu-item-6132" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6132 lvl-0" data-id="6132" data-item-display-desktop="text" ><a aria-expanded="false" href="#" class="menu-link "><span class="tve-disabled-text-inner">Ibadah Haji</span><span class="tve-item-dropdown-trigger"></span><span role="application" class="dropdown-menu-toggle ast-header-navigation-arrow" tabindex="0" aria-expanded="false" aria-label="Menu Toggle" aria-haspopup="true"></span></a><button class="ast-menu-toggle" aria-expanded="false"><span class="screen-reader-text">Menu Toggle</span><span class="ast-icon icon-arrow"><svg class="ast-arrow-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="26px" height="16.043px" viewBox="57 35.171 26 16.043" enable-background="new 57 35.171 26 16.043" xml:space="preserve">
-                <path d="M57.5,38.193l12.5,12.5l12.5-12.5l-2.5-2.5l-10,10l-10-10L57.5,38.193z" />
-                </svg></span></button>
-<ul class="sub-menu menu-item-6132-ul">
-	<li id="menu-item-6136" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6136 lvl-1" data-id="6136" data-item-display-desktop="text" ><a href="https://hajiplus.miw.co.id" class="menu-link "><span class="tve-disabled-text-inner">Haji Plus</span></a></li>
-</ul>
-</li>
-<li id="menu-item-4673" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4673 lvl-0" data-id="4673" data-item-display-desktop="text" ><a href="https://miw.co.id/about-us/" class="menu-link "><span class="tve-disabled-text-inner">Tentang Kami</span></a></li>
-</ul></div>
-</div></div></div></div></div></div></div></div></div><div class="thrv_wrapper thrv-columns" style="--tcb-col-el-width: 1000;" data-css="tve-u-1970fe269f9"><div class="tcb-flex-row v-2 tcb--cols--1" data-css="tve-u-1970fe272bd" style=""><div class="tcb-flex-col" data-css="tve-u-190b4858a58" style=""><div class="tcb-col" style="" data-css="tve-u-190098774a2"><div class="thrv_wrapper thrv_text_element" data-css="tve-u-18616c88db5" style=""><h1 class="" data-css="tve-u-190b494bb9c" style=""><span data-css="tve-u-1987d92e1a1"></span><span data-css="tve-u-1987d92e1a5">&nbsp;UMROH AGUSTUS 2025&nbsp;</span><span data-css="tve-u-1987d7bd38a"></span></h1></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-187e3ca9810" style=""><h2 class="" data-css="tve-u-196cc01dc32" style=""><strong><span data-css="tve-u-1987de4a989"><span data-css="tve-u-1987d8c76e4">Berangkat Umroh Sehangat Keluarga</span></span></strong></h2><p><strong><span data-css="tve-u-1987d8c76e0"><span data-css="tve-u-1987de292e9">Jadikan Perjalanan Ibadah Anda Lebih Bermakna bersama Madinah Iman Wisata (MIW). Kami membersamai anda seperti keluarga sendiri&nbsp;</span></span></strong></p></div></div></div></div></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root" data-css="tve-u-19710a54051" style="" data-button-size="s">
-	<div class="thrive-colors-palette-config" style="display: none !important"></div>
-	<a href="#tve-jump-1987dd911de" class="tcb-button-link tcb-plain-text tve-jump-scroll" style="" rel="nofollow" jump-animation="smooth">
-		<span class="tcb-button-texts" style=""><span class="tcb-button-text thrv-inline-text" style="" data-css="tve-u-19710a54055">Lihat Paket Umroh Agustus</span></span>
-	</a>
-</div><div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-1970fea58d3">	<p style="" data-css="tve-u-1970feaad5f">Booking Umroh Bulan Ini – Kuota Terbatas</p></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-18616c88db7"><p>&nbsp;</p></div></div>
+<div class="thrv_wrapper thrv-columns" style="--tcb-col-el-width: 1000;" data-css="tve-u-1970fe269f9"><div class="tcb-flex-row v-2 tcb--cols--1" data-css="tve-u-1970fe272bd" style=""><div class="tcb-flex-col" data-css="tve-u-190b4858a58" style=""><div class="tcb-col" style="" data-css="tve-u-190098774a2"><div class="thrv_wrapper thrv_text_element" data-css="tve-u-18616c88db5" style=""><h1 class="" data-css="tve-u-190b494bb9c" style=""><span data-css="tve-u-1987d92e1a1"></span><span data-css="tve-u-1987d92e1a5">&nbsp;UMROH BERSAMA MIW&nbsp;</span><span data-css="tve-u-1987d7bd38a"></span></h1></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-187e3ca9810" style=""><h2 class="" data-css="tve-u-196cc01dc32" style=""><strong><span data-css="tve-u-1987de4a989"><span data-css="tve-u-1987d8c76e4">Berangkat Umroh Sehangat Keluarga</span></span></strong></h2><p><strong><span data-css="tve-u-1987d8c76e0"><span data-css="tve-u-1987de292e9">Jadikan Perjalanan Ibadah Anda Lebih Bermakna bersama Madinah Iman Wisata (MIW). Kami membersamai anda seperti keluarga sendiri&nbsp;</span></span></strong></p></div></div></div></div></div>
+
+<!-- Flyer Gallery Section -->
+<div class="container my-5">
+    <h2 class="text-center mb-4">Paket Umroh Tersedia</h2>
+    <div class="row">
+        <?php
+        $flyerDirectory = 'sample/';
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        
+        if (is_dir($flyerDirectory)) {
+            $files = scandir($flyerDirectory);
+            $flyers = [];
+            
+            foreach ($files as $file) {
+                if ($file !== '.' && $file !== '..') {
+                    $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                    if (in_array($extension, $allowedExtensions)) {
+                        $flyers[] = $file;
+                    }
+                }
+            }
+            
+            if (!empty($flyers)) {
+                foreach ($flyers as $flyer) {
+                    echo '<div class="col-md-4 col-sm-6 mb-4">';
+                    echo '<div class="card h-100">';
+                    echo '<img src="' . $flyerDirectory . $flyer . '" class="card-img-top" alt="' . pathinfo($flyer, PATHINFO_FILENAME) . '" style="height: 400px; object-fit: cover;">';
+                    echo '<div class="card-body">';
+                    echo '<h5 class="card-title">' . ucfirst(str_replace(['-', '_'], ' ', pathinfo($flyer, PATHINFO_FILENAME))) . '</h5>';
+                    echo '<p class="card-text">Paket umroh dengan fasilitas terbaik dan harga terjangkau.</p>';
+                    echo '<a href="#" class="btn btn-primary">Info Lebih Lanjut</a>';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
+                }
+            } else {
+                echo '<div class="col-12">';
+                echo '<p class="text-center">Tidak ada flyer yang tersedia saat ini.</p>';
+                echo '</div>';
+            }
+        } else {
+            echo '<div class="col-12">';
+            echo '<p class="text-center">Direktori flyer tidak ditemukan.</p>';
+            echo '</div>';
+        }
+        ?>
+    </div>
+</div>
+
+<div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-1970fea58d3">	<p style="" data-css="tve-u-1970feaad5f">Booking Umroh Sekarang – Kuota Terbatas</p></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-18616c88db7"><p>&nbsp;</p></div></div>
 </div><div class="thrv_wrapper tve_image_caption" data-css="tve-u-1987eb2695f" style=""><span class="tve_image_frame"><img decoding="async" class="tve_image wp-image-6742 tve-not-lazy-loaded" alt="" data-id="6742" width="760" data-init-width="1143" data-init-height="167" title="logo-partners-new-sarana-umrah-1" src="https://miw.co.id/wp-content/uploads/2025/08/logo-partners-new-sarana-umrah-1.png" data-width="760" data-css="tve-u-1987eb2833f" style="" srcset="https://miw.co.id/wp-content/uploads/2025/08/logo-partners-new-sarana-umrah-1.png 1143w, https://miw.co.id/wp-content/uploads/2025/08/logo-partners-new-sarana-umrah-1-768x112.png 768w" sizes="(max-width: 1143px) 100vw, 1143px" /></span></div><div class="thrv_wrapper thrv_text_element"><h2 class="" data-css="tve-u-1987dda46ca" style=""><span data-css="tve-u-1987dda538a">Mengapa </span></h2><h2 class="" data-css="tve-u-1987de5989c" style=""><span data-css="tve-u-1987dda538a">Madinah Iman Wisata&nbsp;</span></h2></div><div data-inherit-lp-settings="1" data-match-lp-colors="1" class="thrv_wrapper thrv-page-section tcb-local-vars-root" data-css="tve-u-1987dd93cc5" style="" tcb-template-name="Benefits 05 (INTERNAL)" tcb-template-id="64565_internal" data-keep-css_id="1"><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div>
 <div class="tve-page-section-out" style="" data-css="tve-u-1987dd93cd4"></div>
 <div class="tve-page-section-in   tve_empty_dropzone" data-css="tve-u-1987dd93cc0" style=""><div class="thrv_wrapper thrv-columns dynamic-group-kemm0gf1" data-css="tve-u-1987dd93cc4" style="--tcb-col-el-width: 1000;"><div class="tcb-flex-row v-2 tcb--cols--3" data-css="tve-u-1987dd93cc1" style=""><div class="tcb-flex-col" data-css="tve-u-1987dd93cd7" style=""><div class="tcb-col dynamic-group-kemm0dkh" data-css="tve-u-1987dd93cea" style=""><div class="thrv_wrapper thrv_icon tcb-icon-display tcb-local-vars-root dynamic-group-kemlzt8n" data-css="tve-u-1987dd93cde" style="" data-style-d="rounded_inverted"><svg class="tcb-icon" viewBox="0 0 24 24" data-id="icon-bullseye-arrow-solid" data-name="" style=""><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,10.84 21.79,9.69 21.39,8.61L19.79,10.21C19.93,10.8 20,11.4 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.6,4 13.2,4.07 13.79,4.21L15.4,2.6C14.31,2.21 13.16,2 12,2M19,2L15,6V7.5L12.45,10.05C12.3,10 12.15,10 12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12C14,11.85 14,11.7 13.95,11.55L16.5,9H18L22,5H19V2M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12H16A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8V6Z"></path></svg></div><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad dynamic-group-kemm0apo" data-css="tve-u-1987dd93cdd" style="">
