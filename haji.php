@@ -175,73 +175,7 @@ var tve_frontend_options = {"ajaxurl":"https:\/\/hajiplus.miw.co.id\/wp-admin\/a
 		</style>
 
 	</head>
-		<body class="home wp-singular page-template-default page page-id-2 wp-theme-astra tve_lp"style="" data-css="tve-u-15e09c94f7d">
-		
-		<!-- Clean Bootstrap Navigation -->
-		<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
-			<div class="container">
-				<a class="navbar-brand" href="beranda.php">
-					<img src="https://miw.co.id/wp-content/uploads/2025/08/logo-miw.jpg" height="50" alt="MIW Logo" class="img-fluid">
-				</a>
-				
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav ms-auto">
-						<li class="nav-item">
-							<a class="nav-link fw-semibold" href="beranda.php">Beranda</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link fw-semibold" href="umroh.php">Ibadah Umroh</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link active fw-semibold" href="haji.php">Ibadah Haji</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link fw-semibold" href="profil.php">Tentang Kami</a>
-						</li>
-						<li class="nav-item ms-3">
-							<a class="btn btn-outline-primary btn-sm px-3" href="#kontak">Konsultasi</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-		
-		<!-- Add Bootstrap CSS if not already included -->
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-		
-		<style>
-		body {
-			padding-top: 80px; /* Account for fixed navbar */
-		}
-		.navbar-brand img {
-			max-height: 50px;
-		}
-		.nav-link {
-			color: #2c3e50 !important;
-			font-size: 16px;
-			margin: 0 10px;
-			transition: color 0.3s ease;
-		}
-		.nav-link:hover, .nav-link.active {
-			color: #3498db !important;
-		}
-		.btn-outline-primary {
-			border-color: #3498db;
-			color: #3498db;
-		}
-		.btn-outline-primary:hover {
-			background-color: #3498db;
-			border-color: #3498db;
-			color: white;
-		}
-		</style>
-		
-		 				<div class="wrp cnt bSe" style="display: none">
+		<body class="home wp-singular page-template-default page page-id-2 wp-theme-astra tve_lp"style="" data-css="tve-u-15e09c94f7d"> 				<div class="wrp cnt bSe" style="display: none">
 			<div class="awr"></div>
 		</div>
 		<div class="tve_wrap_all" id="tcb_landing_page">
@@ -253,27 +187,10 @@ var tve_frontend_options = {"ajaxurl":"https:\/\/hajiplus.miw.co.id\/wp-admin\/a
 <div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrv_wrapper thrv-page-section thrv-lp-block" data-css="tve-u-1854cf29aa1" style="" tcb-template-name="CTA 09" tcb-template-id="61030" data-keep-css_id="1"><div class="tve-page-section-out" data-css="tve-u-1854cf29aa2" style=""></div><div class="tve-page-section-in tve_empty_dropzone" style="" data-css="tve-u-1854cf29aa3"><div class="thrv_wrapper thrv_widget_menu tve-custom-menu-upgrade tve-menu-template-light-tmp-first tve-mobile-dropdown tve-regular" data-tve-switch-icon="tablet,mobile" style="" data-css="tve-u-18e2a8cebb3">
 <div class="thrive-shortcode-config" style="display: none !important"></div>
 </div><div class="thrv_wrapper thrv-columns" style="--tcb-col-el-width: 1100;" data-css="tve-u-1987f2de677"><div class="tcb-flex-row v-2 tcb--cols--2 tcb-resized" data-css="tve-u-1987f2b5ca4" style=""><div class="tcb-flex-col column-fixed-width" data-css="tve-u-1987f2b2146" style=""><div class="tcb-col" data-css="tve-u-1987f2b25f4" style=""><a class="tcb-logo thrv_wrapper" data-css="tve-u-1871458fecb" data-img-style="width: 100%;" class=""><picture><source srcset="https://hajiplus.miw.co.id/wp-content/uploads/2025/08/logo-miw-1.jpg 128w, https://hajiplus.miw.co.id/wp-content/uploads/2025/08/logo-miw-1-60x60.jpg 60w" media="(min-width:1024px)"></source><img src="https://hajiplus.miw.co.id/wp-content/uploads/2025/08/logo-miw-1.jpg" height="128" width="128" alt="" style="width: 100%;" class="tve-not-lazy-loaded"></img></picture></a></div></div><div class="tcb-flex-col" data-css="tve-u-1987f2b48f9" style=""><div class="tcb-col" data-css="tve-u-1987f2b4d9a" style=""><div class="thrv_wrapper thrv_widget_menu tve-custom-menu-upgrade tve-mobile-dropdown tve-menu-template-light-tmp-first tve-regular" data-tve-switch-icon="mobile" style="" data-tve-allhoriz="1" data-css="tve-u-1987f427e52"><div class="thrive-colors-palette-config" style="display: none !important"></div>
-<div class="thrive-shortcode-config" style="display: none !important"></div><div class="thrive-shortcode-html thrive-shortcode-html-editable tve_clearfix" ><a class="tve-m-trigger t_tve_horizontal" href="javascript:void(0)"><div class="thrv_wrapper thrv_icon tcb-icon-open" data-not-changeable="true"><svg class="tcb-icon" viewBox="0 0 24 24" data-name="align-justify"><g><g><path class="st0" d="M23,13H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,13,23,13z"/></g><g><path class="st0" d="M23,6.7H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,6.7,23,6.7z"/></g><g><path class="st0" d="M23,19.3H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,19.3,23,19.3z"/></g></g></svg></div><div class="thrv_wrapper thrv_icon tcb-icon-close" data-not-changeable="true"><svg class="tcb-icon" viewBox="0 0 24 24" data-name="close"><path class="st0" d="M13.4,12l7.1-7.1c0.4-0.4,0.4-1,0-1.4s-1-0.4-1.4,0L12,10.6L4.9,3.5c-0.4-0.4-1-0.4-1.4,0s-0.4,1,0,1.4l7.1,7.1 l-7.1,7.1c-0.4,0.4-0.4,1,0,1.4c0.4,0.4,1,0.4,1.4,0l7.1-7.1l7.1,7.1c0.4,0.4,1,0.4,1.4,0c0.4-0.4,0.4-1,0-1.4L13.4,12z"/></svg></div></a><div class="tcb-hamburger-logo"></div><ul id="m-1987f2a5e32" class="tve_w_menu tve_horizontal "><li id="menu-item-124" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-124 lvl-0" data-id="124" data-item-display-desktop="text" ><a href="https://miw.co.id" class="menu-link "><span class="tve-disabled-text-inner">Beranda</span></a></li>
-<li id="menu-item-127" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-127 lvl-0" data-id="127" data-item-display-desktop="text" ><a aria-expanded="false" href="#" class="menu-link "><span class="tve-disabled-text-inner">Ibadah Umroh</span><span class="tve-item-dropdown-trigger"><svg class="tve-dropdown-icon-up" viewBox="0 0 320 512"><path d="M151.5 347.8L3.5 201c-4.7-4.7-4.7-12.3 0-17l19.8-19.8c4.7-4.7 12.3-4.7 17 0L160 282.7l119.7-118.5c4.7-4.7 12.3-4.7 17 0l19.8 19.8c4.7 4.7 4.7 12.3 0 17l-148 146.8c-4.7 4.7-12.3 4.7-17 0z"/></svg></span><span role="application" class="dropdown-menu-toggle ast-header-navigation-arrow" tabindex="0" aria-expanded="false" aria-label="Menu Toggle" aria-haspopup="true"></span></a><button class="ast-menu-toggle" aria-expanded="false"><span class="screen-reader-text">Menu Toggle</span><span class="ast-icon icon-arrow"><svg class="ast-arrow-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="26px" height="16.043px" viewBox="57 35.171 26 16.043" enable-background="new 57 35.171 26 16.043" xml:space="preserve">
-                <path d="M57.5,38.193l12.5,12.5l12.5-12.5l-2.5-2.5l-10,10l-10-10L57.5,38.193z" />
-                </svg></span></button>
-<ul class="sub-menu menu-item-127-ul">
-	<li id="menu-item-126" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-126 lvl-1" data-id="126" data-item-display-desktop="text" ><a href="https://miw.co.id/umroh-agustus" class="menu-link "><span class="tve-disabled-text-inner">Umroh Agustus</span></a></li>
-	<li id="menu-item-128" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-128 lvl-1" data-id="128" data-item-display-desktop="text" ><a href="https://miw.co.id/umroh-september" class="menu-link "><span class="tve-disabled-text-inner">Umroh September</span></a></li>
-	<li id="menu-item-129" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-129 lvl-1" data-id="129" data-item-display-desktop="text" ><a href="https://miw.co.id/umroh-oktober" class="menu-link "><span class="tve-disabled-text-inner">Umroh Oktober</span></a></li>
-	<li id="menu-item-130" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-130 lvl-1" data-id="130" data-item-display-desktop="text" ><a href="https://miw.co.id/umroh-november" class="menu-link "><span class="tve-disabled-text-inner">Umroh November</span></a></li>
-	<li id="menu-item-131" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-131 lvl-1" data-id="131" data-item-display-desktop="text" ><a href="https://miw.co.id/umroh-desember" class="menu-link "><span class="tve-disabled-text-inner">Umroh Desember</span></a></li>
-</ul>
-</li>
-<li id="menu-item-132" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-132 lvl-0" data-id="132" data-item-display-desktop="text" ><a aria-expanded="false" href="#" class="menu-link "><span class="tve-disabled-text-inner">Ibadah Haji</span><span class="tve-item-dropdown-trigger"><svg class="tve-dropdown-icon-up" viewBox="0 0 320 512"><path d="M151.5 347.8L3.5 201c-4.7-4.7-4.7-12.3 0-17l19.8-19.8c4.7-4.7 12.3-4.7 17 0L160 282.7l119.7-118.5c4.7-4.7 12.3-4.7 17 0l19.8 19.8c4.7 4.7 4.7 12.3 0 17l-148 146.8c-4.7 4.7-12.3 4.7-17 0z"/></svg></span><span role="application" class="dropdown-menu-toggle ast-header-navigation-arrow" tabindex="0" aria-expanded="false" aria-label="Menu Toggle" aria-haspopup="true"></span></a><button class="ast-menu-toggle" aria-expanded="false"><span class="screen-reader-text">Menu Toggle</span><span class="ast-icon icon-arrow"><svg class="ast-arrow-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="26px" height="16.043px" viewBox="57 35.171 26 16.043" enable-background="new 57 35.171 26 16.043" xml:space="preserve">
-                <path d="M57.5,38.193l12.5,12.5l12.5-12.5l-2.5-2.5l-10,10l-10-10L57.5,38.193z" />
-                </svg></span></button>
-<ul class="sub-menu menu-item-132-ul">
-	<li id="menu-item-159" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-159 lvl-1 tve-state-active" data-id="159" data-item-display-desktop="text" ><a href="https://hajiplus.miw.co.id" class="menu-link tve-state-active"><span class="tve-disabled-text-inner">Haji Plus</span></a></li>
-	<li id="menu-item-160" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-160 lvl-1 tve-state-active" data-id="160" data-item-display-desktop="text" ><a href="https://hajiplus.miw.co.id" class="menu-link tve-state-active"><span class="tve-disabled-text-inner">Haji Khusus</span></a></li>
-</ul>
-</li>
-<li id="menu-item-133" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-133 lvl-0" data-id="133" data-item-display-desktop="text" ><a href="https://miw.co.id/tentang-kami" class="menu-link "><span class="tve-disabled-text-inner">Tentang Kami</span></a></li>
+<div class="thrive-shortcode-config" style="display: none !important"></div><div class="thrive-shortcode-html thrive-shortcode-html-editable tve_clearfix" ><a class="tve-m-trigger t_tve_horizontal" href="javascript:void(0)"><div class="thrv_wrapper thrv_icon tcb-icon-open" data-not-changeable="true"><svg class="tcb-icon" viewBox="0 0 24 24" data-name="align-justify"><g><g><path class="st0" d="M23,13H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,13,23,13z"/></g><g><path class="st0" d="M23,6.7H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,6.7,23,6.7z"/></g><g><path class="st0" d="M23,19.3H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,19.3,23,19.3z"/></g></g></svg></div><div class="thrv_wrapper thrv_icon tcb-icon-close" data-not-changeable="true"><svg class="tcb-icon" viewBox="0 0 24 24" data-name="close"><path class="st0" d="M13.4,12l7.1-7.1c0.4-0.4,0.4-1,0-1.4s-1-0.4-1.4,0L12,10.6L4.9,3.5c-0.4-0.4-1-0.4-1.4,0s-0.4,1,0,1.4l7.1,7.1 l-7.1,7.1c-0.4,0.4-0.4,1,0,1.4c0.4,0.4,1,0.4,1.4,0l7.1-7.1l7.1,7.1c0.4,0.4,1,0.4,1.4,0c0.4-0.4,0.4-1,0-1.4L13.4,12z"/></svg></div></a><div class="tcb-hamburger-logo"></div><ul id="m-1987f2a5e32" class="tve_w_menu tve_horizontal "><li id="menu-item-1" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1 lvl-0" data-id="1" data-item-display-desktop="text"><a href="beranda.php" class="menu-link"><span class="tve-disabled-text-inner">Beranda</span></a></li>
+<li id="menu-item-2" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2 lvl-0" data-id="2" data-item-display-desktop="text"><a href="umroh.php" class="menu-link"><span class="tve-disabled-text-inner">Umroh</span></a></li>
+<li id="menu-item-3" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-3 lvl-0 tve-state-active" data-id="3" data-item-display-desktop="text"><a href="haji.php" class="menu-link tve-state-active"><span class="tve-disabled-text-inner">Haji</span></a></li>
+<li id="menu-item-4" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4 lvl-0" data-id="4" data-item-display-desktop="text"><a href="profil.php" class="menu-link"><span class="tve-disabled-text-inner">Profil</span></a></li>
 </ul></div>
 </div></div></div></div></div><div class="thrv_wrapper thrv_text_element" data-css="tve-u-1854cf29aa6" style=""><h1 class="" data-css="tve-u-1871457155f" style=""><strong><span data-css="tve-u-1987f28205e">&nbsp;Haji Plus&nbsp;</span></strong></h1><h1 class="" style="" data-css="tve-u-1987f31c8b0"><span data-css="tve-u-1987f282060"><strong><span data-css="tve-u-1946d5f0120"> PT Madinah Iman Wisata&nbsp;</span></strong></span></h1><p style="" data-css="tve-u-18b48093fa6"><strong><span data-css="tve-u-1987f364d51">Pe</span>nyelenggara Ibadah Haji Plus. Masa Tunggu Hanya 6 Tahun</strong></p></div><div class="thrv_wrapper thrv-columns" style="--tcb-col-el-width: 1100;" data-css="tve-u-1987f30285c"><div class="tcb-flex-row v-2 tcb--cols--1"><div class="tcb-flex-col" data-css="tve-u-18560b57555" style=""><div class="tcb-col variable-height" style="" data-css="tve-u-187146a98b9"><div class="thrv_wrapper thrv_text_element" data-css="tve-u-18b47f568a2" style=""><h3 class="" style="" data-css="tve-u-1987f32ba92"><span style="font-family: &quot;Open Sans&quot;; font-size: 20px;" data-css="tve-u-1946d5f8370">Sambutlah panggilan menjadi Dhuyufurrohman.</span></h3><h3 class="" style="" data-css="tve-u-1987f32ba94"><span data-css="tve-u-190b92dd352" style="font-family: &quot;Open Sans&quot;; font-size: 20px;">Rasakan nikmatnya Haji ke Baitullah Bersama MIW.</span><br><span data-css="tve-u-18b480341a2" style="font-size: 24px;"><span style="font-family: &quot;ADLaM Display&quot;;" data-css="tve-u-190b92d34f9">Harga Mulai $11,000</span></span></h3></div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root tcb-with-icon" data-css="tve-u-1940c4b70a3" style="">
 	<div class="thrive-colors-palette-config" style="display: none !important"></div>
