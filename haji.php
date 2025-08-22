@@ -200,13 +200,6 @@ var tve_frontend_options = {"ajaxurl":"https:\/\/hajiplus.miw.co.id\/wp-admin\/a
 
 		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text" style="" data-css="tve-u-1987f32e1ba">Tanya Haji Plus, Klik disini</span></span>
 	</a>
-</div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root tcb-with-icon" data-css="tve-u-1940c4b70a4" style="margin-top: 10px !important;">
-	<div class="thrive-colors-palette-config" style="display: none !important"></div>
-	<a href="form_haji.php" class="tcb-button-link tcb-plain-text" style="background-color: rgb(238, 130, 238) !important;"><span class="tcb-button-icon">
-	<div class="thrv_wrapper thrv_icon tve_no_drag tve_no_icons tcb-icon-inherit-style tcb-local-vars-root tcb-icon-display" data-css="tve-u-1940c4e0264" style=""><svg class="tcb-icon" viewBox="0 0 512 512" data-id="icon-clipboard-list-solid" data-name="" style=""><path d="M336 64h-56l-4.514-22.568C270.146 14.398 245.814 0 217.152 0h-58.304c-28.662 0-53.018 14.398-58.332 41.432L96 64H40c-13.255 0-24 10.745-24 24s10.745 24 24 24h8v368c0 13.255 10.745 24 24 24h352c13.255 0 24-10.745 24-24V112h8c13.255 0 24-10.745 24-24s-10.745-24-24-24zM149.618 80h76.764l2.28 11.429C229.8 96.232 234.22 100 239.284 100h33.432c5.064 0 9.484-3.768 10.622-8.571L285.618 80h50.764c13.255 0 24 10.745 24 24v16H125.618V104c0-13.255 10.745-24 24-24zM96 128h320v352H96V128zm64 64c-8.837 0-16 7.163-16 16s7.163 16 16 16h192c8.837 0 16-7.163 16-16s-7.163-16-16-16H160zm0 64c-8.837 0-16 7.163-16 16s7.163 16 16 16h192c8.837 0 16-7.163 16-16s-7.163-16-16-16H160zm0 64c-8.837 0-16 7.163-16 16s7.163 16 16 16h192c8.837 0 16-7.163 16-16s-7.163-16-16-16H160z"></path></svg></div>
-</span>
-		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text" style="" data-css="tve-u-1987f32e1bb">📝 Form Pendaftaran Haji</span></span>
-	</a>
 </div></div></div></div></div></div><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div></div><div class="thrv_wrapper thrv-page-section tve-height-update" data-inherit-lp-settings="1">
 	<div class="tve-page-section-out"></div>
 	<div class="tve-page-section-in" data-css="tve-u-1940fc2df8f"><div class="thrv_wrapper tve_image_caption" data-css="tve-u-1987f445b06" style=""><span class="tve_image_frame"><img decoding="async" class="tve_image wp-image-117 tve-not-lazy-loaded tcb-moved-image" alt="" data-id="117" width="698" data-init-width="1143" data-init-height="167" title="logo-partners-new-sarana-umrah-1" src="https://hajiplus.miw.co.id/wp-content/uploads/2025/08/logo-partners-new-sarana-umrah-1-1.png" data-width="698" data-css="tve-u-19887107e3f" style="" srcset="https://hajiplus.miw.co.id/wp-content/uploads/2025/08/logo-partners-new-sarana-umrah-1-1.png 1143w, https://hajiplus.miw.co.id/wp-content/uploads/2025/08/logo-partners-new-sarana-umrah-1-1-300x44.png 300w, https://hajiplus.miw.co.id/wp-content/uploads/2025/08/logo-partners-new-sarana-umrah-1-1-1024x150.png 1024w, https://hajiplus.miw.co.id/wp-content/uploads/2025/08/logo-partners-new-sarana-umrah-1-1-768x112.png 768w" sizes="(max-width: 1143px) 100vw, 1143px" /></span></div><div class="thrv_wrapper thrv-columns" style="--tcb-col-el-width: 1123;" data-css="tve-u-18b47ea87c4"><div class="tcb-flex-row v-2 tcb--cols--2"><div class="tcb-flex-col" data-css="tve-u-18b47ea8a01" style=""><div class="tcb-col" data-css="tve-u-1941021facf" style=""><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad kbqczy5e" data-css="tve-u-18b47ea87ca" style="">
@@ -230,13 +223,6 @@ var tve_frontend_options = {"ajaxurl":"https:\/\/hajiplus.miw.co.id\/wp-admin\/a
 </span>
 
 		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text" style="" data-css="tve-u-1987f4c006b">Tanya Haji Plus</span></span>
-	</a>
-</div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root tcb-with-icon" data-css="tve-u-194108c5485" style="margin-top: 10px !important;">
-	<div class="thrive-colors-palette-config" style="display: none !important"></div>
-	<a href="form_haji.php" class="tcb-button-link tcb-plain-text" style="background-color: rgb(238, 130, 238) !important;"><span class="tcb-button-icon">
-	<div class="thrv_wrapper thrv_icon tve_no_drag tve_no_icons tcb-icon-inherit-style tcb-local-vars-root tcb-icon-display" data-css="tve-u-194108c5486" style=""><svg class="tcb-icon" viewBox="0 0 512 512" data-id="icon-clipboard-list-solid" data-name="" style=""><path d="M336 64h-56l-4.514-22.568C270.146 14.398 245.814 0 217.152 0h-58.304c-28.662 0-53.018 14.398-58.332 41.432L96 64H40c-13.255 0-24 10.745-24 24s10.745 24 24 24h8v368c0 13.255 10.745 24 24 24h352c13.255 0 24-10.745 24-24V112h8c13.255 0 24-10.745 24-24s-10.745-24-24-24zM149.618 80h76.764l2.28 11.429C229.8 96.232 234.22 100 239.284 100h33.432c5.064 0 9.484-3.768 10.622-8.571L285.618 80h50.764c13.255 0 24 10.745 24 24v16H125.618V104c0-13.255 10.745-24 24-24zM96 128h320v352H96V128zm64 64c-8.837 0-16 7.163-16 16s7.163 16 16 16h192c8.837 0 16-7.163 16-16s-7.163-16-16-16H160zm0 64c-8.837 0-16 7.163-16 16s7.163 16 16 16h192c8.837 0 16-7.163 16-16s-7.163-16-16-16H160zm0 64c-8.837 0-16 7.163-16 16s7.163 16 16 16h192c8.837 0 16-7.163 16-16s-7.163-16-16-16H160z"></path></svg></div>
-</span>
-		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text" style="" data-css="tve-u-1987f4c006c">📝 Form Pendaftaran Haji</span></span>
 	</a>
 </div></div>
 </div><div class="thrv_wrapper thrv-page-section thrv-lp-block" data-inherit-lp-settings="1" data-css="tve-u-17eb84a9894" style="" tcb-template-name="Pros&amp;#038;Cons 04" tcb-template-id="60862" data-keep-css_id="1"><div class="tve-page-section-out"></div><div class="tve-page-section-in tve_empty_dropzone  " style="" data-css="tve-u-19410977d33"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tcb-local-vars-root" style="" data-css="tve-u-17e5135a314" data-ct-name="Chic Light" data-ct="testimonial-7320" data-element-name="Testimonial">
@@ -266,13 +252,6 @@ var tve_frontend_options = {"ajaxurl":"https:\/\/hajiplus.miw.co.id\/wp-admin\/a
 </span>
 
 		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text">Tanya Haji Plus</span></span>
-	</a>
-</div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root tcb-with-icon" data-css="tve-u-1940d934bec" style="margin-top: 10px !important;">
-	<div class="thrive-colors-palette-config" style="display: none !important"></div>
-	<a href="form_haji.php" class="tcb-button-link tcb-plain-text" style=""><span class="tcb-button-icon">
-	<div class="thrv_wrapper thrv_icon tve_no_drag tve_no_icons tcb-icon-inherit-style tcb-local-vars-root tcb-icon-display" data-css="tve-u-1940d934bed" style=""><svg class="tcb-icon" viewBox="0 0 24 24" data-id="icon-edit-solid" data-name="" style=""><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg></div>
-</span>
-		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text">📝 Form Pendaftaran Haji</span></span>
 	</a>
 </div></div>
 </div><div class="thrv_wrapper thrv-page-section tve-height-update" data-inherit-lp-settings="1" data-css="tve-u-19410a911a4" style="">
@@ -719,43 +698,41 @@ var tve_dash_front = {"ajaxurl":"https:\/\/hajiplus.miw.co.id\/wp-admin\/admin-a
 <script type="text/javascript">var tcb_current_post_lists=JSON.parse('[]'); var tcb_post_lists=tcb_post_lists?[...tcb_post_lists,...tcb_current_post_lists]:tcb_current_post_lists;</script>			<script>
 			/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
 			</script>
-            
-                <div class="twwr-container twwr-floating bottom-right" style="bottom:30px;right:30px;" data-rot-id="4372">
 
-                                            <span id="contact-trigger" class="twwr-whatsapp-icon-only"><img class="icon" src="https://miw.co.id/wp-content/plugins/tw-whatsapp-rotator//images/whatsapp-icon-a.svg"></span>
-                    
-                    <div id="notification-badge">1</div>
+			<!-- Floating Registration Button -->
+			<div id="miw-floating-registration" style="position: fixed; bottom: 20px; right: 80px; z-index: 999998; cursor: pointer;">
+				<a href="form_haji.php" style="text-decoration: none;">
+					<div style="background: linear-gradient(135deg, #ff8c00, #ffa500); color: white; padding: 12px 16px; border-radius: 25px; box-shadow: 0 4px 12px rgba(255, 140, 0, 0.3); display: flex; align-items: center; gap: 8px; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px;">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+							<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+						</svg>
+						<span>Daftar Haji</span>
+					</div>
+				</a>
+			</div>
 
-                    <ul class="twwr-whatsapp-content">
-						<li class="twwr-content-header">
-							<a class="close-chat" title="Close Support">Close</a>
-							<img class="icon" src="https://miw.co.id/wp-content/plugins/tw-whatsapp-rotator//images/whatsapp-icon-a.svg"> <h5>Assalamu&#039;alaikum .. <span>Adakah yang dapat kami bantu?</span></h5>
-                        </li>
-                                                    <li class="available">
-                                <a class="twwr-whatsapp-button" href="https://miw.co.id/wa/madinah-iman-wisata/?agent=4370&number=6281399467866&ref=https://miw.co.id/haji-plus" target="_blank" data-agent="4370"  data-number="6281399467866" data-chat="4372" rel="nofollow">
-                                                                        <span class="twwr-whatsapp-text">
-                                        <span class="twwr-whatsapp-label">
-                                                                                        <span class="status">Online</span>
-                                        </span>
+			<style>
+			#miw-floating-registration:hover div {
+				transform: translateY(-2px);
+				box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4) !important;
+				background: linear-gradient(135deg, #ff7f00, #ff9500) !important;
+			}
+			
+			@media (max-width: 768px) {
+				#miw-floating-registration {
+					right: 70px !important;
+					bottom: 15px !important;
+				}
+				#miw-floating-registration div {
+					padding: 10px 12px !important;
+					font-size: 12px !important;
+				}
+				#miw-floating-registration svg {
+					width: 16px !important;
+					height: 16px !important;
+				}
+			}
+			</style>
 
-                                        Ida Tahmidah                                    </span>
-                                </a>
-                            </li>
-                        
-						<li class="twwr-content-footer">
-							<p>Kontak CS melalui WhatsApp</p>
-						</li>
-                    </ul>
-                    <audio id="twwr-whatsapp-audio" preload="auto">
-                        <source src="https://miw.co.id/wp-content/plugins/tw-whatsapp-rotator/audio-files/alert.mp3" type="audio/mpeg" />
-                    </audio>
-                    <script type="text/javascript">
-                        setTimeout(function() {
-                          document.getElementById('twwr-whatsapp-audio').play();
-                        }, 3000)
-                    </script>
-
-                </div>
-            
 						</body>
 </html>

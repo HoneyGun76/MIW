@@ -400,11 +400,6 @@ Umroh Agustus</strong></h3><h4 class="" data-css="tve-u-18cd9f51a8e" style="text
 	<a href="https://miw.co.id/wa/madinah-iman-wisata/" class="tcb-button-link tcb-plain-text" style="" target="_blank">
 		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text" style="" data-css="tve-u-19710a57bdc">Konsultasi Paket Umroh Sekarang!</span></span>
 	</a>
-</div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root" data-css="tve-u-19710a57bdb" style="margin-top: 10px !important;">
-	<div class="thrive-colors-palette-config" style="display: none !important"></div>
-	<a href="form_umroh.php" class="tcb-button-link tcb-plain-text" style="">
-		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text" style="" data-css="tve-u-19710a57bdd">📝 Form Pendaftaran Umroh</span></span>
-	</a>
 </div><div class="thrv_wrapper thrv-page-section tve-height-update" data-css="tve-u-195d9816abf" style="">
 	<div class="tve-page-section-out" style="" data-css="tve-u-196cec4bb20"></div>
 	<div class="tve-page-section-in" style="" data-css="tve-u-1971162c72a"><div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-1987ddbc751"><h2 class="" data-css="tve-u-1970fd237d5" style="text-align: center;"><span data-css="tve-u-1970fd311de"><span data-css="tve-u-1970fd311e0">Alhamdulillah, PT&nbsp;</span></span><span data-css="tve-u-1970fd311de"><span data-css="tve-u-1970fd311e0">Madinah Iman Wisata mendapatkan Penghargaan Nasional Sebagai</span> </span><span data-css="tve-u-1987de6de3b">Indonesia Leading Umrah Travel Agent 2023/2024</span></h2></div></div>
@@ -1102,6 +1097,42 @@ var tve_dash_front = {"ajaxurl":"https:\/\/miw.co.id\/wp-admin\/admin-ajax.php",
 <script type="text/javascript">var tcb_current_post_lists=JSON.parse('[]'); var tcb_post_lists=tcb_post_lists?[...tcb_post_lists,...tcb_current_post_lists]:tcb_current_post_lists;</script>			<script>
 			/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
 			</script>
+
+			<!-- Floating Registration Button -->
+			<div id="miw-floating-registration" style="position: fixed; bottom: 20px; right: 80px; z-index: 999998; cursor: pointer;">
+				<a href="form_umroh.php" style="text-decoration: none;">
+					<div style="background: linear-gradient(135deg, #ff8c00, #ffa500); color: white; padding: 12px 16px; border-radius: 25px; box-shadow: 0 4px 12px rgba(255, 140, 0, 0.3); display: flex; align-items: center; gap: 8px; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px;">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+							<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+						</svg>
+						<span>Daftar Umroh</span>
+					</div>
+				</a>
+			</div>
+
+			<style>
+			#miw-floating-registration:hover div {
+				transform: translateY(-2px);
+				box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4) !important;
+				background: linear-gradient(135deg, #ff7f00, #ff9500) !important;
+			}
+			
+			@media (max-width: 768px) {
+				#miw-floating-registration {
+					right: 70px !important;
+					bottom: 15px !important;
+				}
+				#miw-floating-registration div {
+					padding: 10px 12px !important;
+					font-size: 12px !important;
+				}
+				#miw-floating-registration svg {
+					width: 16px !important;
+					height: 16px !important;
+				}
+			}
+			</style>
+
 						</body>
 </html>
 
