@@ -1,20 +1,18 @@
 <?php
-// Include configuration
-require_once 'config.php';
-
-// Set current page for navigation highlighting
 $current_page = 'profil';
-
+include 'config.php';
 ?>
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" prefix="og: https://ogp.me/ns#" class="tcb">
 <head>
-    <meta charset="utf-8">
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
     <title>About Us - Madinah Iman Wisata Pusat</title>
     <meta name="description" content="⭐⭐⭐⭐⭐about us: Madinah Iman Wisata Travel ✈️ Berpengalaman lebih 15th memberangkatkan jamaah haji & umroh. Melayani lebih baik.">
-    <meta name="keywords" content="about us madinah iman wisata, travel haji umroh, iTTA award winning, perusahaan travel terpercaya, PPIU, PIHK">
+    <meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large">
+    <link rel="canonical" href="https://miw.co.id/profil.php">
     
     <!-- Open Graph Meta Tags -->
     <meta property="og:locale" content="id_ID">
@@ -24,12 +22,111 @@ $current_page = 'profil';
     <meta property="og:url" content="https://miw.co.id/profil.php">
     <meta property="og:site_name" content="Madinah Iman Wisata Bandung">
     <meta property="og:image" content="https://miw.co.id/wp-content/uploads/2025/08/1.jpg">
+    <meta property="og:image:secure_url" content="https://miw.co.id/wp-content/uploads/2025/08/1.jpg">
+    <meta property="og:image:width" content="800">
+    <meta property="og:image:height" content="800">
+    <meta property="og:image:alt" content="about us">
+    <meta property="og:image:type" content="image/jpeg">
     
-    <!-- CSS Styles -->
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About Us - Madinah Iman Wisata Pusat">
+    <meta name="twitter:description" content="⭐⭐⭐⭐⭐about us: Madinah Iman Wisata Travel ✈️ Berpengalaman lebih 15th memberangkatkan jamaah haji & umroh. Melayani lebih baik.">
+    <meta name="twitter:site" content="@madinahimanwisatacom">
+    <meta name="twitter:creator" content="@madinahimanwisatacom">
+    <meta name="twitter:image" content="https://miw.co.id/wp-content/uploads/2025/08/1.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Place",
+                "@id": "https://miw.co.id/#place",
+                "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": "-6.8844645",
+                    "longitude": "107.5303815"
+                },
+                "hasMap": "https://www.google.com/maps/search/?api=1&query=-6.8844645,107.5303815",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "R.A.A. Marta Negara No.16, Turangga, Kec. Lengkong",
+                    "addressLocality": "Bandung",
+                    "addressRegion": "Jawa Barat",
+                    "postalCode": "40264",
+                    "addressCountry": "Indonesia"
+                }
+            },
+            {
+                "@type": ["TravelAgency", "Organization"],
+                "@id": "https://miw.co.id/#organization",
+                "name": "Madinah Iman Wisata Bandung",
+                "url": "https://miw.co.id",
+                "sameAs": [
+                    "https://www.facebook.com/madinahimanwisatacom",
+                    "https://twitter.com/madinahimanwisatacom"
+                ],
+                "email": "admin@madinahimanwisata.com",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "R.A.A. Marta Negara No.16, Turangga, Kec. Lengkong",
+                    "addressLocality": "Bandung",
+                    "addressRegion": "Jawa Barat",
+                    "postalCode": "40264",
+                    "addressCountry": "Indonesia"
+                },
+                "logo": {
+                    "@type": "ImageObject",
+                    "@id": "https://miw.co.id/#logo",
+                    "url": "https://miw.co.id/wp-content/uploads/2021/01/miw-logo.jpg",
+                    "contentUrl": "https://miw.co.id/wp-content/uploads/2021/01/miw-logo.jpg",
+                    "caption": "Madinah Iman Wisata Bandung",
+                    "inLanguage": "id"
+                },
+                "priceRange": "$$",
+                "openingHours": [
+                    "Monday,Tuesday,Wednesday,Thursday,Friday 09:00-17:00",
+                    "Saturday 09:00-11:00"
+                ],
+                "location": {"@id": "https://miw.co.id/#place"},
+                "image": {"@id": "https://miw.co.id/#logo"},
+                "telephone": "081399467866"
+            },
+            {
+                "@type": "WebSite",
+                "@id": "https://miw.co.id/#website",
+                "url": "https://miw.co.id",
+                "name": "Madinah Iman Wisata Bandung",
+                "alternateName": "Madinah Iman Wisata",
+                "publisher": {"@id": "https://miw.co.id/#organization"},
+                "inLanguage": "id"
+            },
+            {
+                "@type": "AboutPage",
+                "@id": "https://miw.co.id/profil.php/#webpage",
+                "url": "https://miw.co.id/profil.php/",
+                "name": "About Us - Madinah Iman Wisata Pusat",
+                "datePublished": "2022-08-30T04:40:01+07:00",
+                "dateModified": "<?php echo date('c'); ?>",
+                "isPartOf": {"@id": "https://miw.co.id/#website"},
+                "primaryImageOfPage": {"@id": "https://miw.co.id/wp-content/uploads/2025/08/logo-miw-juara.jpg"},
+                "inLanguage": "id"
+            }
+        ]
+    }
+    </script>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <style>
+        /* Import Google Fonts */
         @import url("//fonts.googleapis.com/css?family=Nunito:400,400i,600,600i&subset=latin");
         @import url("//fonts.googleapis.com/css?family=Jost:400,400i,600,600i,500&subset=latin");
         
+        /* CSS Variables */
         :root {
             --tcb-color-0: rgb(246, 8, 8);
             --tcb-color-1: rgb(6, 6, 6);
@@ -42,6 +139,7 @@ $current_page = 'profil';
             --tcb-tpl-color-11: rgb(108, 110, 122);
         }
         
+        /* Global Styles */
         body {
             font-family: 'Nunito', sans-serif;
             margin: 0;
@@ -474,179 +572,162 @@ $current_page = 'profil';
             .contact-content {
                 grid-template-columns: 1fr;
             }
+        }
     </style>
 </head>
+
 <body>
     <?php include 'navigation.php'; ?>
-
+    
     <!-- Hero Section -->
     <section class="hero-section">
-        <div class="container">
-            <div class="hero-logo">
-                <img src="https://miw.co.id/wp-content/uploads/2025/08/1.jpg" alt="MIW Logo">
-            </div>
-            <div class="hero-subtitle">tentang kami</div>
-            <h1 class="hero-title">MADINAH IMAN WISATA TRAVEL</h1>
-            <p class="hero-description">Kami telah berpengalaman lebih dari 15 tahun memberangkatkan jamaah haji & umroh</p>
+        <div class="hero-logo">
+            <img src="https://miw.co.id/wp-content/uploads/2021/01/miw-logo.jpg" alt="MIW Logo">
         </div>
+        <div class="hero-subtitle">travel haji umroh</div>
+        <h1 class="hero-title">Madinah Iman Wisata Bandung</h1>
+        <p class="hero-description">Perusahaan Travel Terpercaya & Berpengalaman</p>
     </section>
 
-    <!-- Orange Section -->
+    <!-- Orange Introduction Section -->
     <section class="orange-section">
-        <div class="container">
-            <h2>TENTANG KAMI</h2>
-            <div class="subtitle">Madinah Iman Wisata Travel</div>
-            <p>merupakan biro travel yang bergerak di bidang perjalanan, baik domestik maupun internasional, khususnya perjalanan ibadah haji dan umroh ke tanah suci Makkah dan Madinah. Kami telah berpengalaman lebih dari 15 tahun memberangkatkan jamaah haji dan umroh dengan pelayanan terbaik dan memiliki izin resmi dari pemerintah.</p>
-        </div>
+        <h2>Madinah Iman Wisata Group</h2>
+        <div class="subtitle">PPIU & PIHK TERBAIK</div>
+        <p>Madinah Iman Wisata (MIW) adalah agen perjalanan profesional yang telah berpengalaman lebih dari 15 tahun dalam melayani ibadah haji dan umroh. Sebagai agen travel resmi yang telah mendapat kepercayaan dan izin dari Kementerian Agama, kami berkomitmen untuk memberikan pelayanan terbaik dan pengalaman spiritual yang tak terlupakan bagi jamaah.</p>
     </section>
 
     <!-- Partners Section -->
     <section class="partners-section">
-        <div class="container">
-            <div class="partners-img">
-                <img src="https://miw.co.id/wp-content/uploads/2025/08/15.jpg" alt="Partners">
-            </div>
+        <div class="partners-img">
+            <img src="https://miw.co.id/wp-content/uploads/2025/08/KOLABORATOR-BARU.jpg" alt="Partner Kolaborasi MIW">
         </div>
     </section>
 
-    <!-- Vision Mission Section -->
+    <!-- Vision & Mission Section -->
     <section class="vision-mission-section">
-        <div class="container">
-            <div class="vm-container">
-                <h3 class="vm-title">VISI & MISI</h3>
-                <p class="vm-text">Menjadi biro perjalanan haji dan umroh terpercaya yang memberikan pelayanan terbaik untuk membantu jamaah mencapai ibadah yang mabrur dan berkah. Dengan komitmen untuk terus berkembang dan berinovasi dalam memberikan pengalaman spiritual yang berkesan bagi setiap jamaah.</p>
-                
-                <h3 class="vm-title">MISI KAMI:</h3>
-                <ul class="mission-list">
-                    <li class="mission-item">
-                        <span class="mission-icon">⭐</span>
-                        <span class="mission-text">Memberikan pelayanan terbaik dan berkualitas tinggi kepada seluruh jamaah haji dan umroh</span>
+        <div class="vm-container">
+            <h2 class="vm-title">Visi & Misi</h2>
+            <div class="vm-text">
+                <strong>Visi:</strong> Menjadi perusahaan penyelenggara perjalanan ibadah haji dan umroh terdepan yang memberikan pelayanan berkualitas tinggi dengan mengedepankan kenyamanan, keamanan, dan kepuasan jamaah.
+            </div>
+            <div class="vm-text">
+                <strong>Misi:</strong>
+            </div>
+            <ul class="mission-list">
+                <li class="mission-item">
+                    <span class="mission-icon">✓</span>
+                    <span class="mission-text">Memberikan pelayanan prima dengan standar internasional kepada seluruh jamaah</span>
+                </li>
+                <li class="mission-item">
+                    <span class="mission-icon">✓</span>
+                    <span class="mission-text">Menyediakan paket perjalanan yang terjangkau namun tetap berkualitas tinggi</span>
+                </li>
+                <li class="mission-item">
+                    <span class="mission-icon">✓</span>
+                    <span class="mission-text">Membantu jamaah dalam menunaikan ibadah haji dan umroh dengan khusyuk dan tenang</span>
+                </li>
+                <li class="mission-item">
+                    <span class="mission-icon">✓</span>
+                    <span class="mission-text">Kontinuitas pengembangan SDM untuk memberikan pelayanan terbaik</span>
+                </li>
+                <li class="mission-item">
+                    <span class="mission-icon">✓</span>
+                    <span class="mission-text">Menjaga amanah dan kepercayaan yang diberikan oleh jamaah dengan transparansi penuh</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Legal & Certifications Section -->
+    <section class="legal-section">
+        <div class="legal-container">
+            <div class="legal-column">
+                <h3>Legalitas & Sertifikasi</h3>
+                <ul class="legal-list">
+                    <li class="legal-item">
+                        <span class="legal-number"></span>
+                        <span class="legal-text">Izin Penyelenggara Perjalanan Ibadah Umroh (PPIU)</span>
                     </li>
-                    <li class="mission-item">
-                        <span class="mission-icon">⭐</span>
-                        <span class="mission-text">Menyediakan paket perjalanan yang terjangkau tanpa mengurangi kualitas pelayanan</span>
+                    <li class="legal-item">
+                        <span class="legal-number"></span>
+                        <span class="legal-text">Izin Penyelenggara Ibadah Haji Khusus (PIHK)</span>
                     </li>
-                    <li class="mission-item">
-                        <span class="mission-icon">⭐</span>
-                        <span class="mission-text">Membantu jamaah mempersiapkan diri secara spiritual dan praktis untuk menunaikan ibadah</span>
+                    <li class="legal-item">
+                        <span class="legal-number"></span>
+                        <span class="legal-text">Anggota ASITA (Association of Indonesian Tour & Travel Agencies)</span>
                     </li>
-                    <li class="mission-item">
-                        <span class="mission-icon">⭐</span>
-                        <span class="mission-text">Menjalin kemitraan yang kuat dengan berbagai pihak untuk kemudahan dan kenyamanan jamaah</span>
+                    <li class="legal-item">
+                        <span class="legal-number"></span>
+                        <span class="legal-text">Anggota HIMPUH (Himpunan Penyelenggara Umroh dan Haji)</span>
                     </li>
-                    <li class="mission-item">
-                        <span class="mission-icon">⭐</span>
-                        <span class="mission-text">Mengutamakan keamanan, kenyamanan, dan kepuasan jamaah selama perjalanan</span>
+                </ul>
+            </div>
+            <div class="legal-column">
+                <h3>Penghargaan</h3>
+                <ul class="legal-list">
+                    <li class="legal-item">
+                        <span class="legal-number"></span>
+                        <span class="legal-text">iTTA (Indonesia Travel & Tourism Award) sebagai Agen Perjalanan Wisata Terbaik</span>
+                    </li>
+                    <li class="legal-item">
+                        <span class="legal-number"></span>
+                        <span class="legal-text">Penghargaan Best Service dari Kementerian Agama</span>
+                    </li>
+                    <li class="legal-item">
+                        <span class="legal-number"></span>
+                        <span class="legal-text">Sertifikat ISO 9001:2015 untuk Manajemen Kualitas</span>
+                    </li>
+                    <li class="legal-item">
+                        <span class="legal-number"></span>
+                        <span class="legal-text">Rating 5 bintang dari Kementerian Agama</span>
                     </li>
                 </ul>
             </div>
         </div>
     </section>
 
-    <!-- Legal Section -->
-    <section class="legal-section">
-        <div class="container">
-            <div class="legal-container">
-                <div class="legal-column">
-                    <h3>LEGALITAS</h3>
-                    <ul class="legal-list">
-                        <li class="legal-item">
-                            <span class="legal-number"></span>
-                            <span class="legal-text">Izin PPIU (Penyelenggara Perjalanan Ibadah Umroh) No. U.215/2022</span>
-                        </li>
-                        <li class="legal-item">
-                            <span class="legal-number"></span>
-                            <span class="legal-text">Izin PIHK (Penyelenggara Ibadah Haji Khusus) No. 319/2021</span>
-                        </li>
-                        <li class="legal-item">
-                            <span class="legal-number"></span>
-                            <span class="legal-text">SIUP (Surat Izin Usaha Perdagangan)</span>
-                        </li>
-                        <li class="legal-item">
-                            <span class="legal-number"></span>
-                            <span class="legal-text">TDP (Tanda Daftar Perusahaan)</span>
-                        </li>
-                        <li class="legal-item">
-                            <span class="legal-number"></span>
-                            <span class="legal-text">NPWP (Nomor Pokok Wajib Pajak)</span>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="legal-column">
-                    <h3>KEANGGOTAAN</h3>
-                    <ul class="legal-list">
-                        <li class="legal-item">
-                            <span class="legal-number"></span>
-                            <span class="legal-text">Anggota AMPHURI (Asosiasi Muslim Penyelenggara Haji dan Umroh Republik Indonesia)</span>
-                        </li>
-                        <li class="legal-item">
-                            <span class="legal-number"></span>
-                            <span class="legal-text">Anggota ASITA (Association of the Indonesian Tours and Travel Agencies)</span>
-                        </li>
-                        <li class="legal-item">
-                            <span class="legal-number"></span>
-                            <span class="legal-text">Anggota IATA (International Air Transport Association)</span>
-                        </li>
-                        <li class="legal-item">
-                            <span class="legal-number"></span>
-                            <span class="legal-text">Anggota HIMPUH (Himpunan Penyelenggara Umroh dan Haji)</span>
-                        </li>
-                        <li class="legal-item">
-                            <span class="legal-number"></span>
-                            <span class="legal-text">Anggota KAN (Konsorsium Agen Naik Haji)</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Gallery Section -->
     <section class="gallery-section">
-        <div class="container">
-            <h3 class="vm-title">GALERI KEGIATAN</h3>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="https://miw.co.id/wp-content/uploads/2025/08/2.jpg" alt="Gallery 1">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://miw.co.id/wp-content/uploads/2025/08/3.jpg" alt="Gallery 2">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://miw.co.id/wp-content/uploads/2025/08/4.jpg" alt="Gallery 3">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://miw.co.id/wp-content/uploads/2025/08/5.jpg" alt="Gallery 4">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://miw.co.id/wp-content/uploads/2025/08/6.jpg" alt="Gallery 5">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://miw.co.id/wp-content/uploads/2025/08/7.jpg" alt="Gallery 6">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://miw.co.id/wp-content/uploads/2025/08/8.jpg" alt="Gallery 7">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://miw.co.id/wp-content/uploads/2025/08/9.jpg" alt="Gallery 8">
-                </div>
+        <h2 class="vm-title" style="text-align: center;">Galeri Kegiatan</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://miw.co.id/wp-content/uploads/2025/08/1.jpg" alt="Kegiatan 1">
+            </div>
+            <div class="gallery-item">
+                <img src="https://miw.co.id/wp-content/uploads/2025/08/2.jpg" alt="Kegiatan 2">
+            </div>
+            <div class="gallery-item">
+                <img src="https://miw.co.id/wp-content/uploads/2025/08/3.jpg" alt="Kegiatan 3">
+            </div>
+            <div class="gallery-item">
+                <img src="https://miw.co.id/wp-content/uploads/2025/08/4.jpg" alt="Kegiatan 4">
+            </div>
+            <div class="gallery-item">
+                <img src="https://miw.co.id/wp-content/uploads/2025/08/5.jpg" alt="Kegiatan 5">
+            </div>
+            <div class="gallery-item">
+                <img src="https://miw.co.id/wp-content/uploads/2025/08/6.jpg" alt="Kegiatan 6">
+            </div>
+            <div class="gallery-item">
+                <img src="https://miw.co.id/wp-content/uploads/2025/08/7.jpg" alt="Kegiatan 7">
+            </div>
+            <div class="gallery-item">
+                <img src="https://miw.co.id/wp-content/uploads/2025/08/8.jpg" alt="Kegiatan 8">
             </div>
         </div>
     </section>
 
-    <!-- Yellow Section -->
+    <!-- Yellow Achievement Section -->
     <section class="yellow-section">
-        <div class="container">
-            <div class="yellow-content">
-                <div class="yellow-text">
-                    <h3>KOMITMEN KAMI</h3>
-                    <p>Kami berkomitmen untuk memberikan pelayanan terbaik kepada setiap jamaah dengan standar kualitas internasional. Kepercayaan jamaah adalah amanah yang kami jaga dengan sepenuh hati.</p>
-                    <p>Dengan tim yang berpengalaman dan berdedikasi, kami siap membantu Anda mewujudkan impian menunaikan ibadah haji dan umroh dengan khusyuk dan tentram.</p>
-                </div>
-                <div class="yellow-image">
-                    <img src="https://miw.co.id/wp-content/uploads/2025/08/16.jpg" alt="Commitment">
-                </div>
+        <div class="yellow-content">
+            <div class="yellow-text">
+                <h3>Komitmen Kami</h3>
+                <p>Lebih dari 15 tahun pengalaman dalam memberangkatkan jamaah haji dan umroh dengan pelayanan terbaik.</p>
+                <p>Kepercayaan ribuan jamaah yang telah menunaikan ibadah bersama kami adalah motivasi untuk terus memberikan yang terbaik.</p>
+                <p>Kami bangga menjadi bagian dari perjalanan spiritual Anda menuju Tanah Suci.</p>
+            </div>
+            <div class="yellow-image">
+                <img src="https://miw.co.id/wp-content/uploads/2025/08/logo-miw-juara.jpg" alt="MIW Achievement Logo">
             </div>
         </div>
     </section>
@@ -656,24 +737,29 @@ $current_page = 'profil';
         <div class="container">
             <div class="contact-content">
                 <div class="contact-info">
-                    <h3>HUBUNGI KAMI</h3>
-                    <p><strong>Alamat:</strong> Jl. Cijerah No. 125, Bandung Kulon, Kota Bandung, Jawa Barat 40213</p>
-                    <p><strong>Telepon:</strong> (022) 6031698</p>
-                    <p><strong>WhatsApp:</strong> +62 812-2222-1998</p>
-                    <p><strong>Email:</strong> madinahimanwisata@gmail.com</p>
-                    <p><strong>Website:</strong> www.miw.co.id</p>
+                    <h3>Hubungi Kami</h3>
+                    <p><strong>Alamat:</strong><br>
+                    R.A.A. Marta Negara No.16, Turangga<br>
+                    Kec. Lengkong, Bandung, Jawa Barat 40264</p>
+                    
+                    <p><strong>Telepon:</strong><br>
+                    081399467866</p>
+                    
+                    <p><strong>Email:</strong><br>
+                    admin@madinahimanwisata.com</p>
+                    
+                    <p><strong>Jam Operasional:</strong><br>
+                    Senin - Jumat: 09:00 - 17:00<br>
+                    Sabtu: 09:00 - 11:00</p>
                 </div>
                 <div class="map-container">
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.0!2d107.5745!3d-6.9389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e9b36b3f8d1f%3A0x4a35d2b5e3a8c9d2!2sJl.%20Cijerah%20No.125%2C%20Bandung%20Kulon%2C%20Kota%20Bandung%2C%20Jawa%20Barat%2040213!5e0!3m2!1sid!2sid!4v1640995200000!5m2!1sid!2sid"
-                        allowfullscreen="" 
-                        loading="lazy">
-                    </iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.0156453!2d107.5281925!3d-6.8844645!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e7c381e3c323%3A0x5f4a73c0c0b4c4b4!2sR.A.A.%20Marta%20Negara%20No.16%2C%20Turangga%2C%20Kec.%20Lengkong%2C%20Kota%20Bandung%2C%20Jawa%20Barat%2040264!5e0!3m2!1sid!2sid!4v1625000000000!5m2!1sid!2sid" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
