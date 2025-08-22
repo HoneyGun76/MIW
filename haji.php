@@ -719,5 +719,43 @@ var tve_dash_front = {"ajaxurl":"https:\/\/hajiplus.miw.co.id\/wp-admin\/admin-a
 <script type="text/javascript">var tcb_current_post_lists=JSON.parse('[]'); var tcb_post_lists=tcb_post_lists?[...tcb_post_lists,...tcb_current_post_lists]:tcb_current_post_lists;</script>			<script>
 			/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
 			</script>
+            
+                <div class="twwr-container twwr-floating bottom-right" style="bottom:30px;right:30px;" data-rot-id="4372">
+
+                                            <span id="contact-trigger" class="twwr-whatsapp-icon-only"><img class="icon" src="https://miw.co.id/wp-content/plugins/tw-whatsapp-rotator//images/whatsapp-icon-a.svg"></span>
+                    
+                    <div id="notification-badge">1</div>
+
+                    <ul class="twwr-whatsapp-content">
+						<li class="twwr-content-header">
+							<a class="close-chat" title="Close Support">Close</a>
+							<img class="icon" src="https://miw.co.id/wp-content/plugins/tw-whatsapp-rotator//images/whatsapp-icon-a.svg"> <h5>Assalamu&#039;alaikum .. <span>Adakah yang dapat kami bantu?</span></h5>
+                        </li>
+                                                    <li class="available">
+                                <a class="twwr-whatsapp-button" href="https://miw.co.id/wa/madinah-iman-wisata/?agent=4370&number=6281399467866&ref=https://miw.co.id/haji-plus" target="_blank" data-agent="4370"  data-number="6281399467866" data-chat="4372" rel="nofollow">
+                                                                        <span class="twwr-whatsapp-text">
+                                        <span class="twwr-whatsapp-label">
+                                                                                        <span class="status">Online</span>
+                                        </span>
+
+                                        Ida Tahmidah                                    </span>
+                                </a>
+                            </li>
+                        
+						<li class="twwr-content-footer">
+							<p>Kontak CS melalui WhatsApp</p>
+						</li>
+                    </ul>
+                    <audio id="twwr-whatsapp-audio" preload="auto">
+                        <source src="https://miw.co.id/wp-content/plugins/tw-whatsapp-rotator/audio-files/alert.mp3" type="audio/mpeg" />
+                    </audio>
+                    <script type="text/javascript">
+                        setTimeout(function() {
+                          document.getElementById('twwr-whatsapp-audio').play();
+                        }, 3000)
+                    </script>
+
+                </div>
+            
 						</body>
 </html>
