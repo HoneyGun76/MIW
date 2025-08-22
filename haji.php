@@ -200,6 +200,13 @@ var tve_frontend_options = {"ajaxurl":"https:\/\/hajiplus.miw.co.id\/wp-admin\/a
 
 		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text" style="" data-css="tve-u-1987f32e1ba">Tanya Haji Plus, Klik disini</span></span>
 	</a>
+</div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root tcb-with-icon" data-css="tve-u-1940c4b70a4" style="margin-top: 10px !important;">
+	<div class="thrive-colors-palette-config" style="display: none !important"></div>
+	<a href="form_haji.php" class="tcb-button-link tcb-plain-text" style=""><span class="tcb-button-icon">
+	<div class="thrv_wrapper thrv_icon tve_no_drag tve_no_icons tcb-icon-inherit-style tcb-local-vars-root tcb-icon-display" data-css="tve-u-1940c4e0264" style=""><svg class="tcb-icon" viewBox="0 0 24 24" data-id="icon-edit-solid" data-name="" style=""><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg></div>
+</span>
+		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text" style="" data-css="tve-u-1987f32e1bb">Form Pendaftaran Haji</span></span>
+	</a>
 </div></div></div></div></div></div><div class="thrive-group-edit-config" style="display: none !important"></div><div class="thrive-local-colors-config" style="display: none !important"></div></div><div class="thrv_wrapper thrv-page-section tve-height-update" data-inherit-lp-settings="1">
 	<div class="tve-page-section-out"></div>
 	<div class="tve-page-section-in" data-css="tve-u-1940fc2df8f"><div class="thrv_wrapper tve_image_caption" data-css="tve-u-1987f445b06" style=""><span class="tve_image_frame"><img decoding="async" class="tve_image wp-image-117 tve-not-lazy-loaded tcb-moved-image" alt="" data-id="117" width="698" data-init-width="1143" data-init-height="167" title="logo-partners-new-sarana-umrah-1" src="https://hajiplus.miw.co.id/wp-content/uploads/2025/08/logo-partners-new-sarana-umrah-1-1.png" data-width="698" data-css="tve-u-19887107e3f" style="" srcset="https://hajiplus.miw.co.id/wp-content/uploads/2025/08/logo-partners-new-sarana-umrah-1-1.png 1143w, https://hajiplus.miw.co.id/wp-content/uploads/2025/08/logo-partners-new-sarana-umrah-1-1-300x44.png 300w, https://hajiplus.miw.co.id/wp-content/uploads/2025/08/logo-partners-new-sarana-umrah-1-1-1024x150.png 1024w, https://hajiplus.miw.co.id/wp-content/uploads/2025/08/logo-partners-new-sarana-umrah-1-1-768x112.png 768w" sizes="(max-width: 1143px) 100vw, 1143px" /></span></div><div class="thrv_wrapper thrv-columns" style="--tcb-col-el-width: 1123;" data-css="tve-u-18b47ea87c4"><div class="tcb-flex-row v-2 tcb--cols--2"><div class="tcb-flex-col" data-css="tve-u-18b47ea8a01" style=""><div class="tcb-col" data-css="tve-u-1941021facf" style=""><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tve-elem-default-pad kbqczy5e" data-css="tve-u-18b47ea87ca" style="">
@@ -223,6 +230,13 @@ var tve_frontend_options = {"ajaxurl":"https:\/\/hajiplus.miw.co.id\/wp-admin\/a
 </span>
 
 		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text" style="" data-css="tve-u-1987f4c006b">Tanya Haji Plus</span></span>
+	</a>
+</div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root tcb-with-icon" data-css="tve-u-194108c5485" style="margin-top: 10px !important;">
+	<div class="thrive-colors-palette-config" style="display: none !important"></div>
+	<a href="form_haji.php" class="tcb-button-link tcb-plain-text" style=""><span class="tcb-button-icon">
+	<div class="thrv_wrapper thrv_icon tve_no_drag tve_no_icons tcb-icon-inherit-style tcb-local-vars-root tcb-icon-display" data-css="tve-u-194108c5486" style=""><svg class="tcb-icon" viewBox="0 0 24 24" data-id="icon-edit-solid" data-name="" style=""><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg></div>
+</span>
+		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text" style="" data-css="tve-u-1987f4c006c">Form Pendaftaran Haji</span></span>
 	</a>
 </div></div>
 </div><div class="thrv_wrapper thrv-page-section thrv-lp-block" data-inherit-lp-settings="1" data-css="tve-u-17eb84a9894" style="" tcb-template-name="Pros&amp;#038;Cons 04" tcb-template-id="60862" data-keep-css_id="1"><div class="tve-page-section-out"></div><div class="tve-page-section-in tve_empty_dropzone  " style="" data-css="tve-u-19410977d33"><div class="thrv_wrapper thrv_contentbox_shortcode thrv-content-box tcb-local-vars-root" style="" data-css="tve-u-17e5135a314" data-ct-name="Chic Light" data-ct="testimonial-7320" data-element-name="Testimonial">
@@ -252,6 +266,13 @@ var tve_frontend_options = {"ajaxurl":"https:\/\/hajiplus.miw.co.id\/wp-admin\/a
 </span>
 
 		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text">Tanya Haji Plus</span></span>
+	</a>
+</div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root tcb-with-icon" data-css="tve-u-1940d934bec" style="margin-top: 10px !important;">
+	<div class="thrive-colors-palette-config" style="display: none !important"></div>
+	<a href="form_haji.php" class="tcb-button-link tcb-plain-text" style=""><span class="tcb-button-icon">
+	<div class="thrv_wrapper thrv_icon tve_no_drag tve_no_icons tcb-icon-inherit-style tcb-local-vars-root tcb-icon-display" data-css="tve-u-1940d934bed" style=""><svg class="tcb-icon" viewBox="0 0 24 24" data-id="icon-edit-solid" data-name="" style=""><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg></div>
+</span>
+		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text">Form Pendaftaran Haji</span></span>
 	</a>
 </div></div>
 </div><div class="thrv_wrapper thrv-page-section tve-height-update" data-inherit-lp-settings="1" data-css="tve-u-19410a911a4" style="">

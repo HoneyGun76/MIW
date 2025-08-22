@@ -400,6 +400,11 @@ Umroh Agustus</strong></h3><h4 class="" data-css="tve-u-18cd9f51a8e" style="text
 	<a href="https://miw.co.id/wa/madinah-iman-wisata/" class="tcb-button-link tcb-plain-text" style="" target="_blank">
 		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text" style="" data-css="tve-u-19710a57bdc">Konsultasi Paket Umroh Sekarang!</span></span>
 	</a>
+</div><div class="thrv_wrapper thrv-button thrv-button-v2 tcb-local-vars-root" data-css="tve-u-19710a57bdb" style="margin-top: 10px !important;">
+	<div class="thrive-colors-palette-config" style="display: none !important"></div>
+	<a href="form_umroh.php" class="tcb-button-link tcb-plain-text" style="">
+		<span class="tcb-button-texts"><span class="tcb-button-text thrv-inline-text" style="" data-css="tve-u-19710a57bdd">Form Pendaftaran Umroh</span></span>
+	</a>
 </div><div class="thrv_wrapper thrv-page-section tve-height-update" data-css="tve-u-195d9816abf" style="">
 	<div class="tve-page-section-out" style="" data-css="tve-u-196cec4bb20"></div>
 	<div class="tve-page-section-in" style="" data-css="tve-u-1971162c72a"><div class="thrv_wrapper thrv_text_element" style="" data-css="tve-u-1987ddbc751"><h2 class="" data-css="tve-u-1970fd237d5" style="text-align: center;"><span data-css="tve-u-1970fd311de"><span data-css="tve-u-1970fd311e0">Alhamdulillah, PT&nbsp;</span></span><span data-css="tve-u-1970fd311de"><span data-css="tve-u-1970fd311e0">Madinah Iman Wisata mendapatkan Penghargaan Nasional Sebagai</span> </span><span data-css="tve-u-1987de6de3b">Indonesia Leading Umrah Travel Agent 2023/2024</span></h2></div></div>
