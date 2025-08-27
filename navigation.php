@@ -9,7 +9,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3">
     <div class="container">
         <!-- Logo -->
-        <a class="navbar-brand" href="beranda.php">
+        <a class="navbar-brand" href="beranda.html">
             <img src="miw_logo.png" alt="Madinah Iman Wisata" height="50" class="d-inline-block align-text-top">
         </a>
 
@@ -23,20 +23,20 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'beranda.php' ? 'active' : '' ?>" 
-                       href="beranda.php">Beranda</a>
+                    <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'beranda.html' ? 'active' : '' ?>" 
+                       href="beranda.html">Beranda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'umroh.php' ? 'active' : '' ?>" 
-                       href="umroh.php">Umroh</a>
+                    <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'umroh.html' ? 'active' : '' ?>" 
+                       href="umroh.html">Umroh</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'haji.php' ? 'active' : '' ?>" 
-                       href="haji.php">Haji</a>
+                    <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'haji.html' ? 'active' : '' ?>" 
+                       href="haji.html">Haji</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'profil.php' ? 'active' : '' ?>" 
-                       href="profil.php">Tentang Kami</a>
+                    <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'profil.html' ? 'active' : '' ?>" 
+                       href="profil.html">Tentang Kami</a>
                 </li>
             </ul>
         </div>

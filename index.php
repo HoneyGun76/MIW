@@ -4,8 +4,8 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Redirect to beranda.php as the main landing page
-header('Location: beranda.php');
+// Redirect to beranda.html as the main landing page
+header('Location: beranda.html');
 exit();
 ?>
 
