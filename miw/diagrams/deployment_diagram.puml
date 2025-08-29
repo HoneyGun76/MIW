@@ -1,0 +1,51 @@
+@startuml MIW_Deployment_Diagram
+
+!theme plain
+skinparam linetype ortho
+skinparam backgroundColor white
+skinparam nodeBackgroundColor white
+skinparam nodeBorderColor black
+skinparam componentBackgroundColor white
+skinparam componentBorderColor black
+skinparam databaseBackgroundColor white
+skinparam databaseBorderColor black
+skinparam direction top to bottom layout
+
+title MIW Travel System - Deployment Architecture
+
+node "<<device>>\nClient Devices" as ClientNode {
+    component "Web Browser" as Browser
+}
+
+node "<<execution environment>>\nRailway.app Platform" as RailwayPlatform {
+    node "<<container>>\nWeb Container" as WebContainer {
+        component "<<runtime>>\nPHP 8.1 Runtime" as PHPRuntime
+        component "<<web application>>\nMIW Travel App" as MIWApp
+    }
+    
+    node "<<container>>\nDatabase Container" as DBContainer {
+        database "<<database>>\nMySQL 8.0\ndata_miw" as MySQLDB
+    }
+    
+    node "<<container>>\nFile Storage" as FileStorage {
+        artifact "documents/" as Documents
+        artifact "uploads/" as Uploads
+    }
+}
+
+node "<<external service>>\nEmail Service" as EmailService {
+    component "SMTP Provider" as SMTPProvider
+}
+
+' Communication paths with protocols
+ClientNode -down-> WebContainer : "<<HTTPS>>\nport 443"
+WebContainer -down-> DBContainer : "<<MySQL Protocol>>\nport 3306"
+WebContainer -right-> FileStorage : "<<File I/O>>"
+WebContainer -right-> EmailService : "<<SMTP>>\nport 587"
+
+' Deployment relationships
+Browser -[hidden]down- PHPRuntime
+PHPRuntime -[hidden]down- MIWApp
+MySQLDB -[hidden]down- Documents
+
+@enduml

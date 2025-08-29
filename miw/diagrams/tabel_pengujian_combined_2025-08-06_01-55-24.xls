@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Tabel Pengujian MIW Travel</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; margin-bottom: 30px; }
+        th, td { border: 1px solid #000; padding: 8px; text-align: left; }
+        th { background-color: #f0f0f0; font-weight: bold; }
+        .title { font-size: 16px; font-weight: bold; margin: 20px 0 10px 0; }
+        .valid { background-color: #d4edda; }
+        .tidak-valid { background-color: #f8d7da; }
+    </style>
+</head>
+<body>
+    <h1>TABEL PENGUJIAN SISTEM MIW TRAVEL</h1>
+    
+    <div class="title">Tabel 4.1 Rencana Pengujian Sistem MIW Travel</div>
+    <table>
+<tr><th>No.</th><th>Modul</th><th>Requirement yang diuji</th><th>Butir Uji</th><th>Jenis Pengujian</th></tr><tr><td>1</td><td>Konektivitas</td><td>Akses halaman utama website</td><td>Ketersediaan file index.php</td><td>Black Box</td></tr><tr><td>2</td><td>Konektivitas</td><td>Health check endpoint</td><td>Ketersediaan file health.php</td><td>Black Box</td></tr><tr><td>3</td><td>Konektivitas</td><td>Konfigurasi sistem</td><td>Ketersediaan file config.php</td><td>Black Box</td></tr><tr><td>4</td><td>Konektivitas</td><td>Deteksi environment Railway</td><td>Validasi environment variables</td><td>Black Box</td></tr><tr><td>5</td><td>Pendaftaran Jamaah</td><td>Form pendaftaran umroh/haji</td><td>Ketersediaan file form</td><td>Black Box</td></tr><tr><td>6</td><td>Pendaftaran Jamaah</td><td>Validasi input form</td><td>Validasi NIK, email, telepon, tanggal</td><td>Black Box</td></tr><tr><td>7</td><td>Pendaftaran Jamaah</td><td>Upload dokumen jamaah</td><td>Kemampuan upload file</td><td>Black Box</td></tr><tr><td>8</td><td>Manajemen Paket</td><td>Pengelolaan paket perjalanan</td><td>Ketersediaan file admin paket</td><td>Black Box</td></tr><tr><td>9</td><td>Manajemen Paket</td><td>Validasi data paket</td><td>Struktur data paket</td><td>Black Box</td></tr><tr><td>10</td><td>Pembatalan</td><td>Form pengajuan pembatalan</td><td>Ketersediaan file pembatalan</td><td>Black Box</td></tr><tr><td>11</td><td>Pembatalan</td><td>Verifikasi pembatalan</td><td>Proses verifikasi admin</td><td>Black Box</td></tr><tr><td>12</td><td>Administratif</td><td>Panel administrasi</td><td>Akses file admin dashboard</td><td>Black Box</td></tr><tr><td>13</td><td>Administratif</td><td>Export manifest jamaah</td><td>Fungsi export data</td><td>Black Box</td></tr><tr><td>14</td><td>Administratif</td><td>Manajemen roomlist</td><td>Pengaturan kamar jamaah</td><td>Black Box</td></tr><tr><td>15</td><td>File Upload</td><td>Handler upload file</td><td>Sistem upload dokumen</td><td>Black Box</td></tr><tr><td>16</td><td>File Upload</td><td>Permission file system</td><td>Hak akses file dan direktori</td><td>Black Box</td></tr><tr><td>17</td><td>File Upload</td><td>Validasi ukuran file</td><td>Batas maksimum ukuran file</td><td>Black Box</td></tr><tr><td>18</td><td>Keamanan</td><td>Sanitasi input</td><td>Pencegahan XSS dan SQL injection</td><td>Black Box</td></tr><tr><td>19</td><td>Keamanan</td><td>Autentikasi admin</td><td>Sistem login admin</td><td>Black Box</td></tr><tr><td>20</td><td>Keamanan</td><td>Validasi tipe file</td><td>Filter ekstensi file yang diizinkan</td><td>Black Box</td></tr></table>
+    
+    <div class="title">Tabel 4.2 Hasil Pengujian Sistem MIW Travel</div>
+    <table>
+<tr><th>No</th><th>Pengujian</th><th>Test Case</th><th>Hasil yang diharapkan</th><th>Kesimpulan</th></tr><tr><td class="">1</td><td class="">Akses Website</td><td class="">Pemeriksaan file index.php</td><td class="">File tersedia dan dapat diakses</td><td class="valid">Valid</td></tr><tr><td class="">2</td><td class="">Health Check Endpoint</td><td class="">Pemeriksaan file health.php</td><td class="">File health check tersedia</td><td class="valid">Valid</td></tr><tr><td class="">3</td><td class="">File Konfigurasi</td><td class="">Pemeriksaan file config.php</td><td class="">File konfigurasi tersedia</td><td class="valid">Valid</td></tr><tr><td class="">4</td><td class="">Deteksi Environment</td><td class="">Pemeriksaan variabel environment</td><td class="">Environment terdeteksi dengan benar</td><td class="valid">Valid</td></tr><tr><td class="">5</td><td class="">File Form Pendaftaran</td><td class="">Pemeriksaan file form umroh/haji</td><td class="">Semua file form tersedia</td><td class="valid">Valid</td></tr><tr><td class="">6</td><td class="">Validasi Input Form</td><td class="">Testing format NIK, email, telepon</td><td class="">Validasi berfungsi dengan benar</td><td class="valid">Valid</td></tr><tr><td class="">7</td><td class="">Kemampuan Upload File</td><td class="">Pemeriksaan direktori uploads</td><td class="">Direktori dapat diakses dan ditulis</td><td class="valid">Valid</td></tr><tr><td class="">8</td><td class="">File Manajemen Paket</td><td class="">Pemeriksaan file admin paket</td><td class="">File manajemen paket tersedia</td><td class="valid">Valid</td></tr><tr><td class="">9</td><td class="">Struktur Data Paket</td><td class="">Validasi data paket lengkap</td><td class="">Data paket sesuai standar</td><td class="valid">Valid</td></tr><tr><td class="">10</td><td class="">File Form Pembatalan</td><td class="">Pemeriksaan file pembatalan</td><td class="">File form pembatalan tersedia</td><td class="valid">Valid</td></tr><tr><td class="">11</td><td class="">Proses Verifikasi</td><td class="">Pemeriksaan file verify_cancellation</td><td class="">File verifikasi tersedia</td><td class="valid">Valid</td></tr><tr><td class="">12</td><td class="">Akses Panel Admin</td><td class="">Pemeriksaan file admin dashboard</td><td class="">Panel admin dapat diakses</td><td class="tidak-valid">Tidak Valid</td></tr><tr><td class="">13</td><td class="">Export Manifest</td><td class="">Pemeriksaan file export manifest</td><td class="">File export tersedia</td><td class="valid">Valid</td></tr><tr><td class="">14</td><td class="">Manajemen Kamar</td><td class="">Pemeriksaan file roomlist</td><td class="">File manajemen kamar tersedia</td><td class="valid">Valid</td></tr><tr><td class="">15</td><td class="">Handler Upload</td><td class="">Pemeriksaan handler upload file</td><td class="">Handler upload tersedia</td><td class="valid">Valid</td></tr><tr><td class="">16</td><td class="">Permission File</td><td class="">Testing buat/hapus file test</td><td class="">File dapat dibuat dan dihapus</td><td class="valid">Valid</td></tr><tr><td class="">17</td><td class="">Validasi Ukuran File</td><td class="">Simulasi file 2MB vs batas 5MB</td><td class="">File dalam batas diterima</td><td class="valid">Valid</td></tr><tr><td class="">18</td><td class="">Sanitasi Input</td><td class="">Testing input XSS/SQL injection</td><td class="">Input disanitasi dengan benar</td><td class="tidak-valid">Tidak Valid</td></tr><tr><td class="">19</td><td class="">Autentikasi Admin</td><td class="">Pemeriksaan file admin_auth</td><td class="">Sistem autentikasi tersedia</td><td class="tidak-valid">Tidak Valid</td></tr><tr><td class="">20</td><td class="">Validasi Tipe File</td><td class="">Testing ekstensi file beragam</td><td class="">Hanya file diizinkan diterima</td><td class="valid">Valid</td></tr></table>
+
+    <div class="title">Ringkasan Hasil Pengujian</div>
+    <table>
+        <tr><th>Metrik</th><th>Nilai</th></tr>
+        <tr><td>Total Pengujian</td><td>20</td></tr>
+        <tr><td>Valid</td><td>17 (85%)</td></tr>
+        <tr><td>Tidak Valid</td><td>3 (15%)</td></tr>
+        <tr><td>Tingkat Keberhasilan</td><td>85%</td></tr>
+        <tr><td>Tanggal Pengujian</td><td>5 Agustus 2025</td></tr>
+        <tr><td>Environment</td><td>Local Simulation</td></tr>
+    </table>
+    
+</body>
+</html>

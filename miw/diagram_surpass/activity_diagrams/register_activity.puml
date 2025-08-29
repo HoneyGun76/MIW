@@ -1,0 +1,30 @@
+@startuml Register for Umrah/Haji Activity
+
+start
+:Customer visits registration page;
+
+:Select package type (Umrah/Haji);
+:Fill personal information;
+:Upload required documents;
+
+if (All required fields filled?) then (yes)
+  :Submit registration;
+  :System validates data;
+  
+  if (Data valid?) then (yes)
+    :Create registration record;
+    :Calculate initial payment;
+    :Send confirmation email;
+    :Show registration summary;
+  else (no)
+    :Show validation errors;
+    :Return to form;
+  endif
+else (no)
+  :Show required field errors;
+  :Return to form;
+endif
+
+stop
+
+@enduml

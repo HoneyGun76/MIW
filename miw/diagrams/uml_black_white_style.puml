@@ -1,0 +1,400 @@
+@startuml
+!define BLACK_WHITE_STYLE
+
+' ===== STRICT BLACK & WHITE STYLE CONFIGURATION =====
+' Based on UML 2.5 standard design as referenced from uml-diagrams.org
+' This style provides professional, print-friendly, monochrome appearance
+
+' Remove all colors, shadows, and gradients for strict professional look
+skinparam backgroundColor White
+skinparam shadowing false
+skinparam handwritten false
+skinparam monochrome true
+skinparam defaultFontSize 10
+skinparam defaultFontName Arial
+skinparam DefaultTextAlignment center
+skinparam wrapWidth 200
+skinparam maxMessageSize 60
+
+' ===== SEQUENCE DIAGRAM STRICT STYLING =====
+skinparam sequence {
+    ' Actor styling - strict black and white
+    ActorBackgroundColor White
+    ActorBorderColor Black
+    ActorBorderThickness 2
+    ActorFontColor Black
+    ActorFontSize 10
+    ActorFontStyle bold
+    
+    ' Participant styling - minimal design
+    ParticipantBackgroundColor White
+    ParticipantBorderColor Black
+    ParticipantBorderThickness 1
+    ParticipantFontColor Black
+    ParticipantFontSize 10
+    ParticipantFontStyle normal
+    ParticipantPadding 10
+    
+    ' Arrow styling - clean black lines
+    ArrowColor Black
+    ArrowThickness 1
+    ArrowFontColor Black
+    ArrowFontSize 9
+    ArrowFontStyle normal
+    
+    ' Lifeline styling - simple black lines
+    LifeLineBackgroundColor White
+    LifeLineBorderColor Black
+    LifeLineBorderThickness 1
+    
+    ' Activation box styling - minimal white boxes
+    BoxBackgroundColor White
+    BoxBorderColor Black
+    BoxBorderThickness 1
+    BoxFontColor Black
+    BoxFontSize 9
+    
+    ' Message styling
+    MessageAlignment left
+    MessageTextAlignment left
+    
+    ' Divider styling
+    DividerBackgroundColor White
+    DividerBorderColor Black
+    DividerBorderThickness 1
+    DividerFontColor Black
+    DividerFontSize 10
+    DividerFontStyle bold
+    
+    ' Reference styling
+    ReferenceBackgroundColor White
+    ReferenceBorderColor Black
+    ReferenceBorderThickness 1
+    ReferenceFontColor Black
+    ReferenceFontSize 9
+    
+    ' Stereotype styling
+    StereotypeFontColor Black
+    StereotypeFontSize 8
+}
+
+' ===== CLASS DIAGRAM STRICT STYLING =====
+skinparam class {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 1
+    ArrowColor Black
+    ArrowThickness 1
+    FontColor Black
+    FontSize 10
+    FontName Arial
+    HeaderBackgroundColor White
+    AttributeFontColor Black
+    AttributeFontSize 9
+    StereotypeFontColor Black
+    StereotypeFontSize 8
+}
+
+skinparam package {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 2
+    FontColor Black
+    FontSize 11
+    FontStyle bold
+    StereotypeFontColor Black
+}
+
+' ===== DATABASE/ENTITY DIAGRAM STRICT STYLING =====
+skinparam entity {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 1
+    FontColor Black
+    FontSize 10
+    FontName Arial
+    AttributeFontColor Black
+    AttributeFontSize 9
+    StereotypeFontColor Black
+}
+
+skinparam rectangle {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 1
+    FontColor Black
+    FontSize 10
+}
+
+' ===== DEPLOYMENT DIAGRAM STRICT STYLING =====
+skinparam node {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 2
+    FontColor Black
+    FontSize 10
+    FontStyle bold
+    StereotypeFontColor Black
+}
+
+skinparam component {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 1
+    FontColor Black
+    FontSize 10
+    StereotypeFontColor Black
+}
+
+skinparam interface {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 1
+    FontColor Black
+    FontSize 10
+}
+
+skinparam artifact {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 1
+    FontColor Black
+    FontSize 10
+}
+
+skinparam database {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 1
+    FontColor Black
+    FontSize 10
+    StereotypeFontColor Black
+}
+
+skinparam folder {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 1
+    FontColor Black
+    FontSize 10
+}
+
+' ===== USE CASE DIAGRAM STRICT STYLING =====
+skinparam usecase {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 1
+    FontColor Black
+    FontSize 10
+    StereotypeFontColor Black
+}
+
+skinparam actor {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 2
+    FontColor Black
+    FontSize 10
+    FontStyle bold
+}
+
+' ===== ACTIVITY DIAGRAM STRICT STYLING =====
+skinparam activity {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 1
+    FontColor Black
+    FontSize 10
+    BarColor Black
+    StartColor Black
+    EndColor Black
+    DiamondBackgroundColor White
+    DiamondBorderColor Black
+    DiamondFontColor Black
+}
+
+skinparam swimlane {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 1
+    TitleBackgroundColor White
+    TitleFontColor Black
+}
+
+' ===== GENERAL STYLING OVERRIDES FOR STRICT BLACK & WHITE =====
+skinparam title {
+    FontColor Black
+    FontSize 14
+    FontStyle bold
+}
+
+skinparam legend {
+    BackgroundColor White
+    BorderColor Black
+    FontColor Black
+}
+
+skinparam caption {
+    FontColor Black
+    FontSize 10
+}
+
+skinparam note {
+    BackgroundColor White
+    BorderColor Black
+    FontColor Black
+    FontSize 9
+}
+
+skinparam state {
+    BackgroundColor White
+    BorderColor Black
+    FontColor Black
+    AttributeFontColor Black
+    StartColor Black
+    EndColor Black
+}
+
+@enduml
+    ParticipantBorderColor Black
+    ParticipantBorderThickness 1
+    ParticipantFontColor Black
+    ParticipantFontSize 10
+    
+    ArrowColor Black
+    ArrowThickness 1
+    ArrowFontColor Black
+    ArrowFontSize 9
+    
+    LifeLineBackgroundColor White
+    LifeLineBorderColor Black
+    LifeLineBorderThickness 1
+    
+    BoxBackgroundColor White
+    BoxBorderColor Black
+    BoxFontColor Black
+}
+
+' ===== DATABASE/ENTITY DIAGRAM STYLING =====
+skinparam entity {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 1
+    FontColor Black
+    FontSize 10
+    FontName Arial
+    AttributeFontColor Black
+    AttributeFontSize 9
+}
+
+skinparam rectangle {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 1
+    FontColor Black
+    FontSize 10
+}
+
+' ===== DEPLOYMENT DIAGRAM STYLING =====
+skinparam node {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 2
+    FontColor Black
+    FontSize 10
+    FontStyle bold
+}
+
+skinparam component {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 1
+    FontColor Black
+    FontSize 10
+}
+
+skinparam interface {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 1
+    FontColor Black
+    FontSize 10
+}
+
+skinparam artifact {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 1
+    FontColor Black
+    FontSize 10
+}
+
+' ===== USE CASE DIAGRAM STYLING =====
+skinparam usecase {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 1
+    FontColor Black
+    FontSize 10
+}
+
+skinparam actor {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 2
+    FontColor Black
+    FontSize 10
+    FontStyle bold
+}
+
+' ===== ACTIVITY DIAGRAM STYLING =====
+skinparam activity {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 1
+    FontColor Black
+    FontSize 10
+    BarColor Black
+    StartColor Black
+    EndColor Black
+    DiamondBackgroundColor White
+    DiamondBorderColor Black
+    DiamondFontColor Black
+}
+
+' ===== STATE DIAGRAM STYLING =====
+skinparam state {
+    BackgroundColor White
+    BorderColor Black
+    BorderThickness 1
+    FontColor Black
+    FontSize 10
+    StartColor Black
+    EndColor Black
+    ArrowColor Black
+}
+
+' ===== NOTES AND LEGENDS =====
+skinparam note {
+    BackgroundColor White
+    BorderColor Black
+    FontColor Black
+    FontSize 9
+}
+
+skinparam legend {
+    BackgroundColor White
+    BorderColor Black
+    FontColor Black
+    FontSize 9
+}
+
+' ===== STEREOTYPES =====
+skinparam stereotype {
+    CBackgroundColor White
+    CBorderColor Black
+    CFontColor Black
+    CFontSize 9
+}
+
+@enduml

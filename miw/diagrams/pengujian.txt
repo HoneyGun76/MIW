@@ -1,0 +1,439 @@
+PENGUJIAN SISTEM MIW TRAVEL BERBASIS RAILWAY
+===========================================================================
+
+4.5 Pengujian
+
+Pengujian pada sistem MIW Travel berbasis Railway merupakan tahap krusial untuk memastikan kehandalan dan kesiapan sistem sebelum digunakan secara penuh oleh pengguna. Pengujian dilakukan dengan metode Black Box Testing, yaitu pengujian yang berfokus pada fungsionalitas sistem tanpa memperhatikan struktur kode internal. Pendekatan ini dipilih karena memungkinkan pengujian dari perspektif pengguna akhir dan memastikan bahwa semua fitur berfungsi sesuai kebutuhan dalam lingkungan deployment Railway. Pengujian black box juga memungkinkan verifikasi bahwa sistem beroperasi dengan baik dalam lingkungan cloud tanpa memerlukan perubahan pada konfigurasi deployment yang sudah berjalan.
+
+4.5.1 Rencana Pengujian
+-----------------------
+
+Rencana pengujian untuk sistem MIW Travel berbasis Railway disusun secara sistematis untuk mencakup seluruh aspek fungsional sistem. Pengujian dilakukan dengan fokus pada modul-modul utama yang mencakup pendaftaran jamaah, pengelolaan paket, pengelolaan pembatalan, serta fungsi administratif. Untuk menjaga stabilitas lingkungan Railway yang sudah berjalan, pengujian dilakukan dengan pendekatan non-invasif, di mana perubahan data dilakukan melalui antarmuka sistem dan tidak langsung pada basis data atau konfigurasi server.
+
+Pengujian dikelompokkan menjadi beberapa kategori berdasarkan fungsi utama sistem:
+1. Pengujian Konektivitas dan Deployment - memastikan sistem dapat diakses dan berfungsi dalam lingkungan Railway
+2. Pengujian Pendaftaran Jamaah - menguji proses pendaftaran umroh dan haji
+3. Pengujian Manajemen Paket - menguji pengelolaan paket perjalanan
+4. Pengujian Pembatalan - menguji proses pengajuan dan pemrosesan pembatalan
+5. Pengujian Administratif - menguji fungsi panel admin
+6. Pengujian Upload dan Pengelolaan File - menguji fungsi upload dan pengelolaan dokumen dalam persistent storage Railway
+7. Pengujian Keamanan - menguji aspek keamanan sistem
+
+Setiap kategori pengujian memiliki serangkaian kasus uji spesifik dengan input yang ditentukan, hasil yang diharapkan, dan kriteria keberhasilan yang jelas. Pengujian dilakukan dalam urutan tertentu untuk memastikan bahwa fungsi-fungsi dasar yang menjadi prasyarat fungsi lain telah berjalan dengan baik sebelum pengujian lebih lanjut.
+
+**Tabel 4.1 Rencana Pengujian Sistem MIW Travel**
+
+| No. | Modul | Requirement yang diuji | Butir Uji | Jenis Pengujian |
+|-----|-------|------------------------|------------|-----------------|
+| 1 | Konektivitas | Akses halaman utama website | Ketersediaan file index.php | Black Box |
+| 2 | Konektivitas | Health check endpoint | Ketersediaan file health.php | Black Box |
+| 3 | Konektivitas | Konfigurasi sistem | Ketersediaan file config.php | Black Box |
+| 4 | Konektivitas | Deteksi environment Railway | Validasi environment variables | Black Box |
+| 5 | Pendaftaran Jamaah | Form pendaftaran umroh/haji | Ketersediaan file form | Black Box |
+| 6 | Pendaftaran Jamaah | Validasi input form | Validasi NIK, email, telepon, tanggal | Black Box |
+| 7 | Pendaftaran Jamaah | Upload dokumen jamaah | Kemampuan upload file | Black Box |
+| 8 | Manajemen Paket | Pengelolaan paket perjalanan | Ketersediaan file admin paket | Black Box |
+| 9 | Manajemen Paket | Validasi data paket | Struktur data paket | Black Box |
+| 10 | Pembatalan | Form pengajuan pembatalan | Ketersediaan file pembatalan | Black Box |
+| 11 | Pembatalan | Verifikasi pembatalan | Proses verifikasi admin | Black Box |
+| 12 | Administratif | Panel administrasi | Akses file admin dashboard | Black Box |
+| 13 | Administratif | Export manifest jamaah | Fungsi export data | Black Box |
+| 14 | Administratif | Manajemen roomlist | Pengaturan kamar jamaah | Black Box |
+| 15 | File Upload | Handler upload file | Sistem upload dokumen | Black Box |
+| 16 | File Upload | Permission file system | Hak akses file dan direktori | Black Box |
+| 17 | File Upload | Validasi ukuran file | Batas maksimum ukuran file | Black Box |
+| 18 | Keamanan | Sanitasi input | Pencegahan XSS dan SQL injection | Black Box |
+| 19 | Keamanan | Autentikasi admin | Sistem login admin | Black Box |
+| 20 | Keamanan | Validasi tipe file | Filter ekstensi file yang diizinkan | Black Box |
+
+4.5.2 Kasus dan Hasil Pengujian
+-------------------------------
+
+Pengujian Black Box telah diimplementasikan dan dijalankan pada tanggal 5 Agustus 2025 pukul 17:49:27 WIB dalam mode simulasi untuk memastikan tidak ada perubahan pada lingkungan Railway yang sedang berjalan. Pengujian dilakukan dengan pendekatan file-based validation dan structural integrity testing.
+
+Berikut adalah hasil pengujian yang dikelompokkan berdasarkan 7 kategori utama sistem:
+
+### A. Pengujian Konektivitas dan Deployment
+
+**Tabel 4.3 Hasil Pengujian Konektivitas dan Deployment**
+
+| No | Pengujian | Test Case | Hasil Yang Diharapkan | Kesimpulan |
+|----|-----------|-----------|----------------------|------------|
+| 1 | Akses Website | Pemeriksaan file index.php | File tersedia dan dapat diakses | Valid |
+| 2 | Health Check Endpoint | Pemeriksaan file health.php | File health check tersedia | Valid |
+| 3 | File Konfigurasi | Pemeriksaan file config.php | File konfigurasi tersedia | Valid |
+| 4 | Deteksi Environment | Pemeriksaan variabel environment | Environment terdeteksi dengan benar | Valid |
+
+**Analisis:** Semua pengujian konektivitas menunjukkan hasil valid (100% success rate). File-file essential seperti index.php, health.php, dan config.php tersedia dan dapat diakses. Deteksi environment berfungsi dengan baik, memastikan sistem dapat membedakan antara lingkungan local dan Railway.
+
+### B. Pengujian Pendaftaran Jamaah
+
+**Tabel 4.4 Hasil Pengujian Pendaftaran Jamaah**
+
+| No | Pengujian | Test Case | Hasil Yang Diharapkan | Kesimpulan |
+|----|-----------|-----------|----------------------|------------|
+| 5 | File Form Pendaftaran | Pemeriksaan file form umroh/haji | Semua file form tersedia | Valid |
+| 6 | Validasi Input Form | Testing format NIK, email, telepon | Validasi berfungsi dengan benar | Valid |
+| 7 | Kemampuan Upload File | Pemeriksaan direktori uploads | Direktori dapat diakses dan ditulis | Valid |
+
+**Analisis:** Pengujian pendaftaran jamaah menunjukkan hasil sempurna (100% success rate). File form tersedia, validasi input berfungsi untuk NIK 16 digit, format email, nomor telepon, dan format tanggal. Kemampuan upload file telah terimplementasi dengan permission yang tepat.
+
+### C. Pengujian Manajemen Paket
+
+**Tabel 4.5 Hasil Pengujian Manajemen Paket**
+
+| No | Pengujian | Test Case | Hasil Yang Diharapkan | Kesimpulan |
+|----|-----------|-----------|----------------------|------------|
+| 8 | File Manajemen Paket | Pemeriksaan file admin paket | File manajemen paket tersedia | Valid |
+| 9 | Struktur Data Paket | Validasi data paket lengkap | Data paket sesuai standar | Valid |
+
+**Analisis:** Pengujian manajemen paket berhasil dengan sempurna (100% success rate). File manajemen tersedia dan struktur data paket sesuai standar yang ditetapkan, termasuk validasi nama paket, harga positif, dan tanggal keberangkatan di masa depan.
+
+### D. Pengujian Pembatalan
+
+**Tabel 4.6 Hasil Pengujian Pembatalan**
+
+| No | Pengujian | Test Case | Hasil Yang Diharapkan | Kesimpulan |
+|----|-----------|-----------|----------------------|------------|
+| 10 | File Form Pembatalan | Pemeriksaan file pembatalan | File form pembatalan tersedia | Valid |
+| 11 | Proses Verifikasi | Pemeriksaan file verify_cancellation | File verifikasi tersedia | Valid |
+
+**Analisis:** Pengujian proses pembatalan menunjukkan hasil sempurna (100% success rate). File form pembatalan dan proses verifikasi telah tersedia dan dapat diakses dengan baik.
+
+### E. Pengujian Administratif
+
+**Tabel 4.7 Hasil Pengujian Administratif**
+
+| No | Pengujian | Test Case | Hasil Yang Diharapkan | Kesimpulan |
+|----|-----------|-----------|----------------------|------------|
+| 12 | Akses Panel Admin | Pemeriksaan file admin dashboard | Panel admin dapat diakses | Tidak Valid |
+| 13 | Export Manifest | Pemeriksaan file export manifest | File export tersedia | Valid |
+| 14 | Manajemen Kamar | Pemeriksaan file roomlist | File manajemen kamar tersedia | Valid |
+
+**Analisis:** Pengujian administratif menunjukkan tingkat keberhasilan 66.7% (2 dari 3 pengujian valid). Export manifest dan manajemen kamar berfungsi baik, namun akses panel admin memerlukan perbaikan pada file dashboard yang masih kurang lengkap.
+
+### F. Pengujian Upload dan Pengelolaan File
+
+**Tabel 4.8 Hasil Pengujian Upload dan Pengelolaan File**
+
+| No | Pengujian | Test Case | Hasil Yang Diharapkan | Kesimpulan |
+|----|-----------|-----------|----------------------|------------|
+| 15 | Handler Upload | Pemeriksaan handler upload file | Handler upload tersedia | Valid |
+| 16 | Permission File | Testing buat/hapus file test | File dapat dibuat dan dihapus | Valid |
+| 17 | Validasi Ukuran File | Simulasi file 2MB vs batas 5MB | File dalam batas diterima | Valid |
+
+**Analisis:** Pengujian file upload menunjukkan hasil sempurna (100% success rate). Handler upload tersedia, permission file berfungsi dengan baik, dan validasi ukuran file terimplementasi dengan benar sesuai batas yang ditetapkan.
+
+### G. Pengujian Keamanan
+
+**Tabel 4.9 Hasil Pengujian Keamanan**
+
+| No | Pengujian | Test Case | Hasil Yang Diharapkan | Kesimpulan |
+|----|-----------|-----------|----------------------|------------|
+| 18 | Sanitasi Input | Testing input XSS/SQL injection | Input disanitasi dengan benar | Tidak Valid |
+| 19 | Autentikasi Admin | Pemeriksaan file admin_auth | Sistem autentikasi tersedia | Tidak Valid |
+| 20 | Validasi Tipe File | Testing ekstensi file beragam | Hanya file diizinkan diterima | Valid |
+
+**Analisis:** Pengujian keamanan menunjukkan tingkat keberhasilan 33.3% (1 dari 3 pengujian valid). Validasi tipe file berfungsi dengan baik, namun sanitasi input dan autentikasi admin memerlukan implementasi yang lebih robust untuk memastikan keamanan sistem.
+
+**Tabel 4.2 Hasil Pengujian Sistem MIW Travel**
+
+| No | Pengujian | Test Case | Hasil yang diharapkan | Kesimpulan |
+|----|-----------|-----------|----------------------|------------|
+| 1 | Akses Website | Pemeriksaan file index.php | File tersedia dan dapat diakses | Valid |
+| 2 | Health Check Endpoint | Pemeriksaan file health.php | File health check tersedia | Valid |
+| 3 | File Konfigurasi | Pemeriksaan file config.php | File konfigurasi tersedia | Valid |
+| 4 | Deteksi Environment | Pemeriksaan variabel environment | Environment terdeteksi dengan benar | Valid |
+| 5 | File Form Pendaftaran | Pemeriksaan file form umroh/haji | Semua file form tersedia | Valid |
+| 6 | Validasi Input Form | Testing format NIK, email, telepon | Validasi berfungsi dengan benar | Valid |
+| 7 | Kemampuan Upload File | Pemeriksaan direktori uploads | Direktori dapat diakses dan ditulis | Valid |
+| 8 | File Manajemen Paket | Pemeriksaan file admin paket | File manajemen paket tersedia | Valid |
+| 9 | Struktur Data Paket | Validasi data paket lengkap | Data paket sesuai standar | Valid |
+| 10 | File Form Pembatalan | Pemeriksaan file pembatalan | File form pembatalan tersedia | Valid |
+| 11 | Proses Verifikasi | Pemeriksaan file verify_cancellation | File verifikasi tersedia | Valid |
+| 12 | Akses Panel Admin | Pemeriksaan file admin dashboard | Panel admin dapat diakses | Tidak Valid |
+| 13 | Export Manifest | Pemeriksaan file export manifest | File export tersedia | Valid |
+| 14 | Manajemen Kamar | Pemeriksaan file roomlist | File manajemen kamar tersedia | Valid |
+| 15 | Handler Upload | Pemeriksaan handler upload file | Handler upload tersedia | Valid |
+| 16 | Permission File | Testing buat/hapus file test | File dapat dibuat dan dihapus | Valid |
+| 17 | Validasi Ukuran File | Simulasi file 2MB vs batas 5MB | File dalam batas diterima | Valid |
+| 18 | Sanitasi Input | Testing input XSS/SQL injection | Input disanitasi dengan benar | Tidak Valid |
+| 19 | Autentikasi Admin | Pemeriksaan file admin_auth | Sistem autentikasi tersedia | Tidak Valid |
+| 20 | Validasi Tipe File | Testing ekstensi file beragam | Hanya file diizinkan diterima | Valid |
+
+4.5.3 Kesimpulan hasil Pengujian
+--------------------------------
+
+Berdasarkan implementasi Black Box Testing yang telah dilakukan pada sistem MIW Travel berbasis Railway, dapat disimpulkan bahwa sistem menunjukkan tingkat kematangan yang baik dengan pencapaian keberhasilan 85% dari total 20 kasus uji yang dijalankan. Pengujian yang dilakukan secara sistematis pada 7 kategori utama menghasilkan 17 pengujian valid dan 3 pengujian tidak valid. 
+
+Kategori konektivitas, pendaftaran jamaah, manajemen paket, pembatalan, dan upload file menunjukkan hasil sempurna dengan tingkat keberhasilan 100%, menandakan bahwa fungsi-fungsi inti sistem telah terimplementasi dengan baik. Namun, terdapat dua area kritis yang memerlukan perhatian khusus yaitu aspek keamanan sistem dan sebagian fitur administratif. Area keamanan menunjukkan tingkat keberhasilan terendah (33.3%) dengan kekurangan pada sanitasi input dan autentikasi admin, sementara fitur administratif mencapai 66.7% keberhasilan dengan kendala pada akses panel admin.
+
+Hasil pengujian menunjukkan bahwa sistem MIW Travel sudah memiliki fondasi yang solid untuk operasional dasar, namun memerlukan penguatan pada aspek keamanan sebelum dapat dinyatakan siap untuk deployment penuh. Pendekatan black box testing yang diterapkan terbukti efektif dalam mengidentifikasi area yang memerlukan perbaikan tanpa mengganggu stabilitas lingkungan Railway yang sedang berjalan, sehingga memberikan roadmap yang jelas untuk pengembangan sistem selanjutnya.
+
+4.6 Implementasi
+---------------
+
+Implementasi sistem MIW Travel berbasis Railway merupakan tahapan realisasi dari perancangan sistem ke dalam bentuk aplikasi web yang siap digunakan. Implementasi dilakukan dengan memanfaatkan platform Railway sebagai layanan hosting berbasis cloud yang menawarkan konfigurasi otomatis, continuous deployment, dan kemudahan pengelolaan infrastruktur. Sistem diimplementasikan dengan pendekatan yang mempertimbangkan aspek keamanan, skalabilitas, dan kemudahan penggunaan. Website didesain menggunakan prinsip responsive design untuk memastikan tampilan optimal pada berbagai perangkat, serta menerapkan praktik terbaik dalam pengembangan aplikasi web modern seperti pemisahan logika bisnis dari presentasi, sanitasi input, dan validasi data. Implementasi Railway memungkinkan proses deployment dan update aplikasi menjadi lebih efisien melalui integrasi langsung dengan repositori Git, sehingga setiap perubahan pada kode sumber secara otomatis diterapkan ke lingkungan produksi.
+
+4.6.1 Implementasi Perangkat Lunak
+-------------------------------
+
+Implementasi perangkat lunak MIW Travel berfokus pada penggunaan teknologi web yang modern dan efisien untuk memastikan kinerja optimal pada platform Railway. Sistem ini dikembangkan menggunakan PHP sebagai bahasa pemrograman server-side yang dipilih karena skalabilitasnya, dukungan komunitas yang luas, dan kompatibilitas dengan berbagai lingkungan hosting termasuk Railway. Framework Bootstrap digunakan untuk memastikan antarmuka yang responsif dan konsisten pada berbagai perangkat. Untuk manajemen database, MySQL dipilih karena keandalannya dalam menangani data transaksional dengan volume tinggi. Pengembangan dilakukan dengan Visual Studio Code sebagai editor pilihan karena fitur-fitur kolaboratifnya dan dukungan ekstensi yang luas untuk pengembangan PHP. Implementasi juga memanfaatkan berbagai library pendukung seperti PHPMailer untuk fungsionalitas email, PhpSpreadsheet untuk ekspor data, dan TCPDF untuk generasi dokumen PDF.
+
+Sistem Operasi		: Windows 10
+Bahasa Pemograman	: PHP 8.1
+Framework		: Bootstrap 5.3, jQuery 3.6
+Database		: MySQL 8.0
+Text Editor		: Visual Studio Code
+Perangkat Tambahan	: PHPMailer, TCPDF, PhpSpreadsheet, Composer
+
+4.6.2 Implementasi Perangkat Keras
+-------------------------------
+
+Implementasi perangkat keras untuk sistem MIW Travel berbasis Railway berfokus pada spesifikasi minimum yang diperlukan untuk pengembangan dan pengujian lokal sebelum deployment ke lingkungan Railway. Meskipun Railway menyediakan infrastruktur cloud yang terpisah untuk deployment produksi, perangkat keras lokal tetap diperlukan untuk pengembangan, pengujian, dan maintenance sistem. Spesifikasi perangkat keras yang digunakan mampu menjalankan server lokal XAMPP dengan baik untuk simulasi lingkungan produksi, serta menangani beban kerja pengembangan seperti pengeditan kode, pengujian fitur, dan debugging. Dengan memanfaatkan lingkungan pengembangan lokal yang efisien, tim dapat memastikan kualitas sistem sebelum melakukan deployment ke Railway, sehingga meminimalisir kemungkinan masalah yang muncul di lingkungan produksi.
+
+CPU			: Intel Core i5-5500 (2.5 GHz)
+RAM			: 4 GB
+Harddisk		: 350 GB
+Perangkat Tambahan	: Mouse, Keyboard
+
+4.6.3 Implementasi Database
+-------------------------------
+
+Implementasi database MIW Travel menggunakan MySQL yang dikelola oleh platform Railway, menyediakan solusi database yang terkelola dengan baik, skalabel, dan aman. Railway MySQL menawarkan keuntungan berupa backup otomatis, replikasi data, dan kemudahan monitoring performa. Database dirancang dengan struktur relasional yang mengakomodasi kebutuhan penyimpanan data jamaah, paket perjalanan, pembayaran, dan informasi administratif lainnya. Pemanfaatan Railway sebagai penyedia layanan database juga menghilangkan kebutuhan akan manajemen infrastruktur database tradisional, sehingga tim pengembang dapat fokus pada pengembangan fitur aplikasi.
+
+Berikut adalah struktur database yang diimplementasikan:
+
+```sql
+-- Database: data_miw
+
+CREATE TABLE jamaah (
+    id_jamaah INT AUTO_INCREMENT PRIMARY KEY,
+    nik VARCHAR(16) NOT NULL UNIQUE,
+    nama_lengkap VARCHAR(100) NOT NULL,
+    tempat_lahir VARCHAR(50) NOT NULL,
+    tanggal_lahir DATE NOT NULL,
+    jenis_kelamin ENUM('Pria', 'Wanita') NOT NULL,
+    alamat TEXT NOT NULL,
+    kewarganegaraan VARCHAR(50) DEFAULT 'Indonesia',
+    no_telepon VARCHAR(15) NOT NULL,
+    email VARCHAR(100),
+    pekerjaan VARCHAR(100),
+    pak_id INT NOT NULL,
+    no_paspor VARCHAR(50),
+    tanggal_pembuatan_paspor DATE,
+    tempat_pembuatan_paspor VARCHAR(100),
+    tanggal_habis_berlaku_paspor DATE,
+    nama_mahram VARCHAR(100),
+    hubungan_mahram VARCHAR(50),
+    room_type ENUM('Quad', 'Triple', 'Double') NOT NULL DEFAULT 'Quad',
+    medinah_room_number VARCHAR(20),
+    mekkah_room_number VARCHAR(20),
+    room_notes TEXT,
+    payment_status ENUM('pending', 'verified', 'completed', 'cancelled') DEFAULT 'pending',
+    verification_date DATETIME,
+    verified_by INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (pak_id) REFERENCES data_paket(pak_id),
+    FOREIGN KEY (verified_by) REFERENCES admin(id_admin)
+);
+
+CREATE TABLE data_paket (
+    pak_id INT AUTO_INCREMENT PRIMARY KEY,
+    jenis_paket ENUM('Umroh', 'Haji') NOT NULL,
+    nama_paket VARCHAR(100) NOT NULL,
+    tanggal_keberangkatan DATE NOT NULL,
+    durasi_hari INT NOT NULL,
+    harga_quad DECIMAL(12, 2) NOT NULL,
+    harga_triple DECIMAL(12, 2) NOT NULL,
+    harga_double DECIMAL(12, 2) NOT NULL,
+    kuota_jamaah INT NOT NULL,
+    hotel_mekkah VARCHAR(100),
+    hotel_madinah VARCHAR(100),
+    maskapai VARCHAR(100),
+    itinerary TEXT,
+    ketentuan TEXT,
+    status ENUM('active', 'completed', 'cancelled') DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+```
+
+4.6.2 Implementasi Perangkat Keras
+---------------------------------
+
+Implementasi perangkat keras untuk pengembangan dan pengoperasian sistem MIW Travel membutuhkan spesifikasi yang memadai untuk menjalankan lingkungan pengembangan dengan lancar. Meskipun sistem berjalan pada infrastruktur cloud Railway, spesifikasi perangkat keras berikut digunakan untuk aktivitas pengembangan lokal dan pengujian sebelum deployment.
+
+CPU			: Intel Core i5-5500 (2.5 GHz)
+RAM			: 4 GB
+Harddisk		: 350 GB
+Perangkat Tambahan	: Mouse, Keyboard
+
+4.6.3 Implementasi Database
+-------------------------
+
+Implementasi database MIW Travel menggunakan MySQL yang dikelola oleh platform Railway, menyediakan solusi database yang terkelola dengan baik, skalabel, dan aman. Railway MySQL menawarkan keuntungan berupa backup otomatis, replikasi data, dan kemudahan monitoring performa. Database dirancang dengan struktur relasional yang mengakomodasi kebutuhan penyimpanan data jamaah, paket perjalanan, pembayaran, dan informasi administratif lainnya. Pemanfaatan Railway sebagai penyedia layanan database juga menghilangkan kebutuhan akan manajemen infrastruktur database tradisional, sehingga tim pengembang dapat fokus pada pengembangan fitur aplikasi.
+
+Berikut adalah struktur database yang diimplementasikan:
+
+```sql
+-- Database: data_miw
+
+CREATE TABLE jamaah (
+    id_jamaah INT AUTO_INCREMENT PRIMARY KEY,
+    nik VARCHAR(16) NOT NULL UNIQUE,
+    nama_lengkap VARCHAR(100) NOT NULL,
+    tempat_lahir VARCHAR(50) NOT NULL,
+    tanggal_lahir DATE NOT NULL,
+    jenis_kelamin ENUM('L', 'P') NOT NULL,
+    alamat TEXT NOT NULL,
+    email VARCHAR(100),
+    no_telepon VARCHAR(15) NOT NULL,
+    pekerjaan VARCHAR(50),
+    nama_mahram VARCHAR(100),
+    hubungan_mahram VARCHAR(50),
+    status_pembayaran ENUM('Lunas', 'DP', 'Belum Bayar') DEFAULT 'Belum Bayar',
+    id_paket INT,
+    tanggal_daftar TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE paket (
+    id_paket INT AUTO_INCREMENT PRIMARY KEY,
+    nama_paket VARCHAR(100) NOT NULL,
+    jenis_paket ENUM('Umroh', 'Haji') NOT NULL,
+    deskripsi TEXT,
+    harga DECIMAL(12, 2) NOT NULL,
+    durasi_hari INT NOT NULL,
+    tanggal_keberangkatan DATE NOT NULL,
+    kuota INT NOT NULL,
+    kuota_terisi INT DEFAULT 0,
+    status ENUM('Aktif', 'Tidak Aktif') DEFAULT 'Aktif',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE pembayaran (
+    id_pembayaran INT AUTO_INCREMENT PRIMARY KEY,
+    id_jamaah INT NOT NULL,
+    tanggal_pembayaran DATE NOT NULL,
+    jumlah DECIMAL(12, 2) NOT NULL,
+    metode_pembayaran VARCHAR(50) NOT NULL,
+    bukti_pembayaran VARCHAR(255),
+    status_verifikasi ENUM('Menunggu', 'Terverifikasi', 'Ditolak') DEFAULT 'Menunggu',
+    keterangan TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_jamaah) REFERENCES jamaah(id_jamaah)
+);
+
+CREATE TABLE dokumen (
+    id_dokumen INT AUTO_INCREMENT PRIMARY KEY,
+    id_jamaah INT NOT NULL,
+    jenis_dokumen ENUM('Paspor', 'KTP', 'KK', 'Akta Lahir', 'Buku Nikah', 'Foto') NOT NULL,
+    nama_file VARCHAR(255) NOT NULL,
+    path_file VARCHAR(255) NOT NULL,
+    tanggal_upload TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status_verifikasi ENUM('Menunggu', 'Terverifikasi', 'Ditolak') DEFAULT 'Menunggu',
+    keterangan TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_jamaah) REFERENCES jamaah(id_jamaah)
+);
+
+CREATE TABLE admin (
+    id_admin INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    nama_lengkap VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    level ENUM('Super Admin', 'Admin', 'Operator') DEFAULT 'Operator',
+    status ENUM('Aktif', 'Tidak Aktif') DEFAULT 'Aktif',
+    last_login TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE manifest (
+    id_manifest INT AUTO_INCREMENT PRIMARY KEY,
+    id_paket INT NOT NULL,
+    tanggal_generate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    nama_file VARCHAR(255),
+    path_file VARCHAR(255),
+    status ENUM('Draft', 'Final') DEFAULT 'Draft',
+    created_by INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_paket) REFERENCES paket(id_paket),
+    FOREIGN KEY (created_by) REFERENCES admin(id_admin)
+);
+
+CREATE TABLE roomlist (
+    id_room INT AUTO_INCREMENT PRIMARY KEY,
+    id_paket INT NOT NULL,
+    nomor_kamar VARCHAR(20) NOT NULL,
+    tipe_kamar ENUM('Double', 'Triple', 'Quad') NOT NULL,
+    hotel VARCHAR(100) NOT NULL,
+    kapasitas INT NOT NULL,
+    terisi INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_paket) REFERENCES paket(id_paket)
+);
+
+CREATE TABLE jamaah_kamar (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_jamaah INT NOT NULL,
+    id_room INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_jamaah) REFERENCES jamaah(id_jamaah),
+    FOREIGN KEY (id_room) REFERENCES roomlist(id_room)
+);
+
+CREATE TABLE pembatalan (
+    id_pembatalan INT AUTO_INCREMENT PRIMARY KEY,
+    id_jamaah INT NOT NULL,
+    tanggal_pengajuan DATE NOT NULL,
+    alasan TEXT NOT NULL,
+    dokumen_pendukung VARCHAR(255),
+    status ENUM('Diajukan', 'Diproses', 'Disetujui', 'Ditolak') DEFAULT 'Diajukan',
+    tanggal_verifikasi DATE NULL,
+    keterangan TEXT,
+    verified_by INT NULL,
+    refund_amount DECIMAL(12, 2) NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_jamaah) REFERENCES jamaah(id_jamaah),
+    FOREIGN KEY (verified_by) REFERENCES admin(id_admin)
+);
+
+CREATE TABLE log_aktivitas (
+    id_log INT AUTO_INCREMENT PRIMARY KEY,
+    id_admin INT NULL,
+    aktivitas VARCHAR(255) NOT NULL,
+    tabel VARCHAR(50) NULL,
+    id_record INT NULL,
+    ip_address VARCHAR(50),
+    user_agent TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_admin) REFERENCES admin(id_admin)
+);
+```
+
+4.6.4 Implementasi Antar Muka
+---------------------------
+
+Implementasi antarmuka MIW Travel dirancang dengan pendekatan user-centered design dan responsive web design untuk memastikan pengalaman pengguna yang optimal pada berbagai perangkat. Antarmuka menggabungkan elemen desain modern dengan fungsionalitas yang intuitif, mengutamakan kemudahan navigasi dan aksesibilitas informasi. Tampilan sistem dibagi menjadi dua bagian utama: frontend untuk calon jamaah dan backend untuk administrator. Frontend menyajikan informasi paket perjalanan, formulir pendaftaran, dan status pembayaran dengan desain yang menarik namun tetap profesional. Backend admin memberikan dashboard komprehensif dengan visualisasi data, manajemen jamaah, pengelolaan paket, dan fungsi administratif lainnya. Implementasi antarmuka juga mempertimbangkan branding MIW Travel dengan penggunaan warna, tipografi, dan elemen visual yang konsisten untuk menciptakan identitas yang kuat dan mudah dikenali.
+
+4.6.6. Penggunaan Program
+-----------------------
+
+Sistem MIW Travel berbasis Railway dirancang sebagai aplikasi manajemen perjalanan umroh dan haji dengan alur kerja yang terintegrasi dan antarmuka yang intuitif. Program ini memiliki dua antarmuka utama: sisi publik untuk calon jamaah dan panel administrasi untuk pengelola. Pada sisi publik, calon jamaah dapat dengan mudah melihat paket perjalanan yang tersedia, melakukan pendaftaran secara online melalui form umroh atau haji, mengunggah dokumen persyaratan (KTP, KK, paspor, foto), dan melakukan pembayaran dengan bukti transfer. Sistem secara otomatis mengirim email konfirmasi pendaftaran dan pembayaran. Pada sisi administrasi, staf MIW Travel dapat mengelola keseluruhan proses bisnis melalui panel admin yang terintegrasi, termasuk validasi pendaftaran, verifikasi pembayaran, pengelolaan paket perjalanan, penyusunan manifest jamaah, pengaturan roomlist (akomodasi kamar), hingga penanganan pembatalan. Sistem juga dilengkapi dengan fitur export data dalam format Excel untuk kebutuhan pelaporan dan koordinasi operasional. Implementasi berbasis Railway memastikan sistem dapat diakses dari mana saja dengan keamanan data yang terjamin dan performa yang stabil.
+
+4.6.6 Penggunaan Program
+---------------------------
+
+Program MIW Travel berbasis Railway dirancang sebagai sistem manajemen terpadu untuk pengelolaan perjalanan umroh dan haji dengan pendekatan user-friendly dan workflow yang terstruktur. Sistem ini memiliki dua komponen utama: antarmuka publik untuk pendaftaran jamaah dan panel administrasi untuk pengelolaan operasional. Jamaah dapat mengakses website untuk melihat paket perjalanan yang tersedia, melakukan pendaftaran melalui form yang komprehensif, mengupload dokumen pendukung seperti KTP dan KK, serta menerima invoice dan konfirmasi secara otomatis. Sementara itu, administrator dapat mengelola seluruh proses bisnis melalui panel admin yang terintegrasi, mulai dari verifikasi pendaftaran dan pembayaran, pengelolaan paket perjalanan, pengaturan kamar hotel (roomlist), hingga ekspor manifest jamaah untuk keperluan operasional. Sistem juga dilengkapi dengan fitur pengajuan pembatalan yang memungkinkan jamaah mengajukan pembatalan perjalanan dengan dokumen pendukung, yang kemudian dapat diproses oleh admin melalui workflow terstruktur. Penggunaan teknologi Railway sebagai platform deployment memastikan keandalan sistem dengan persistent storage untuk dokumen, konektivitas database yang stabil, dan kemampuan skalabilitas sesuai kebutuhan.

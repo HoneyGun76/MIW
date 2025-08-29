@@ -1,0 +1,2137 @@
+# MIW Travel Management System - Diagram Explanations Draft
+# Author: GitHub Copilot Assistant
+# Date: August 3, 2025
+# Project: Sistem Manajemen Perjalanan Umroh & Haji
+
+================================================================================
+# CLASS DIAGRAM - ARSITEKTUR SISTEM BERORIENTASI OBJEK
+================================================================================
+
+## OVERVIEW
+Class Diagram MIW Travel menggambarkan struktur arsitektural sistem dalam paradigma object-oriented programming. Diagram ini menunjukkan bagaimana sistem diorganisir dalam bentuk kelas-kelas yang saling berinteraksi untuk mengelola bisnis travel Umroh dan Haji.
+
+## PACKAGE STRUCTURE ANALYSIS
+
+### 1. PAKET "KONFIGURASI & KONEKSI"
+**ConfigManager Class:**
+- Kelas utama yang mengelola konfigurasi sistem
+- Mendeteksi environment (Railway production vs local development)
+- Mengelola direktori upload yang berbeda antara environment
+- Menyediakan fungsi utilitas untuk environment detection
+- Bertanggung jawab atas inisialisasi upload directory
+
+**DatabaseConnection Class:**
+- Abstraksi koneksi database menggunakan PDO
+- Mendukung multiple environment (local MySQL vs Railway MySQL)
+- Implementasi connection pooling dan error handling
+- Menyediakan metod untuk query execution dengan prepared statements
+
+### 2. PAKET "ENTITAS DATA" (DOMAIN MODELS)
+**DataJamaah Class:**
+- Representasi data jamaah (peserta umroh/haji)
+- Menyimpan informasi personal lengkap (NIK, nama, alamat, kontak)
+- Mengelola preferensi room (Quad/Triple/Double)
+- Tracking status pembayaran dan verifikasi
+- Menyimpan nomor kamar Madinah dan Mekkah
+- Hubungan family/mahram antar jamaah
+
+**DataPaket Class:**
+- Model untuk paket perjalanan Umroh/Haji
+- Mengelola pricing tier (Quad/Triple/Double room)
+- Informasi hotel Madinah dan Mekkah
+- Tanggal keberangkatan dan durasi program
+- Room allocation system dengan prefix (Q/T/D)
+- HCN (Hotel Confirmation Number) management
+
+**DataInvoice Class:**
+- Entitas untuk invoice dan billing
+- Link antara jamaah dan paket yang dipilih
+- Tracking pembayaran DP vs LUNAS
+- Sistem diskon dan payment method
+
+**DataPembatalan Class:**
+- Model untuk pembatalan perjalanan
+- Alasan pembatalan dan dokumentasi
+- Kalkulasi refund berdasarkan policy
+- Status approval pembatalan
+
+### 3. PAKET "PENGELOLA BISNIS" (BUSINESS LOGIC)
+**PaketManager Class:**
+- Business logic untuk pengelolaan paket travel
+- CRUD operations untuk paket Umroh/Haji
+- Validasi data paket dan pricing
+- Room allocation algorithm
+- Package availability management
+
+**JamaahManager Class:**
+- Core business logic untuk data jamaah
+- Registration workflow management
+- Document upload processing
+- Payment tracking dan verification
+- Room assignment dan manifest generation
+
+**ManifestManager Class:**
+- Spesialisasi untuk manifest keberangkatan
+- Room allocation optimization
+- Mahram relationship management
+- Export ke Excel format
+- Printing dan distribusi manifest
+
+**PaymentManager Class:**
+- Payment processing dan verification
+- Invoice generation menggunakan TCPDF
+- Payment reminder system
+- Refund calculation untuk pembatalan
+- Integration dengan receipt template
+
+**FileUploadManager Class:**
+- File upload handling dengan validasi
+- Support multiple file types (PDF, JPG, PNG)
+- Environment-aware storage (local vs Railway)
+- File security dan path validation
+- Document categorization (KTP, Paspor, KK, dll)
+
+### 4. PAKET "PENGENDALI APLIKASI" (APPLICATION CONTROLLERS)
+**AdminController Class:**
+- Main controller untuk admin dashboard
+- Authentication dan authorization
+- Navigation antar modul admin
+- Data aggregation untuk dashboard
+- Report generation coordination
+
+**RegistrationController Class:**
+- Controller untuk proses pendaftaran jamaah
+- Form validation dan sanitization
+- File upload coordination
+- Email notification triggering
+- Registration workflow orchestration
+
+**PembatalanController Class:**
+- Controller khusus untuk pembatalan
+- Cancellation request processing
+- Document verification untuk refund
+- Approval workflow management
+- Refund calculation dan notification
+
+### 5. PAKET "UTILITAS" (UTILITY CLASSES)
+**TerbilangConverter Class:**
+- Utility untuk konversi angka ke terbilang
+- Support currency format (Rupiah)
+- Integration dengan invoice generation
+- Localization dalam Bahasa Indonesia
+
+**EmailManager Class:**
+- Email notification system
+- SMTP configuration management
+- Template-based email generation
+- Multi-recipient support
+- Delivery tracking dan retry mechanism
+
+**DiagnosticManager Class:**
+- System health monitoring
+- Error logging dan reporting
+- Performance metrics collection
+- Environment diagnostic tools
+- Railway deployment status checking
+
+**RailwayFileManager Class:**
+- Spesialisasi file management untuk Railway.com
+- Persistent volume handling
+- Environment detection dan path resolution
+- Backup dan recovery mechanism
+- Performance optimization untuk cloud storage
+
+## DESIGN PATTERNS IMPLEMENTED
+
+### 1. REPOSITORY PATTERN
+Setiap entity class (DataJamaah, DataPaket, dll) mengimplementasikan repository pattern untuk data access abstraction.
+
+### 2. MANAGER PATTERN
+Business logic dipisahkan ke dalam Manager classes untuk separation of concerns.
+
+### 3. FACTORY PATTERN
+ConfigManager menggunakan factory pattern untuk environment-specific configuration.
+
+### 4. STRATEGY PATTERN
+FileUploadManager menggunakan strategy pattern untuk different storage strategies (local vs cloud).
+
+================================================================================
+# DATABASE DIAGRAM - STRUKTUR DATA DAN RELASI
+================================================================================
+
+## OVERVIEW
+Database Diagram menggambarkan struktur data MIW Travel System yang dirancang untuk mengelola informasi jamaah, paket perjalanan, pembayaran, dan manifest keberangkatan. Database ini menggunakan MySQL dengan normalisasi yang baik untuk performa optimal.
+
+## TABLE STRUCTURE ANALYSIS
+
+### 1. TABEL "data_paket" (MASTER DATA)
+**Primary Key:** pak_id (INT AUTO_INCREMENT)
+**Purpose:** Menyimpan informasi paket perjalanan Umroh/Haji
+
+**Field Analysis:**
+- jenis_paket: ENUM('Umroh', 'Haji') - Kategorisasi jenis perjalanan
+- currency: VARCHAR(5) - Support multiple currency (IDR, USD, SAR)
+- program_pilihan: VARCHAR(255) - Nama program/package 
+- tanggal_keberangkatan: DATE - Tanggal departure
+- base_price_* : DECIMAL(15,2) - Pricing tier untuk room types
+- hotel_medinah/makkah: VARCHAR(255) - Hotel information
+- hotel_*_rooms: JSON - Room allocation data structure
+- room_numbers: JSON - Available room numbers
+- hcn_data: JSON - Hotel Confirmation Numbers
+- additional_hotels: JSON - Additional hotel options
+
+**Business Rules:**
+- Setiap paket harus memiliki minimal pricing untuk satu room type
+- Tanggal keberangkatan tidak boleh di masa lalu
+- Room allocation harus consistent dengan kapasitas hotel
+- HCN data required untuk final manifest
+
+### 2. TABEL "data_jamaah" (TRANSACTIONAL DATA)
+**Primary Key:** nik (VARCHAR(20))
+**Foreign Key:** pak_id → data_paket.pak_id
+
+**Personal Information Fields:**
+- nik: Nomor Induk Kependudukan sebagai unique identifier
+- nama: Nama lengkap sesuai dokumen resmi
+- jenis_kelamin: ENUM('Laki-laki', 'Perempuan')
+- tempat_lahir, tanggal_lahir: Birth information
+- alamat, no_telp, email: Contact information
+
+**Travel-Specific Information:**
+- type_room_pilihan: ENUM('Quad', 'Triple', 'Double')
+- hubungan_mahram: Relationship untuk female Jamaahs
+- nama_mahram, no_telp_mahram: Mahram contact details
+- room_prefix: Assignment to specific room groups
+- medinah_room_number, mekkah_room_number: Final room assignments
+
+**Payment Tracking:**
+- payment_status: ENUM('pending', 'verified', 'rejected')
+- payment_total: Total amount paid
+- payment_remaining: Outstanding balance
+
+**Health Information:**
+- berat_badan: DECIMAL(5,2) - Weight for airline requirements
+- golongan_darah: VARCHAR(5) - Blood type for medical emergencies
+- riwayat_penyakit: TEXT - Medical history
+
+### 3. TABEL "data_invoice" (BILLING SYSTEM)
+**Primary Key:** invoice_id (VARCHAR(8))
+**Foreign Keys:** pak_id, nik
+
+**Invoice Structure:**
+- Unique 8-character invoice identifier
+- Link to specific jamaah and package
+- Payment breakdown dan calculation
+- Tax handling dan discount application
+- Payment method tracking
+
+### 4. TABEL "data_pembatalan" (CANCELLATION MANAGEMENT)
+**Purpose:** Track cancellation requests dan refund processing
+
+**Key Fields:**
+- Reason categorization
+- Supporting document references
+- Refund calculation based on timing
+- Approval workflow status
+- Refund disbursement tracking
+
+## RELATIONSHIP ANALYSIS
+
+### 1. JAMAAH ↔ PAKET (Many-to-One)
+- Setiap jamaah terdaftar dalam satu paket
+- Satu paket dapat memiliki multiple jamaah
+- Constraint: package capacity limits
+- Cascade rules: Restrict delete if jamaah exists
+
+### 2. JAMAAH ↔ INVOICE (One-to-Many)
+- Satu jamaah dapat memiliki multiple invoices (DP, Pelunasan)
+- Invoice progression tracking
+- Payment history maintenance
+
+### 3. JAMAAH ↔ PEMBATALAN (One-to-One Optional)
+- Not all jamaah akan mengajukan pembatalan
+- One-to-one relationship ketika terjadi
+- Historical record maintenance
+
+## DATA INTEGRITY CONSTRAINTS
+
+### 1. BUSINESS RULES ENFORCEMENT
+- NIK format validation (16 digits)
+- Email format constraints
+- Phone number format validation
+- Age restrictions for Jamaahage
+- Mahram requirements for female Jamaahs
+
+### 2. REFERENTIAL INTEGRITY
+- Foreign key constraints dengan appropriate cascade rules
+- Check constraints untuk enum values
+- Date range validations
+- Currency amount validations
+
+### 3. INDEXING STRATEGY
+- Primary keys: Clustered indexes
+- pak_id in data_jamaah: Non-clustered index
+- payment_status: Index for admin queries
+- tanggal_keberangkatan: Index for package searches
+
+================================================================================
+# DEPLOYMENT DIAGRAM - ARSITEKTUR INFRASTRUKTUR
+================================================================================
+
+## OVERVIEW
+Deployment Diagram menggambarkan bagaimana MIW Travel System didistribusikan dan dijalankan di berbagai environment, dari development local hingga production di Railway.com cloud platform.
+
+## ENVIRONMENT ANALYSIS
+
+### 1. LOCAL DEVELOPMENT ENVIRONMENT
+**XAMPP Stack Configuration:**
+- Apache HTTP Server: Web server untuk local development
+- PHP 8.1+: Runtime environment dengan extensions
+- MySQL Database: Local database instance (data_miw)
+- PhpMyAdmin: Database administration tool
+
+**File Structure:**
+- Document root: /htdocs/MIW-Railway/miw/
+- Upload directory: ./uploads/ dengan subdirectories
+- Error logs: ./error_logs/
+- Vendor libraries: ./vendor/ (managed by Composer)
+
+**Development Tools:**
+- VS Code: Primary IDE dengan extensions
+- PlantUML Extension: For diagram generation
+- PHP Extension: Syntax highlighting dan debugging
+- Git Integration: Version control
+
+### 2. RAILWAY PRODUCTION ENVIRONMENT
+**Docker Container Architecture:**
+- Base Image: PHP 8.1-Apache official image
+- Runtime: PHP-FPM dengan Apache mod_php
+- Process Management: Supervisor for service orchestration
+
+**Application Layer:**
+- PHP Runtime: CLI dan web server mode
+- Built-in Server: php -S 0.0.0.0:$PORT
+- Composer Dependencies: Optimized autoloader
+- Environment Variables: Configuration management
+
+**Storage Layer:**
+- Persistent Volume: /app/uploads/ mounted storage
+- Error Logging: /app/error_logs/ persistent
+- Temporary Storage: /tmp/ for PDF generation
+- Static Assets: Served directly by web server
+
+**Database Service:**
+- Railway MySQL: Managed database service
+- Connection: Internal network via mysql.railway.internal
+- Backup: Automated by Railway platform
+- Monitoring: Built-in performance metrics
+
+### 3. EXTERNAL SERVICES INTEGRATION
+**SMTP Service:**
+- Gmail SMTP: For email notifications
+- TLS Encryption: Secure email transmission
+- Authentication: App-specific passwords
+- Rate Limiting: Respect Gmail sending limits
+
+**File Storage:**
+- Local Development: Filesystem storage
+- Production: Railway persistent volumes
+- Backup Strategy: Cloud storage integration
+- CDN: Optional for static asset delivery
+
+## NETWORK ARCHITECTURE
+
+### 1. CLIENT ACCESS LAYER
+**Web Browser Access:**
+- HTTPS Protocol: SSL/TLS encryption
+- Responsive Design: Mobile dan desktop support
+- Session Management: PHP sessions dengan security
+- CSRF Protection: Token-based form security
+
+### 2. APPLICATION LAYER
+**Request Processing:**
+- Apache mod_rewrite: URL routing
+- PHP Request Lifecycle: Bootstrap → routing → execution
+- Error Handling: Custom error pages
+- Logging: Application dan access logs
+
+### 3. DATA ACCESS LAYER
+**Database Connectivity:**
+- PDO Abstraction: Database-agnostic access
+- Connection Pooling: Efficient resource usage
+- Transaction Management: ACID compliance
+- Query Optimization: Prepared statements
+
+## SCALABILITY CONSIDERATIONS
+
+### 1. HORIZONTAL SCALING
+- Railway Auto-scaling: Based on CPU/memory usage
+- Load Balancing: Railway handles automatically
+- Session Sharing: Database-backed sessions
+- File Storage: Shared persistent volumes
+
+### 2. PERFORMANCE OPTIMIZATION
+- PHP OPcache: Bytecode caching
+- Database Indexing: Query performance
+- Image Optimization: For uploaded documents
+- Gzip Compression: Reduced bandwidth usage
+
+### 3. MONITORING & MAINTENANCE
+- Railway Metrics: Built-in monitoring
+- Error Tracking: Centralized logging
+- Health Checks: Application health endpoints
+- Backup Strategy: Automated dan manual backups
+
+================================================================================
+# SEQUENCE DIAGRAMS - PROSES BISNIS WORKFLOW
+================================================================================
+
+## OVERVIEW
+Lima Sequence Diagram menggambarkan workflow utama dalam MIW Travel System, mulai dari pendaftaran jamaah hingga proses pembatalan. Setiap diagram menunjukkan interaksi antara actor, sistem, dan database.
+
+## SEQUENCE 1: PROSES PENDAFTARAN JAMAAH
+
+### ACTORS & PARTICIPANTS
+- Jamaah: End user yang mendaftar
+- Browser: Client-side interface
+- Form Pages: form_umroh.php / form_haji.php
+- Submit Handlers: submit_umroh.php / submit_haji.php
+- Database: MySQL data persistence
+- FileUploadManager: Document processing
+- EmailManager: Notification system
+
+### WORKFLOW ANALYSIS
+**Phase 1: Form Access**
+1. Jamaah mengakses website MIW Travel
+2. System load available packages dari database
+3. Form ditampilkan dengan dropdown package options
+4. Client-side validation diaktifkan
+
+**Phase 2: Data Entry**
+1. Jamaah mengisi form data pribadi
+2. Upload dokumen required (KTP, KK, Paspor, Foto)
+3. JavaScript validation untuk format data
+4. File type dan size validation
+
+**Phase 3: Submission Processing**
+1. Form submission via POST request
+2. Server-side validation dan sanitization
+3. File upload processing dengan unique naming
+4. Database transaction untuk insert data
+5. Email notification generation
+6. Redirect ke confirmation page
+
+### BUSINESS RULES IMPLEMENTED
+- NIK uniqueness validation
+- Package availability checking
+- File type restrictions (PDF, JPG, PNG)
+- Email format validation
+- Phone number format checking
+
+## SEQUENCE 2: VERIFIKASI PEMBAYARAN ADMIN
+
+### ACTORS & PARTICIPANTS
+- Admin: System administrator
+- Admin Dashboard: admin_dashboard.php
+- Pending Page: admin_pending.php
+- Database: Payment dan jamaah data
+- PDF Library: TCPDF for receipt generation
+- Email System: Payment confirmation notifications
+
+### WORKFLOW ANALYSIS
+**Phase 1: Admin Access**
+1. Admin login to dashboard
+2. System displays pending payments list
+3. Admin selects jamaah for review
+4. Payment details loaded from database
+
+**Phase 2: Payment Review**
+1. Admin reviews uploaded payment proof
+2. Calculates package price based on room type
+3. Inputs actual payment amount
+4. Validates payment against package cost
+
+**Phase 3: Verification Process**
+1. Payment status update in database
+2. Remaining balance calculation
+3. Receipt generation using TCPDF
+4. Email notification to jamaah
+5. Dashboard refresh dengan updated status
+
+### INTEGRATION POINTS
+- TerbilangConverter: Amount to words conversion
+- Invoice Template: Standardized receipt format
+- Email Template: Professional notification design
+- Audit Trail: Payment verification logging
+
+## SEQUENCE 3: PENGELOLAAN KAMAR DAN MANIFEST
+
+### ACTORS & PARTICIPANTS
+- Admin: Manifest manager
+- Manifest Page: admin_manifest.php
+- Tab Manager: tab_manifest.php
+- Update Handler: update_manifest.php
+- PhpSpreadsheet: Excel export functionality
+- JavaScript: Client-side room management
+
+### WORKFLOW ANALYSIS
+**Phase 1: Package Selection**
+1. Admin accesses manifest management
+2. System displays available packages
+3. Admin selects package for manifest
+4. Jamaah list loaded dengan room preferences
+
+**Phase 2: Room Assignment**
+1. System analyzes available rooms vs preferences
+2. Algorithm suggests room assignments
+3. Admin manually adjusts assignments
+4. Real-time validation of room capacity
+5. Mahram relationship enforcement
+
+**Phase 3: Manifest Export**
+1. Final room assignment validation
+2. Export to Excel format menggunakan PhpSpreadsheet
+3. Manifest template application
+4. File download generation
+5. Print-ready format creation
+
+### ROOM ALLOCATION ALGORITHM
+- Priority based on registration order
+- Family grouping optimization
+- Mahram requirement compliance
+- Room type preference matching
+- Hotel capacity constraints
+
+## SEQUENCE 4: PENGELOLAAN PAKET PERJALANAN
+
+### ACTORS & PARTICIPANTS
+- Admin: Package administrator
+- Package Page: admin_paket.php
+- Package Functions: paket_functions.php
+- Database: Package data storage
+- JavaScript: Dynamic form handling
+
+### WORKFLOW ANALYSIS
+**Phase 1: Package Management Access**
+1. Admin navigates to package management
+2. System loads existing packages
+3. Display package list dengan CRUD options
+4. Form modal preparation
+
+**Phase 2: Package Creation/Edit**
+1. Admin fills package form
+2. Pricing tier configuration (Quad/Triple/Double)
+3. Hotel information input
+4. Room allocation setup
+5. HCN data management
+
+**Phase 3: Package Processing**
+1. Form validation dan sanitization
+2. JSON data structure creation
+3. Database transaction execution
+4. Cache invalidation
+5. UI refresh dengan updated data
+
+### DATA VALIDATION RULES
+- Date validation (future dates only)
+- Price validation (positive numbers)
+- Hotel capacity consistency
+- Room number format validation
+- Currency validation
+
+## SEQUENCE 5: PROSES PEMBATALAN PERJALANAN
+
+### ACTORS & PARTICIPANTS
+- Jamaah: Cancellation requester
+- Admin: Cancellation approver
+- Cancellation Forms: form_pembatalan.php
+- Submit Handler: submit_pembatalan.php
+- Verification System: verify_cancellation.php
+- Email System: Multi-party notifications
+
+### WORKFLOW ANALYSIS
+**Phase 1: Cancellation Request**
+1. Jamaah accesses cancellation form
+2. NIK verification against existing registration
+3. Reason selection dari predefined categories
+4. Supporting document upload
+5. Cancellation request submission
+
+**Phase 2: Admin Review Process**
+1. Admin receives cancellation notification
+2. Document review dan verification
+3. Refund calculation based on policy
+4. Approval atau rejection decision
+5. Final notification to jamaah
+
+**Phase 3: Refund Processing**
+1. Approved cancellation processing
+2. Refund amount calculation
+3. Bank account verification
+4. Refund disbursement coordination
+5. Completion notification
+
+### CANCELLATION POLICY IMPLEMENTATION
+- Time-based refund percentages
+- Document requirement validation
+- Admin approval workflow
+- Audit trail maintenance
+- Multi-stakeholder notification
+
+================================================================================
+# DESIGN CUSTOMIZATION RECOMMENDATIONS
+================================================================================
+
+## CURRENT STYLING ANALYSIS
+Berdasarkan review diagram yang ada, sistem menggunakan:
+- !theme aws-orange: Orange color scheme
+- Mixed color approaches dalam berbagai diagram
+- Inconsistent styling across diagrams
+
+## PROPOSED BLACK & WHITE STYLING
+Untuk mencapai tampilan professional black & white seperti standar UML di uml-diagrams.org:
+
+### 1. UNIVERSAL SKIN PARAMETERS
+```plantuml
+skinparam backgroundColor White
+skinparam shadowing false
+skinparam handwritten false
+skinparam monochrome true
+```
+
+### 2. CLASS DIAGRAM STYLING
+```plantuml
+skinparam class {
+    BackgroundColor White
+    BorderColor Black
+    ArrowColor Black
+    FontColor Black
+    FontSize 10
+    FontName Arial
+}
+```
+
+### 3. SEQUENCE DIAGRAM STYLING
+```plantuml
+skinparam sequence {
+    ActorBackgroundColor White
+    ActorBorderColor Black
+    ParticipantBackgroundColor White
+    ParticipantBorderColor Black
+    ArrowColor Black
+}
+```
+
+### 4. DATABASE DIAGRAM STYLING
+```plantuml
+skinparam entity {
+    BackgroundColor White
+    BorderColor Black
+    FontColor Black
+}
+```
+
+## BENEFITS OF BLACK & WHITE DESIGN
+1. **Professional Appearance**: Sesuai standar UML dokumentasi
+2. **Print Friendly**: Optimal untuk dokumentasi cetak
+3. **Universal Compatibility**: Mudah dibaca di semua device
+4. **Focus on Content**: Tidak ada distraksi warna
+5. **Consistency**: Unified look across all diagrams
+
+================================================================================
+# CONCLUSIONS & RECOMMENDATIONS
+================================================================================
+
+## SYSTEM STRENGTHS
+1. **Comprehensive Architecture**: Well-structured OOP design
+2. **Environment Flexibility**: Local dan cloud deployment support
+3. **Business Process Coverage**: Complete workflow dari registration ke cancellation
+4. **Data Integrity**: Proper database design dengan constraints
+5. **Scalability**: Railway cloud platform support
+
+## AREAS FOR IMPROVEMENT
+1. **Diagram Styling**: Standardize to black & white professional look
+2. **Documentation**: Enhanced inline code documentation
+3. **Testing**: Comprehensive unit dan integration testing
+4. **Performance**: Database query optimization
+5. **Security**: Enhanced authentication dan authorization
+
+## IMPLEMENTATION ROADMAP
+1. **Phase 1**: Diagram redesign dengan black & white styling
+2. **Phase 2**: Code documentation enhancement
+3. **Phase 3**: Performance optimization
+4. **Phase 4**: Security hardening
+5. **Phase 5**: Advanced features implementation
+
+================================================================================
+# END OF DRAFT
+================================================================================
+
+### 2. PAKET "ENTITAS DATA" (DOMAIN MODELS)
+**DataJamaah Class:**
+- Representasi data jamaah (peserta umroh/haji)
+- Menyimpan informasi personal lengkap (NIK, nama, alamat, kontak)
+- Mengelola preferensi room (Quad/Triple/Double)
+- Tracking status pembayaran dan verifikasi
+- Menyimpan nomor kamar Madinah dan Mekkah
+- Hubungan family/mahram antar jamaah
+
+**DataPaket Class:**
+- Model untuk paket perjalanan Umroh/Haji
+- Mengelola pricing tier (Quad/Triple/Double room)
+- Informasi hotel Madinah dan Mekkah
+- Tanggal keberangkatan dan durasi program
+- Room allocation system dengan prefix (Q/T/D)
+- HCN (Hotel Confirmation Number) management
+
+**DataInvoice Class:**
+- Entitas untuk invoice dan billing
+- Link antara jamaah dan paket yang dipilih
+- Tracking pembayaran DP vs LUNAS
+- Sistem diskon dan payment method
+
+### 3. PAKET "PENGELOLA BISNIS" (BUSINESS LOGIC)
+**PackageManager Class:**
+- Business logic untuk manajemen paket travel
+- CRUD operations untuk data paket
+- Validasi pricing dan availability
+- Room allocation algorithm
+- HCN validation dan hotel booking integration
+
+**PaymentManager Class:**
+- Mengelola workflow pembayaran
+- Verifikasi pembayaran oleh admin
+- Generate invoice dan kwitansi PDF
+- Email notification system
+- Tracking payment status (pending/verified/rejected)
+
+**RoomAssignmentManager Class:**
+- Algoritma assignment kamar hotel
+- Mengelola room prefix (Q1, Q2, T1, T2, D1, D2)
+- Validation capacity per room type
+- Family/group room assignment logic
+- Integration dengan hotel booking system
+
+**DocumentManager Class:**
+- Mengelola upload dan storage dokumen
+- File validation (type, size, format)
+- Railway persistent storage integration
+- Security access control untuk dokumen
+- Document categorization (KTP, Paspor, Payment, etc.)
+
+### 4. PAKET "PENGENDALI APLIKASI" (CONTROLLERS)
+**AdminController Class:**
+- Dashboard administration interface
+- User authentication dan authorization
+- Data jamaah management (view/edit/delete)
+- Payment verification workflow
+- Report generation dan export functionality
+
+**RegistrationController Class:**
+- Mengelola proses pendaftaran jamaah
+- Form validation dan submission
+- File upload handling
+- Email confirmation system
+- Integration dengan payment system
+
+**ManifestController Class:**
+- Generate manifest perjalanan
+- Export ke Excel format
+- Room list generation
+- Integration dengan immigration data
+- Airline manifest preparation
+
+## DESIGN PATTERNS IMPLEMENTED
+
+### 1. MVC (Model-View-Controller)
+- Model: DataJamaah, DataPaket, DataInvoice
+- View: Form registrasi, Admin dashboard, Reports
+- Controller: AdminController, RegistrationController
+
+### 2. Repository Pattern
+- Database abstraction layer
+- Separation of business logic dari data access
+- Testable dan maintainable code structure
+
+### 3. Factory Pattern
+- ConfigManager untuk environment-specific configuration
+- DatabaseConnection untuk different database types
+
+### 4. Strategy Pattern
+- Payment processing (DP vs LUNAS)
+- Room assignment algorithms
+- File storage strategies (local vs Railway)
+
+================================================================================
+# DATABASE DIAGRAM - SKEMA BASIS DATA RELATIONAL
+================================================================================
+
+## OVERVIEW
+Database Diagram menunjukkan struktur relational database yang mendukung operasi MIW Travel System. Schema ini dirancang untuk mendukung kompleksitas bisnis travel dengan multiple packages, customer management, payment tracking, dan room assignment.
+
+## TABLE STRUCTURE ANALYSIS
+
+### 1. DATA_PAKET (MASTER DATA)
+**Purpose:** Master data untuk paket perjalanan Umroh/Haji
+**Key Fields:**
+- pak_id (Primary Key): Unique identifier untuk setiap paket
+- jenis_paket: ENUM('Umroh', 'Haji') - kategorisasi paket
+- program_pilihan: Nama program spesifik (e.g., "Umroh 12 Hari")
+- currency: Mata uang pricing (IDR/USD)
+- base_price_quad/triple/double: Pricing tier berdasarkan room type
+- hotel_medinah/hotel_makkah: Informasi akomodasi
+- tanggal_keberangkatan: Scheduling information
+- room_numbers: JSON array room prefixes (Q1,Q2,T1,T2,D1,D2)
+- hcn: Hotel Confirmation Numbers dalam format JSON
+
+**Business Logic:**
+- Pricing strategy berbasis room occupancy
+- Multi-currency support untuk international packages
+- Flexible room allocation system
+- Hotel booking integration ready
+
+### 2. DATA_JAMAAH (CUSTOMER DATA)
+**Purpose:** Comprehensive customer registration dan tracking
+**Key Fields:**
+- nik (Primary Key): Indonesian National ID
+- pak_id (Foreign Key): Reference ke data_paket
+- Personal info: nama, jenis_kelamin, tempat_lahir, tanggal_lahir
+- Contact info: alamat, no_telp, email
+- Travel preferences: type_room_pilihan, hubungan_mahram
+- Payment tracking: payment_status, payment_total, payment_remaining
+- Room assignment: room_prefix, medinah_room_number, mekkah_room_number
+- Document paths: Lokasi file upload untuk berbagai dokumen
+
+**Business Logic:**
+- NIK sebagai unique identifier untuk prevent duplicate registration
+- Room preference tracking untuk assignment algorithm
+- Payment status workflow (pending → verified/rejected)
+- Document management dengan file path tracking
+- Family/group linkage melalui hubungan_mahram
+
+### 3. DATA_INVOICE (BILLING & PAYMENT)
+**Purpose:** Financial transaction tracking dan invoice generation
+**Key Fields:**
+- invoice_id (Primary Key): Unique billing identifier
+- nik (Foreign Key): Link ke customer
+- pak_id (Foreign Key): Link ke package
+- payment_type: ENUM('DP', 'LUNAS') - payment category
+- total_amount: Total package cost
+- payment_amount: Amount actually paid
+- sisa_pembayaran: Remaining balance
+- payment_status: Transaction status
+- created_at/updated_at: Audit trail
+
+**Business Logic:**
+- Support untuk DP (Down Payment) dan LUNAS (Full Payment)
+- Automatic balance calculation
+- Audit trail untuk financial compliance
+- Integration point untuk payment gateway
+
+### 4. DATA_PEMBATALAN (CANCELLATION MANAGEMENT)
+**Purpose:** Mengelola permintaan pembatalan dan refund
+**Key Fields:**
+- pembatalan_id (Primary Key): Unique cancellation ID
+- nik (Foreign Key): Customer reference
+- alasan_pembatalan: Cancellation reason
+- tanggal_pengajuan: Request submission date
+- status_pembatalan: ENUM('pending', 'approved', 'rejected')
+- jumlah_refund: Refund amount calculation
+- dokumen_pendukung: Supporting document path
+
+**Business Logic:**
+- Cancellation workflow dengan approval process
+- Refund calculation berdasarkan terms & conditions
+- Document support untuk cancellation justification
+- Integration dengan payment refund system
+
+## RELATIONSHIP ANALYSIS
+
+### 1. PAKET → JAMAAH (One-to-Many)
+- Satu paket bisa memiliki multiple jamaah
+- Jamaah harus terkait dengan exactly one paket
+- Enforces data integrity untuk pricing dan scheduling
+
+### 2. JAMAAH → INVOICE (One-to-One/One-to-Many)
+- Setiap jamaah memiliki minimal satu invoice
+- Possible multiple invoices untuk payment installments
+- Supports DP followed by remaining payment
+
+### 3. JAMAAH → PEMBATALAN (One-to-Many)
+- Customer bisa mengajukan multiple cancellation requests
+- Tracking cancellation history untuk audit purposes
+
+### 4. ROOM ASSIGNMENT RELATIONSHIPS
+- Room allocation melalui room_prefix di data_jamaah
+- Cross-reference dengan room_numbers di data_paket
+- Supports both Madinah dan Mekkah hotel assignment
+
+## DATABASE OPTIMIZATION FEATURES
+
+### 1. INDEXING STRATEGY
+- Primary keys untuk fast lookup
+- Foreign key indexes untuk join optimization
+- Compound indexes pada frequently queried combinations
+
+### 2. DATA INTEGRITY
+- Foreign key constraints untuk referential integrity
+- Check constraints untuk valid enum values
+- NOT NULL constraints pada critical fields
+
+### 3. AUDIT TRAIL
+- created_at/updated_at timestamps
+- Payment status change tracking
+- Document upload timestamp tracking
+
+================================================================================
+# DEPLOYMENT DIAGRAM - ARSITEKTUR INFRASTRUKTUR
+================================================================================
+
+## OVERVIEW
+Deployment Diagram menggambarkan bagaimana MIW Travel System dideploy across different environments, menunjukkan komponen infrastruktur, networking, dan deployment strategy untuk mendukung operasi bisnis yang scalable dan reliable.
+
+## ENVIRONMENT ARCHITECTURE
+
+### 1. LOCAL DEVELOPMENT ENVIRONMENT
+**Components:**
+- XAMPP Stack (Apache + MySQL + PHP)
+- Development database (data_miw)
+- Local file storage (./uploads/)
+- Git repository untuk version control
+
+**Configuration:**
+- PHP 8.1+ dengan extensions (PDO, GD, MBString)
+- MySQL database dengan full schema
+- Apache web server dengan mod_rewrite
+- Local SMTP untuk email testing
+
+**Purpose:**
+- Development dan testing
+- Code debugging dan optimization
+- Database schema development
+- Feature prototyping
+
+### 2. RAILWAY PRODUCTION ENVIRONMENT
+**Infrastructure Components:**
+- Railway.com platform (PaaS)
+- MySQL service (managed database)
+- Web service (PHP application)
+- Persistent volume storage (/app/uploads)
+- Environment variables management
+
+**Technical Stack:**
+- PHP 8.1+ runtime
+- Railway MySQL dengan auto-scaling
+- Nixpacks build system
+- SSL/TLS termination
+- Auto-deployment dari Git
+
+**Configuration Management:**
+- Environment-based configuration detection
+- Railway-specific paths (/app/uploads vs ./uploads)
+- Database connection via environment variables
+- SMTP configuration via Railway variables
+
+### 3. DOCKER CONTAINERIZATION
+**Container Components:**
+- PHP Application Container (takaruma7/miw)
+- MySQL Database Container (db-1)
+- phpMyAdmin Container (phpmyadmin-1)
+
+**Docker Benefits:**
+- Consistent deployment environment
+- Easy local development setup
+- Container orchestration capability
+- Backup dan recovery simplified
+
+## NETWORK ARCHITECTURE
+
+### 1. CLIENT-SIDE ACCESS
+**Public Users:**
+- Form registrasi Umroh/Haji
+- Invoice viewing dan download
+- Document upload functionality
+- Payment confirmation pages
+
+**Admin Users:**
+- Admin dashboard access
+- Payment verification interface
+- Manifest generation tools
+- Room assignment management
+
+### 2. APPLICATION LAYER
+**Web Server:**
+- Apache dengan PHP-FPM
+- Static asset serving
+- File upload handling
+- Session management
+
+**Application Logic:**
+- MVC architecture implementation
+- Business logic processing
+- Email notification system
+- PDF generation services
+
+### 3. DATA LAYER
+**Database Services:**
+- MySQL untuk transactional data
+- Connection pooling
+- Backup dan recovery
+- Performance monitoring
+
+**File Storage:**
+- Railway persistent volumes
+- Document categorization
+- Security access control
+- Backup integration
+
+## DEPLOYMENT STRATEGIES
+
+### 1. CONTINUOUS INTEGRATION/DEPLOYMENT
+**Git Workflow:**
+- main branch: Active development
+- production-backup: Stable production mirror
+- staging: Testing environment
+
+**Railway Auto-Deployment:**
+- Git push triggers automatic deployment
+- Health check validation
+- Rollback capability
+- Environment variable management
+
+### 2. SCALING CAPABILITIES
+**Horizontal Scaling:**
+- Railway auto-scaling containers
+- Database connection optimization
+- Session state management
+- Load balancing ready
+
+**Vertical Scaling:**
+- Memory allocation tuning
+- PHP execution time limits
+- File upload size limits
+- Database query optimization
+
+### 3. MONITORING & OBSERVABILITY
+**Health Monitoring:**
+- /health.php endpoint
+- Database connectivity checks
+- File system validation
+- Performance metrics
+
+**Logging & Debugging:**
+- Error log aggregation
+- Railway logs integration
+- Performance monitoring
+- Security audit trails
+
+## SECURITY ARCHITECTURE
+
+### 1. NETWORK SECURITY
+**SSL/TLS:**
+- End-to-end encryption
+- Certificate management
+- HTTPS enforcement
+- Secure cookie handling
+
+**Access Control:**
+- Admin authentication
+- Role-based permissions
+- Session security
+- CSRF protection
+
+### 2. DATA SECURITY
+**File Upload Security:**
+- File type validation
+- Size restrictions
+- Path traversal protection
+- Virus scanning ready
+
+**Database Security:**
+- Prepared statements (SQL injection prevention)
+- Connection encryption
+- Access control lists
+- Audit logging
+
+### 3. INFRASTRUCTURE SECURITY
+**Railway Platform Security:**
+- Platform-level security
+- Environment isolation
+- Backup encryption
+- Access logging
+
+================================================================================
+# SEQUENCE DIAGRAM 1 - PROSES PENDAFTARAN JAMAAH
+================================================================================
+
+## OVERVIEW
+Sequence Diagram Registration menggambarkan alur lengkap proses pendaftaran jamaah baru untuk paket Umroh atau Haji. Diagram ini menunjukkan interaksi temporal antara user, system components, dan external services dalam workflow pendaftaran.
+
+## ACTOR ANALYSIS
+
+### 1. JAMAAH (PRIMARY ACTOR)
+- Calon peserta Umroh/Haji
+- Mengakses form pendaftaran via web browser
+- Mengisi data personal dan memilih paket
+- Upload dokumen yang diperlukan
+- Melakukan pembayaran initial
+
+### 2. SYSTEM COMPONENTS
+- **Web Interface:** Form handler dan validation
+- **Business Logic:** RegistrationController class
+- **Database:** Data persistence layer
+- **File Manager:** Document upload handler
+- **Email Service:** Notification system
+
+## DETAILED PROCESS FLOW
+
+### PHASE 1: FORM ACCESS & PACKAGE SELECTION
+1. **Jamaah → Web Interface:** Akses form_umroh.php atau form_haji.php
+2. **Web Interface → Database:** Query available packages
+3. **Database → Web Interface:** Return package list dengan pricing
+4. **Web Interface → Jamaah:** Display form dengan package options
+
+**Technical Implementation:**
+```sql
+SELECT pak_id, program_pilihan, tanggal_keberangkatan, 
+       base_price_quad, base_price_triple, base_price_double
+FROM data_paket 
+WHERE jenis_paket = 'Umroh'/'Haji'
+```
+
+### PHASE 2: DATA INPUT & VALIDATION
+1. **Jamaah → Web Interface:** Submit form dengan data lengkap
+2. **Web Interface → Business Logic:** Trigger RegistrationController
+3. **Business Logic → Validation:** Check NIK uniqueness, data completeness
+4. **Validation → Business Logic:** Return validation results
+
+**Validation Rules:**
+- NIK format validation (16 digits)
+- Email format validation
+- Phone number format validation
+- Required field completeness
+- Age validation for Haji (minimum requirements)
+
+### PHASE 3: DOCUMENT UPLOAD PROCESSING
+1. **Business Logic → File Manager:** Process uploaded documents
+2. **File Manager → File System:** Store files dengan organized structure
+3. **File System → File Manager:** Return file paths
+4. **File Manager → Business Logic:** Confirm upload success
+
+**File Organization:**
+```
+uploads/
+├── documents/[nik]_ktp.pdf
+├── documents/[nik]_paspor.pdf
+├── payments/[nik]_payment.jpg
+└── photos/[nik]_foto.jpg
+```
+
+### PHASE 4: DATABASE TRANSACTION
+1. **Business Logic → Database:** Begin transaction
+2. **Database → Business Logic:** Transaction started
+3. **Business Logic → Database:** Insert into data_jamaah
+4. **Business Logic → Database:** Insert into data_invoice
+5. **Database → Business Logic:** Commit transaction success
+
+**Transaction Structure:**
+```sql
+BEGIN;
+INSERT INTO data_jamaah (...) VALUES (...);
+INSERT INTO data_invoice (...) VALUES (...);
+COMMIT;
+```
+
+### PHASE 5: NOTIFICATION & CONFIRMATION
+1. **Business Logic → Email Service:** Trigger welcome email
+2. **Email Service → SMTP Server:** Send registration confirmation
+3. **SMTP Server → Jamaah:** Email delivered
+4. **Business Logic → Web Interface:** Return success response
+5. **Web Interface → Jamaah:** Display confirmation page dengan invoice link
+
+## ERROR HANDLING SCENARIOS
+
+### 1. DUPLICATE NIK DETECTION
+- System checks NIK uniqueness before insertion
+- Return error message if duplicate found
+- Redirect ke existing registration status
+
+### 2. FILE UPLOAD FAILURES
+- Validate file type dan size before processing
+- Handle network interruptions gracefully
+- Rollback database changes if file upload fails
+
+### 3. PAYMENT VALIDATION ERRORS
+- Validate payment amount against package price
+- Check payment method validity
+- Handle incomplete payment scenarios
+
+## BUSINESS RULES IMPLEMENTATION
+
+### 1. PACKAGE AVAILABILITY
+- Check package quota before allowing registration
+- Validate departure date (must be future date)
+- Ensure package is still active/available
+
+### 2. ROOM TYPE ASSIGNMENT
+- Validate room preference against package availability
+- Calculate pricing based on room type selection
+- Reserve room slot in package allocation
+
+### 3. PAYMENT PROCESSING
+- Support both DP (Down Payment) dan LUNAS (Full Payment)
+- Calculate remaining balance automatically
+- Set appropriate payment status
+
+## INTEGRATION POINTS
+
+### 1. EMAIL NOTIFICATION SYSTEM
+- Welcome email dengan registration details
+- Invoice attachment in PDF format
+- Payment instruction dan deadline
+- Customer service contact information
+
+### 2. FILE STORAGE SYSTEM
+- Railway persistent volume integration
+- Security access control implementation
+- File type validation dan virus scanning
+- Backup dan recovery procedures
+
+### 3. AUDIT TRAIL
+- Log semua registration attempts
+- Track file upload activities
+- Monitor payment transactions
+- Record email notification status
+
+================================================================================
+# SEQUENCE DIAGRAM 2 - VERIFIKASI PEMBAYARAN ADMIN
+================================================================================
+
+## OVERVIEW
+Sequence Diagram Payment Verification menggambarkan workflow verifikasi pembayaran oleh admin setelah jamaah melakukan upload bukti pembayaran. Proses ini critical untuk business operation karena menentukan status konfirmasi keikutsertaan jamaah.
+
+## ACTOR ANALYSIS
+
+### 1. ADMIN (PRIMARY ACTOR)
+- Staff MIW Travel dengan akses admin dashboard
+- Bertugas memverifikasi bukti pembayaran jamaah
+- Memiliki authority untuk approve/reject payments
+- Bertanggung jawab atas accuracy verifikasi
+
+### 2. SYSTEM COMPONENTS
+- **Admin Dashboard:** Payment verification interface
+- **Payment Manager:** Business logic untuk payment processing
+- **Database:** Payment status tracking
+- **PDF Generator:** Kwitansi generation service
+- **Email Service:** Notification delivery system
+
+### 3. JAMAAH (SECONDARY ACTOR)
+- Receives notification email hasil verifikasi
+- Can download kwitansi if payment approved
+- May need to resubmit if payment rejected
+
+## DETAILED PROCESS FLOW
+
+### PHASE 1: PAYMENT QUEUE REVIEW
+1. **Admin → Admin Dashboard:** Access admin_pending.php
+2. **Admin Dashboard → Database:** Query pending payments
+3. **Database → Admin Dashboard:** Return list of unverified payments
+4. **Admin Dashboard → Admin:** Display payment queue dengan preview
+
+**Query Implementation:**
+```sql
+SELECT j.*, p.program_pilihan, j.payment_path
+FROM data_jamaah j
+LEFT JOIN data_paket p ON j.pak_id = p.pak_id
+WHERE j.payment_status = 'pending'
+ORDER BY j.created_at ASC
+```
+
+### PHASE 2: PAYMENT DOCUMENT REVIEW
+1. **Admin → Admin Dashboard:** Select specific payment for review
+2. **Admin Dashboard → File System:** Retrieve payment document
+3. **File System → Admin Dashboard:** Return document content
+4. **Admin Dashboard → Admin:** Display document dengan jamaah details
+
+**Document Access Security:**
+- Verify admin authentication
+- Check file existence dan integrity
+- Implement access logging
+- Prevent unauthorized download
+
+### PHASE 3: VERIFICATION DECISION PROCESS
+1. **Admin → Admin Dashboard:** Make verification decision (approve/reject)
+2. **Admin Dashboard → Payment Manager:** Process verification request
+3. **Payment Manager → Database:** Update payment status
+4. **Database → Payment Manager:** Confirm status update
+
+**Approval Process:**
+```sql
+UPDATE data_jamaah 
+SET payment_status = 'verified',
+    payment_verified_at = NOW(),
+    payment_verified_by = 'Admin'
+WHERE nik = ?
+```
+
+### PHASE 4: INVOICE GENERATION (IF APPROVED)
+1. **Payment Manager → Database:** Retrieve complete jamaah+package data
+2. **Database → Payment Manager:** Return joined data for invoice
+3. **Payment Manager → PDF Generator:** Generate kwitansi PDF
+4. **PDF Generator → File System:** Store kwitansi file
+5. **File System → Payment Manager:** Return kwitansi path
+
+**Kwitansi Data Structure:**
+```php
+$kwitansiData = [
+    'invoice_id' => $invoiceId,
+    'nama' => $jamaah['nama'],
+    'alamat' => $jamaah['alamat'],
+    'program_pilihan' => $jamaah['program_pilihan'],
+    'payment_amount' => $paymentTotal,
+    'payment_remaining' => $paymentRemaining,
+    'currency' => $jamaah['currency']
+];
+```
+
+### PHASE 5: CUSTOMER NOTIFICATION
+1. **Payment Manager → Email Service:** Trigger notification email
+2. **Email Service → Email Template:** Load appropriate template
+3. **Email Template → Email Service:** Return formatted email
+4. **Email Service → SMTP Server:** Send notification
+5. **SMTP Server → Jamaah:** Deliver verification result
+
+**Email Content Variations:**
+- **Approved:** Welcome message + kwitansi attachment + next steps
+- **Rejected:** Rejection reason + resubmission instructions
+
+### PHASE 6: DASHBOARD UPDATE
+1. **Payment Manager → Admin Dashboard:** Return operation result
+2. **Admin Dashboard → Admin:** Display success/error notification
+3. **Admin Dashboard → Database:** Refresh payment queue
+4. **Database → Admin Dashboard:** Return updated pending list
+
+## BUSINESS LOGIC IMPLEMENTATION
+
+### 1. PAYMENT AMOUNT VALIDATION
+- Verify payment amount against package price
+- Handle partial payments (DP scenarios)
+- Calculate remaining balance automatically
+- Validate currency consistency
+
+### 2. APPROVAL WORKFLOW
+**Approval Criteria:**
+- Payment amount accuracy
+- Payment method validity
+- Document clarity dan authenticity
+- Timeline compliance
+
+**Rejection Reasons:**
+- Insufficient payment amount
+- Invalid payment method
+- Unclear/illegible documents
+- Expired payment deadline
+
+### 3. INVOICE GENERATION LOGIC
+- Generate unique invoice ID format (YYYY + sequence)
+- Calculate totals including any discounts
+- Apply appropriate payment type (DP/LUNAS)
+- Include all necessary payment details
+
+## ERROR HANDLING SCENARIOS
+
+### 1. DATABASE TRANSACTION FAILURES
+- Implement database rollback mechanisms
+- Log transaction errors for debugging
+- Notify admin of system issues
+- Maintain data consistency
+
+### 2. PDF GENERATION FAILURES
+- Handle memory limitations
+- Implement retry mechanisms
+- Fallback to basic invoice format
+- Log generation errors
+
+### 3. EMAIL DELIVERY FAILURES
+- Queue failed emails for retry
+- Log delivery status
+- Provide alternative notification methods
+- Admin notification of delivery issues
+
+## AUDIT TRAIL & COMPLIANCE
+
+### 1. VERIFICATION AUDIT LOG
+- Record who verified each payment
+- Timestamp all verification actions
+- Track approval/rejection reasons
+- Maintain immutable audit trail
+
+### 2. FINANCIAL AUDIT REQUIREMENTS
+- Complete payment tracking
+- Invoice numbering sequence integrity
+- Payment method documentation
+- Refund/cancellation trail
+
+### 3. CUSTOMER SERVICE INTEGRATION
+- Quick access to verification status
+- Historical payment information
+- Customer inquiry resolution tools
+- Status change notifications
+
+================================================================================
+# SEQUENCE DIAGRAM 3 - MANAJEMEN PENUGASAN KAMAR
+================================================================================
+
+## OVERVIEW
+Sequence Diagram Room Management menggambarkan proses kompleks penugasan kamar hotel untuk jamaah di Madinah dan Mekkah. Sistem ini harus mengelola berbagai room types (Quad/Triple/Double), family grouping, dan constraint hotel availability.
+
+## ACTOR ANALYSIS
+
+### 1. ADMIN (PRIMARY ACTOR)
+- Staff yang bertanggung jawab atas room assignment
+- Memiliki akses ke manifest management interface
+- Dapat modify room assignments secara manual
+- Bertanggung jawab atas accuracy room allocation
+
+### 2. SYSTEM COMPONENTS
+- **Room Manager:** Core business logic untuk room assignment
+- **Manifest Interface:** UI untuk room assignment management
+- **Database:** Room allocation data storage
+- **Validation Engine:** Room assignment constraint validation
+
+## DETAILED PROCESS FLOW
+
+### PHASE 1: PACKAGE ROOM SETUP
+1. **Admin → Manifest Interface:** Access admin_manifest.php
+2. **Manifest Interface → Database:** Query package details dengan room configuration
+3. **Database → Manifest Interface:** Return package dengan available rooms
+4. **Manifest Interface → Admin:** Display package room matrix
+
+**Room Configuration Query:**
+```sql
+SELECT pak_id, room_numbers, hotel_medinah_rooms, hotel_makkah_rooms
+FROM data_paket 
+WHERE pak_id = ?
+```
+
+**Room Number Format:**
+- Q1, Q2, Q3... untuk Quad rooms
+- T1, T2, T3... untuk Triple rooms  
+- D1, D2, D3... untuk Double rooms
+
+### PHASE 2: JAMAAH ROOM PREFERENCE ANALYSIS
+1. **Manifest Interface → Database:** Query jamaah dengan room preferences
+2. **Database → Manifest Interface:** Return jamaah list dengan type_room_pilihan
+3. **Manifest Interface → Room Manager:** Process room allocation request
+4. **Room Manager → Validation Engine:** Validate room capacity constraints
+
+**Jamaah Room Query:**
+```sql
+SELECT nik, nama, type_room_pilihan, hubungan_mahram,
+       room_prefix, medinah_room_number, mekkah_room_number
+FROM data_jamaah 
+WHERE pak_id = ? 
+ORDER BY type_room_pilihan, hubungan_mahram
+```
+
+### PHASE 3: AUTOMATIC ROOM ASSIGNMENT ALGORITHM
+1. **Room Manager → Algorithm Engine:** Execute room assignment logic
+2. **Algorithm Engine → Room Manager:** Process family/group groupings
+3. **Room Manager → Database:** Update room assignments
+4. **Database → Room Manager:** Confirm assignment updates
+
+**Assignment Algorithm Logic:**
+```
+1. Group jamaah by room type preference (Quad/Triple/Double)
+2. Identify family groups (same hubungan_mahram)
+3. Assign family groups to same rooms where possible
+4. Fill remaining capacity with individual jamaah
+5. Handle overflow scenarios (upgrade to larger room types)
+6. Assign specific room numbers in both Madinah and Mekkah
+```
+
+### PHASE 4: MANUAL ROOM ADJUSTMENT
+1. **Admin → Manifest Interface:** Manual room assignment modification
+2. **Manifest Interface → Validation Engine:** Validate manual assignment
+3. **Validation Engine → Manifest Interface:** Return validation results
+4. **Manifest Interface → Database:** Update specific room assignments
+
+**Validation Rules:**
+- Room capacity tidak exceeded
+- Gender separation compliance (if applicable)
+- Family group preferences maintained
+- Hotel availability constraints
+
+### PHASE 5: ROOM LIST GENERATION
+1. **Room Manager → Database:** Compile final room assignments
+2. **Database → Room Manager:** Return complete room allocation data
+3. **Room Manager → Export Engine:** Generate room list report
+4. **Export Engine → File System:** Create downloadable room list
+
+**Room List Format:**
+```
+Hotel Madinah:
+- Room Q1: Jamaah A, Jamaah B, Jamaah C, Jamaah D
+- Room T1: Jamaah E, Jamaah F, Jamaah G
+- Room D1: Jamaah H, Jamaah I
+
+Hotel Mekkah:
+- Room Q1: [same grouping as Madinah]
+- Room T1: [same grouping as Madinah]
+- Room D1: [same grouping as Madinah]
+```
+
+## ROOM ASSIGNMENT ALGORITHMS
+
+### 1. FAMILY GROUP OPTIMIZATION
+**Algorithm Objective:** Prioritize family members in same room
+**Implementation:**
+```
+FOR each family group:
+    Calculate total members
+    IF group_size <= 4: Assign to Quad room
+    IF group_size <= 3: Assign to Triple room  
+    IF group_size <= 2: Assign to Double room
+    IF group_size > 4: Split intelligently across multiple rooms
+```
+
+### 2. CAPACITY OPTIMIZATION
+**Algorithm Objective:** Minimize unused room capacity
+**Implementation:**
+```
+FOR each room type:
+    Fill rooms to maximum capacity first
+    Handle remaining jamaah with room type upgrades
+    Minimize single-occupancy scenarios
+    Balance occupancy across all rooms
+```
+
+### 3. CONSTRAINT SATISFACTION
+**Hard Constraints:**
+- Room capacity limits (Quad=4, Triple=3, Double=2)
+- Hotel availability
+- Package room allocation
+
+**Soft Constraints:**
+- Family group preferences
+- Room type preferences
+- Minimize room type upgrades
+- Balanced distribution
+
+## BUSINESS RULES IMPLEMENTATION
+
+### 1. ROOM TYPE HIERARCHY
+**Upgrade Logic:**
+- Double → Triple → Quad (capacity increase)
+- No downgrade allowed (maintains customer satisfaction)
+- Price adjustment may apply for upgrades
+
+### 2. FAMILY GROUP MANAGEMENT
+**Family Identification:**
+- Same hubungan_mahram value indicates family
+- Priority assignment to same room
+- Split large families intelligently
+
+### 3. HOTEL COORDINATION
+**Madinah-Mekkah Consistency:**
+- Same room groupings in both hotels
+- Consistent room numbering
+- Coordinated check-in/check-out
+
+## ERROR HANDLING & CONFLICT RESOLUTION
+
+### 1. OVERALLOCATION SCENARIOS
+**Problem:** More jamaah than available room capacity
+**Solution:** 
+- Automatic room type upgrades
+- Additional room booking
+- Admin notification untuk manual intervention
+
+### 2. ASSIGNMENT CONFLICTS
+**Problem:** Multiple assignment attempts untuk same room
+**Solution:**
+- Database locking mechanisms
+- Transaction-based updates
+- Conflict detection algorithms
+
+### 3. HOTEL AVAILABILITY CHANGES
+**Problem:** Hotel confirms room unavailability
+**Solution:**
+- Reassignment algorithms
+- Alternative hotel integration
+- Customer notification workflow
+
+## INTEGRATION POINTS
+
+### 1. HOTEL BOOKING SYSTEMS
+- Real-time availability checking
+- Booking confirmation integration
+- Room status updates
+- Cancellation handling
+
+### 2. MANIFEST EXPORT SYSTEM
+- Excel format room lists
+- Immigration manifest data
+- Airline seat assignment coordination
+- Check-in list generation
+
+### 3. CUSTOMER COMMUNICATION
+- Room assignment notifications
+- Hotel information sharing
+- Check-in instructions
+- Room change notifications
+
+================================================================================
+# SEQUENCE DIAGRAM 4 - MANAJEMEN PAKET PERJALANAN
+================================================================================
+
+## OVERVIEW
+Sequence Diagram Package Management menggambarkan workflow comprehensive untuk mengelola paket perjalanan Umroh dan Haji. Proses ini mencakup creation, pricing setup, hotel booking coordination, dan room allocation configuration yang essential untuk operasi travel business.
+
+## ACTOR ANALYSIS
+
+### 1. ADMIN (PRIMARY ACTOR)
+- Travel package coordinator
+- Memiliki authority untuk create/modify packages
+- Bertanggung jawab atas pricing accuracy
+- Koordinasi dengan hotel partners dan airlines
+
+### 2. SYSTEM COMPONENTS
+- **Package Manager:** Core package management logic
+- **Pricing Engine:** Calculation dan validation pricing
+- **Hotel Integration:** Hotel booking dan room allocation
+- **Database:** Package data persistence
+- **Validation System:** Business rules enforcement
+
+## DETAILED PROCESS FLOW
+
+### PHASE 1: PACKAGE CREATION INITIATION
+1. **Admin → Package Interface:** Access admin_paket.php
+2. **Package Interface → Admin:** Display package creation form
+3. **Admin → Package Interface:** Submit new package data
+4. **Package Interface → Package Manager:** Process package creation request
+
+**Package Data Structure:**
+```php
+$packageData = [
+    'jenis_paket' => 'Umroh'/'Haji',
+    'currency' => 'IDR'/'USD',
+    'program_pilihan' => 'Umroh 12 Hari VIP',
+    'tanggal_keberangkatan' => '2025-09-15',
+    'base_price_quad' => 25000000,
+    'base_price_triple' => 28000000,
+    'base_price_double' => 32000000
+];
+```
+
+### PHASE 2: PRICING CALCULATION & VALIDATION
+1. **Package Manager → Pricing Engine:** Validate pricing structure
+2. **Pricing Engine → Package Manager:** Return pricing validation results
+3. **Package Manager → Database:** Check pricing consistency
+4. **Database → Package Manager:** Return market pricing data
+
+**Pricing Validation Rules:**
+- Triple price > Quad price (lower occupancy = higher cost)
+- Double price > Triple price (premium for privacy)
+- Currency consistency throughout package
+- Minimum margin requirements
+- Market price competitiveness
+
+### PHASE 3: HOTEL CONFIGURATION & BOOKING
+1. **Package Manager → Hotel Integration:** Configure hotel details
+2. **Hotel Integration → External API:** Verify hotel availability
+3. **External API → Hotel Integration:** Return availability confirmation
+4. **Hotel Integration → Package Manager:** Confirm hotel booking setup
+
+**Hotel Configuration:**
+```php
+$hotelConfig = [
+    'hotel_medinah' => 'Pullman Zam Zam Madinah',
+    'hotel_makkah' => 'Conrad Makkah',
+    'additional_hotels' => ['Fairmont Madinah', 'Ritz Carlton Makkah'],
+    'hcn' => [
+        'medinah' => 'PZM2025091501',
+        'makkah' => 'CM2025091501',
+        'issued_date' => '2025-08-03'
+    ]
+];
+```
+
+### PHASE 4: ROOM ALLOCATION SETUP
+1. **Package Manager → Room Manager:** Configure room allocation
+2. **Room Manager → Validation System:** Validate room configuration
+3. **Validation System → Room Manager:** Return configuration validation
+4. **Room Manager → Database:** Store room allocation data
+
+**Room Allocation Structure:**
+```php
+$roomAllocation = [
+    'medinah_rooms' => [
+        'quad' => ['Q1', 'Q2', 'Q3'],
+        'triple' => ['T1', 'T2'],
+        'double' => ['D1', 'D2', 'D3']
+    ],
+    'makkah_rooms' => [
+        'quad' => ['Q1', 'Q2', 'Q3'],
+        'triple' => ['T1', 'T2'],
+        'double' => ['D1', 'D2', 'D3']
+    ]
+];
+```
+
+### PHASE 5: PACKAGE VALIDATION & ACTIVATION
+1. **Package Manager → Validation System:** Complete package validation
+2. **Validation System → Package Manager:** Return comprehensive validation report
+3. **Package Manager → Database:** Commit package to database
+4. **Database → Package Manager:** Confirm package creation success
+
+**Validation Checklist:**
+- All required fields completed
+- Pricing structure valid
+- Hotel bookings confirmed
+- Room allocation feasible
+- Departure date feasibility
+- Legal compliance (tourism regulations)
+
+### PHASE 6: PACKAGE AVAILABILITY PUBLICATION
+1. **Package Manager → Web Interface:** Update available packages
+2. **Web Interface → Cache System:** Refresh package cache
+3. **Cache System → Web Interface:** Confirm cache update
+4. **Web Interface → Admin:** Display package availability confirmation
+
+## BUSINESS LOGIC IMPLEMENTATION
+
+### 1. DYNAMIC PRICING STRATEGY
+**Base Pricing Factors:**
+- Hotel star rating dan location
+- Departure date (peak/off-peak seasons)
+- Package duration
+- Included services (visa, insurance, etc.)
+- Group size economics
+
+**Price Calculation Formula:**
+```
+Base Price = Hotel Cost + Flight Cost + Service Fee + Margin
+Quad Price = Base Price (4-person occupancy)
+Triple Price = Base Price * 1.12 (3-person occupancy)
+Double Price = Base Price * 1.28 (2-person occupancy)
+```
+
+### 2. HOTEL INTEGRATION WORKFLOW
+**Hotel Booking Process:**
+1. Check hotel availability for specific dates
+2. Reserve room blocks (quota system)
+3. Generate Hotel Confirmation Numbers (HCN)
+4. Set up payment terms dengan hotels
+5. Configure cancellation policies
+
+**HCN Management:**
+- Unique identifier for each hotel booking
+- Tracking confirmation status
+- Integration dengan hotel reservation systems
+- Audit trail untuk booking changes
+
+### 3. ROOM ALLOCATION ALGORITHM
+**Allocation Strategy:**
+```
+Total Capacity Calculation:
+- Quad Rooms: Count * 4 persons
+- Triple Rooms: Count * 3 persons  
+- Double Rooms: Count * 2 persons
+- Total Package Capacity = Sum of all room capacities
+
+Allocation Logic:
+- Prioritize cost-effective room types (Quad first)
+- Maintain room type distribution balance
+- Allow for family group accommodations
+- Reserve upgrade flexibility
+```
+
+## PACKAGE LIFECYCLE MANAGEMENT
+
+### 1. PACKAGE CREATION WORKFLOW
+**Pre-Creation Phase:**
+- Market research dan competitor analysis
+- Hotel partner negotiations
+- Airline partnership agreements
+- Regulatory compliance verification
+
+**Creation Phase:**
+- Package configuration input
+- Pricing structure setup
+- Hotel booking confirmation
+- Room allocation planning
+
+**Post-Creation Phase:**
+- Package testing dan validation
+- Marketing material preparation
+- Sales team training
+- Customer availability announcement
+
+### 2. PACKAGE MODIFICATION WORKFLOW
+**Modification Triggers:**
+- Hotel booking changes
+- Pricing adjustments
+- Room availability updates
+- Customer feedback integration
+
+**Impact Assessment:**
+- Existing customer commitments
+- Financial implications
+- Operational feasibility
+- Timeline adjustments
+
+### 3. PACKAGE DEACTIVATION WORKFLOW
+**Deactivation Reasons:**
+- Departure date passed
+- Hotel unavailability
+- Regulatory issues
+- Business strategic changes
+
+**Deactivation Process:**
+- Customer notification
+- Refund processing
+- Alternative package offering
+- Database status update
+
+## INTEGRATION POINTS
+
+### 1. HOTEL BOOKING SYSTEMS
+- Real-time availability APIs
+- Booking confirmation protocols
+- Room block management
+- Payment processing integration
+
+### 2. AIRLINE RESERVATION SYSTEMS
+- Flight availability checking
+- Group booking coordination
+- Seat allocation management
+- Ticket issuance integration
+
+### 3. CUSTOMER REGISTRATION SYSTEM
+- Package availability display
+- Real-time pricing updates
+- Registration constraint validation
+- Payment integration
+
+### 4. FINANCIAL MANAGEMENT SYSTEM
+- Cost tracking dan analysis
+- Profitability calculation
+- Payment processing
+- Financial reporting
+
+================================================================================
+# SEQUENCE DIAGRAM 5 - PROSES PEMBATALAN PERJALANAN
+================================================================================
+
+## OVERVIEW
+Sequence Diagram Cancellation Process menggambarkan workflow complex untuk menangani permintaan pembatalan perjalanan jamaah. Proses ini melibatkan multiple stakeholders, financial calculations, approval workflows, dan coordination dengan berbagai service providers.
+
+## ACTOR ANALYSIS
+
+### 1. JAMAAH (PRIMARY ACTOR)
+- Customer yang mengajukan pembatalan
+- Harus provide cancellation reason dan supporting documents
+- Entitled untuk refund berdasarkan terms & conditions
+- Receives communication sepanjang cancellation process
+
+### 2. ADMIN (APPROVAL AUTHORITY)
+- Staff yang menreview cancellation requests
+- Authority untuk approve/reject cancellations
+- Bertanggung jawab atas refund calculations
+- Coordinates dengan finance team untuk refund processing
+
+### 3. SYSTEM COMPONENTS
+- **Cancellation Manager:** Core cancellation business logic
+- **Financial Calculator:** Refund amount calculation
+- **Document Manager:** Supporting document handling
+- **Notification System:** Multi-channel communication
+- **Database:** Cancellation tracking dan audit trail
+
+## DETAILED PROCESS FLOW
+
+### PHASE 1: CANCELLATION REQUEST SUBMISSION
+1. **Jamaah → Web Interface:** Access form_pembatalan.php
+2. **Web Interface → Database:** Retrieve jamaah registration data
+3. **Database → Web Interface:** Return registration details dengan financial info
+4. **Web Interface → Jamaah:** Display cancellation form dengan current status
+
+**Registration Data Query:**
+```sql
+SELECT j.*, p.program_pilihan, p.tanggal_keberangkatan,
+       i.payment_amount, i.total_uang_masuk
+FROM data_jamaah j
+JOIN data_paket p ON j.pak_id = p.pak_id
+JOIN data_invoice i ON j.nik = i.nik
+WHERE j.nik = ?
+```
+
+### PHASE 2: CANCELLATION FORM PROCESSING
+1. **Jamaah → Web Interface:** Submit cancellation request dengan documents
+2. **Web Interface → Document Manager:** Process supporting documents
+3. **Document Manager → File System:** Store cancellation documents
+4. **File System → Document Manager:** Confirm document storage
+5. **Document Manager → Cancellation Manager:** Process cancellation request
+
+**Cancellation Data Structure:**
+```php
+$cancellationData = [
+    'nik' => $jamaah_nik,
+    'alasan_pembatalan' => $cancellation_reason,
+    'keterangan_tambahan' => $additional_details,
+    'tanggal_pengajuan' => date('Y-m-d H:i:s'),
+    'dokumen_pendukung' => $uploaded_document_path,
+    'status_pembatalan' => 'pending'
+];
+```
+
+### PHASE 3: REFUND AMOUNT CALCULATION
+1. **Cancellation Manager → Financial Calculator:** Calculate refund amount
+2. **Financial Calculator → Database:** Retrieve payment history
+3. **Database → Financial Calculator:** Return payment details
+4. **Financial Calculator → Terms Engine:** Apply cancellation terms
+5. **Terms Engine → Financial Calculator:** Return calculated refund amount
+
+**Refund Calculation Logic:**
+```php
+function calculateRefund($jamaah_data, $cancellation_date) {
+    $payment_total = $jamaah_data['payment_total'];
+    $departure_date = $jamaah_data['tanggal_keberangkatan'];
+    $days_before_departure = dateDiff($cancellation_date, $departure_date);
+    
+    if ($days_before_departure >= 60) {
+        $refund_percentage = 0.90; // 90% refund
+    } elseif ($days_before_departure >= 30) {
+        $refund_percentage = 0.70; // 70% refund
+    } elseif ($days_before_departure >= 14) {
+        $refund_percentage = 0.50; // 50% refund
+    } else {
+        $refund_percentage = 0.25; // 25% refund
+    }
+    
+    return $payment_total * $refund_percentage;
+}
+```
+
+### PHASE 4: ADMIN REVIEW & APPROVAL WORKFLOW
+1. **Cancellation Manager → Admin Interface:** Add to review queue
+2. **Admin → Admin Interface:** Access cancellation review dashboard
+3. **Admin Interface → Database:** Retrieve pending cancellations
+4. **Database → Admin Interface:** Return cancellation details dengan documents
+5. **Admin Interface → Admin:** Display cancellation untuk review
+
+**Admin Review Interface:**
+- Customer information dan registration details
+- Cancellation reason dan supporting documents
+- Calculated refund amount dengan breakdown
+- Approval/rejection decision options
+- Admin comments untuk decision justification
+
+### PHASE 5: APPROVAL DECISION PROCESSING
+1. **Admin → Admin Interface:** Make approval/rejection decision
+2. **Admin Interface → Cancellation Manager:** Process decision
+3. **Cancellation Manager → Database:** Update cancellation status
+4. **Database → Cancellation Manager:** Confirm status update
+5. **Cancellation Manager → Financial System:** Initiate refund process (if approved)
+
+**Approval Decision Logic:**
+```sql
+UPDATE data_pembatalan 
+SET status_pembatalan = ?, 
+    tanggal_keputusan = NOW(),
+    admin_reviewer = ?,
+    keterangan_admin = ?,
+    jumlah_refund = ?
+WHERE pembatalan_id = ?
+```
+
+### PHASE 6: CUSTOMER NOTIFICATION & COMMUNICATION
+1. **Cancellation Manager → Notification System:** Trigger notification
+2. **Notification System → Email Service:** Send decision notification
+3. **Email Service → SMTP Server:** Deliver email notification
+4. **SMTP Server → Jamaah:** Email received
+5. **Notification System → SMS Service:** Send SMS notification (optional)
+
+**Notification Content Variations:**
+
+**Approval Notification:**
+- Confirmation of cancellation approval
+- Refund amount dan processing timeline
+- Refund method (bank transfer details)
+- Customer service contact untuk follow-up
+
+**Rejection Notification:**
+- Reason for rejection
+- Appeal process information
+- Alternative solutions (date change, package modification)
+- Customer service contact information
+
+### PHASE 7: REFUND PROCESSING (IF APPROVED)
+1. **Financial System → Bank Integration:** Process refund transfer
+2. **Bank Integration → Customer Bank:** Transfer refund amount
+3. **Customer Bank → Financial System:** Confirm transfer completion
+4. **Financial System → Database:** Update refund status
+5. **Database → Notification System:** Trigger refund confirmation
+
+## BUSINESS RULES IMPLEMENTATION
+
+### 1. CANCELLATION TERMS & CONDITIONS
+**Time-Based Refund Scale:**
+- 60+ days before departure: 90% refund
+- 30-59 days before departure: 70% refund
+- 14-29 days before departure: 50% refund
+- Less than 14 days: 25% refund
+
+**Non-Refundable Components:**
+- Visa processing fees
+- Travel insurance premiums
+- Hotel booking penalties
+- Administrative processing fees
+
+### 2. APPROVAL CRITERIA
+**Automatic Approval Scenarios:**
+- Medical emergencies dengan doctor certification
+- Family emergency situations
+- Force majeure events (government travel bans)
+
+**Manual Review Scenarios:**
+- Personal reason cancellations
+- Business-related cancellations
+- Change of mind scenarios
+- Financial hardship cases
+
+### 3. REFUND PROCESSING RULES
+**Refund Methods:**
+- Bank transfer (preferred method)
+- Company check issuance
+- Credit untuk future bookings
+- Partial cash refund (small amounts)
+
+**Processing Timeline:**
+- Approved cancellations: 7-14 business days
+- Complex cases: Up to 21 business days
+- International transfers: Additional 3-5 days
+
+## ERROR HANDLING & EXCEPTION SCENARIOS
+
+### 1. DOCUMENT VALIDATION FAILURES
+**Invalid Document Scenarios:**
+- Insufficient supporting documentation
+- Document authenticity concerns
+- Missing required signatures/stamps
+
+**Resolution Process:**
+- Request additional documentation
+- Allow resubmission dengan extended deadline
+- Provide document requirement guidance
+
+### 2. REFUND PROCESSING FAILURES
+**Technical Failures:**
+- Bank integration errors
+- Network connectivity issues
+- Payment processing system downtime
+
+**Resolution Process:**
+- Automatic retry mechanisms
+- Manual processing fallback
+- Customer notification of delays
+- Alternative refund methods
+
+### 3. APPROVAL WORKFLOW CONFLICTS
+**Conflict Scenarios:**
+- Multiple admin reviewers
+- Contradictory decisions
+- Policy interpretation differences
+
+**Resolution Process:**
+- Escalation to senior management
+- Policy clarification documentation
+- Decision audit trail maintenance
+
+## INTEGRATION POINTS
+
+### 1. HOTEL BOOKING CANCELLATION
+- Cancel hotel room reservations
+- Negotiate cancellation penalties
+- Update room allocation untuk remaining jamaah
+- Coordinate dengan hotel partners
+
+### 2. AIRLINE TICKET CANCELLATION
+- Process airline ticket cancellations
+- Recover cancellation fees where possible
+- Update group booking manifests
+- Coordinate seat reallocation
+
+### 3. FINANCIAL SYSTEM INTEGRATION
+- Automated refund processing
+- Accounting system updates
+- Tax implication handling
+- Financial reporting updates
+
+### 4. CUSTOMER RELATIONSHIP MANAGEMENT
+- Update customer status
+- Maintain cancellation history
+- Track customer satisfaction
+- Future marketing considerations
+
+================================================================================
+# CONCLUSION & SYSTEM INTEGRATION ANALYSIS
+================================================================================
+
+## OVERALL SYSTEM ARCHITECTURE INSIGHTS
+
+Berdasarkan analisis mendalam terhadap kelima diagram yang telah dibuat, MIW Travel Management System menunjukkan arsitektur yang robust dan well-designed untuk menangani kompleksitas bisnis travel Umroh dan Haji. Sistem ini mengimplementasikan:
+
+### 1. SCALABLE MULTI-ENVIRONMENT ARCHITECTURE
+- Local development environment dengan XAMPP stack
+- Production deployment di Railway.com platform
+- Docker containerization untuk consistency
+- Environment-aware configuration management
+
+### 2. COMPREHENSIVE BUSINESS PROCESS COVERAGE
+- End-to-end customer journey dari registration hingga cancellation
+- Administrative workflows untuk operational efficiency
+- Financial management dengan multiple payment scenarios
+- Document management dengan security considerations
+
+### 3. ROBUST DATA MANAGEMENT STRATEGY
+- Relational database design dengan proper normalization
+- Audit trail implementation untuk compliance
+- File storage dengan persistent volume integration
+- Backup dan recovery mechanisms
+
+### 4. INTEGRATION-READY ARCHITECTURE
+- Hotel booking system integration points
+- Email notification system
+- Payment gateway readiness
+- Airline reservation system coordination
+
+## BUSINESS VALUE DELIVERED
+
+Sistem MIW Travel memberikan value proposition yang signifikan:
+
+**Operational Efficiency:**
+- Automated workflow processes
+- Reduced manual data entry
+- Integrated communication systems
+- Streamlined approval processes
+
+**Customer Experience:**
+- Online registration convenience
+- Real-time status tracking
+- Automated notifications
+- Transparent pricing
+
+**Business Intelligence:**
+- Comprehensive reporting capabilities
+- Financial tracking dan analysis
+- Customer behavior insights
+- Operational performance metrics
+
+**Risk Management:**
+- Document verification workflows
+- Payment validation processes
+- Cancellation policy enforcement
+- Audit trail maintenance
+
+Sistem ini menunjukkan implementasi best practices dalam software engineering untuk industri travel, dengan fokus pada reliability, scalability, dan user experience yang optimal.

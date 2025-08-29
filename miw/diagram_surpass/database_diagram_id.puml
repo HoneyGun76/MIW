@@ -1,0 +1,94 @@
+@startuml Diagram Basis Data MIW
+
+!define tabel(x) class x << (T,#FFAAAA) >>
+!define kunci_utama(x) <b><u>x</u></b>
+!define kunci_asing(x) <color:blue>x</color>
+
+skinparam class {
+    BackgroundColor White
+    ArrowColor #2688d4
+    BorderColor #2688d4
+}
+
+tabel(paket_perjalanan) {
+    kunci_utama(id_paket): int
+    jenis_perjalanan: enum
+    mata_uang: enum
+    nama_program: varchar(255)
+    tanggal_berangkat: date
+    harga_quad: decimal(15,2)
+    harga_triple: decimal(15,2)
+    harga_double: decimal(15,2)
+    hotel_madinah: varchar(100)
+    hotel_mekkah: varchar(100)
+    hotel_tambahan: varchar(100)
+    kamar_madinah: text
+    kamar_mekkah: text
+    kamar_tambahan: text
+    nomor_kamar: text
+    konfirmasi_hotel: text
+    dibuat_pada: timestamp
+    diperbarui_pada: timestamp
+}
+
+tabel(data_jemaah) {
+    kunci_utama(nik): varchar(16)
+    kunci_asing(id_paket): int
+    nama_lengkap: varchar(100)
+    tempat_lahir: varchar(50)
+    tanggal_lahir: date
+    jenis_kelamin: enum
+    alamat: text
+    kontak: text
+    informasi_fisik: text
+    dokumen: text
+    preferensi_kamar: enum
+    status_pembayaran: enum
+    total_pembayaran: decimal(15,2)
+    sisa_pembayaran: decimal(15,2)
+    dibuat_pada: timestamp
+    diperbarui_pada: timestamp
+}
+
+tabel(faktur_pembayaran) {
+    kunci_utama(nomor_faktur): varchar(8)
+    kunci_asing(id_paket): int
+    kunci_asing(nik): varchar(16)
+    detail_pembayaran: text
+    jenis_pembayaran: enum
+    total_bayar: decimal(15,2)
+    potongan: int
+    total_masuk: decimal(15,2)
+    sisa_tagihan: decimal(15,2)
+}
+
+tabel(manifest_perjalanan) {
+    kunci_utama(id_manifest): int
+    kunci_asing(id_paket): int
+    kunci_asing(nik): varchar(16)
+    kode_kamar: varchar(5)
+    kamar_madinah: varchar(5)
+    kamar_mekkah: varchar(5)
+    hubungan: varchar(30)
+    dibuat_pada: timestamp
+    diperbarui_pada: timestamp
+}
+
+tabel(pembatalan_perjalanan) {
+    kunci_utama(nik): varchar(16)
+    nama_lengkap: varchar(100)
+    kontak: text
+    alasan: text
+    dokumen_pendukung: text
+    waktu_unggah: timestamp
+}
+
+' Relasi
+data_jemaah ||--|| pembatalan_perjalanan : "nik"
+data_jemaah }|--|| paket_perjalanan : "id_paket"
+manifest_perjalanan }|--|| paket_perjalanan : "id_paket"
+manifest_perjalanan }|--|| data_jemaah : "nik"
+faktur_pembayaran }o--|| paket_perjalanan : "id_paket"
+faktur_pembayaran }o--|| data_jemaah : "nik"
+
+@enduml

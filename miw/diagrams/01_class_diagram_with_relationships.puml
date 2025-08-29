@@ -1,0 +1,296 @@
+@startuml MIW_Travel_Class_Diagram_With_Relationships
+
+!theme aws-orange
+title Diagram Kelas dengan Relasi - Sistem Manajemen Perjalanan MIW Travel
+
+' Core Configuration Classes (dengan relasi)
+package "Konfigurasi & Koneksi" {
+    class ConfigManager {
+        +$isRailway: boolean
+        +$db_config: array
+        +$pdo: PDO
+        +$conn: PDO
+        --
+        +getCurrentEnvironment(): string
+        +isProduction(): boolean
+        +getUploadDirectory(): string
+        +ensureUploadDirectory(): void
+    }
+
+    class DatabaseConnection {
+        -$host: string
+        -$port: int
+        -$database: string
+        -$username: string
+        -$password: string
+        --
+        +connect(): PDO
+        +disconnect(): void
+        +executeQuery(sql: string): array
+    }
+}
+
+' Entity Classes (Database Models)
+package "Entitas Data" {
+    class DataJamaah {
+        +nik: string
+        +nama: string
+        +jenis_kelamin: string
+        +tempat_lahir: string
+        +tanggal_lahir: date
+        +alamat: string
+        +no_telp: string
+        +email: string
+        +pak_id: int
+        +type_room_pilihan: string
+        +payment_status: string
+        +payment_total: decimal
+        +payment_remaining: decimal
+        +room_prefix: string
+        +medinah_room_number: string
+        +mekkah_room_number: string
+        +room_relation: string
+        +created_at: timestamp
+        --
+        +create(): boolean
+        +update(): boolean
+        +delete(): boolean
+        +findByNik(nik: string): DataJamaah
+        +getByPackageId(pak_id: int): array
+    }
+
+    class DataPaket {
+        +pak_id: int
+        +jenis_paket: string
+        +currency: string
+        +program_pilihan: string
+        +tanggal_keberangkatan: date
+        +base_price_quad: decimal
+        +base_price_triple: decimal
+        +base_price_double: decimal
+        +hotel_medinah: string
+        +hotel_makkah: string
+        +room_numbers: string
+        +created_at: timestamp
+        --
+        +create(): boolean
+        +update(): boolean
+        +delete(): boolean
+        +getAllPackages(): array
+        +getPackageById(id: int): DataPaket
+        +getByType(type: string): array
+    }
+
+    class DataInvoice {
+        +invoice_id: string
+        +pak_id: int
+        +nik: string
+        +nama: string
+        +alamat: string
+        +no_telp: string
+        +keterangan: string
+        +payment_type: string
+        +program_pilihan: string
+        +type_room_pilihan: string
+        +harga_paket: decimal
+        +payment_amount: decimal
+        +total_uang_masuk: decimal
+        +sisa_pembayaran: decimal
+        +created_at: timestamp
+        --
+        +generateInvoiceId(): string
+        +create(): boolean
+        +getByNik(nik: string): DataInvoice
+    }
+
+    class DataPembatalan {
+        +nik: string
+        +nama: string
+        +no_telp: string
+        +email: string
+        +alasan_pembatalan: string
+        +kwitansi_path: string
+        +proof_path: string
+        +status: string
+        +created_at: timestamp
+        --
+        +create(): boolean
+        +update(): boolean
+        +getAll(): array
+        +getByNik(nik: string): DataPembatalan
+    }
+}
+
+' Manager Classes (yang memiliki relasi)
+package "Pengelola Bisnis" {
+    class PaketManager {
+        -$conn: PDO
+        --
+        +handlePackageOperations(): void
+        +addPackage(data: array): boolean
+        +updatePackage(id: int, data: array): boolean
+        +deletePackage(id: int): boolean
+        +getAllPackages(): array
+        +getPackageById(id: int): array
+        +calculatePrice(roomType: string, packageData: array): decimal
+    }
+
+    class JamaahManager {
+        -$conn: PDO
+        --
+        +registerJamaah(data: array): boolean
+        +verifyPayment(nik: string, amount: decimal): boolean
+        +rejectPayment(nik: string, reason: string): boolean
+        +deleteJamaahAndRelatedData(nik: string): array
+        +updateRoomAssignment(nik: string, roomData: array): boolean
+        +getJamaahDetails(nik: string): array
+    }
+
+    class ManifestManager {
+        -$conn: PDO
+        --
+        +generateManifest(pak_id: int): array
+        +exportToExcel(pak_id: int): string
+        +getRoomList(pak_id: int): array
+        +assignRooms(jamaahList: array): boolean
+        +validateRoomAssignments(pak_id: int): boolean
+    }
+
+    class PaymentManager {
+        -$conn: PDO
+        --
+        +processPayment(data: array): boolean
+        +generateInvoice(data: array): string
+        +generateKwitansi(invoiceData: array): string
+        +verifyPaymentProof(filePath: string): boolean
+        +calculatePaymentRemaining(total: decimal, paid: decimal): decimal
+    }
+
+    class FileUploadManager {
+        -$uploadBaseDir: string
+        -$isRailway: boolean
+        -$maxFileSize: int
+        --
+        +handleUpload(file: array, targetDir: string): array
+        +validateFile(file: array): boolean
+        +generateUniqueFilename(): string
+        +storeFileMetadata(filename: string, directory: string): void
+        +serveFile(filename: string, directory: string): void
+        +deleteFile(filePath: string): boolean
+    }
+
+    class RailwayFileManager {
+        -$uploadBaseDir: string
+        -$isRailway: boolean
+        --
+        +detectRailwayEnvironment(): boolean
+        +ensureDirectoriesExist(): void
+        +handleUpload(file: array): array
+        +getFileUrl(filename: string): string
+    }
+}
+
+' Controller Classes (yang memiliki relasi)
+package "Pengendali Aplikasi" {
+    class AdminController {
+        -$conn: PDO
+        --
+        +dashboard(): void
+        +managePaket(): void
+        +manageJamaah(): void
+        +manageManifest(): void
+        +managePembatalan(): void
+        +viewPendingPayments(): void
+        +verifyPayment(nik: string): void
+        +rejectPayment(nik: string): void
+    }
+
+    class RegistrationController {
+        -$conn: PDO
+        --
+        +showUmrohForm(): void
+        +showHajiForm(): void
+        +submitUmrohRegistration(data: array): void
+        +submitHajiRegistration(data: array): void
+        +generateInvoice(data: array): void
+        +confirmPayment(data: array): void
+    }
+
+    class PembatalanController {
+        -$conn: PDO
+        --
+        +showPembatalanForm(): void
+        +submitPembatalan(data: array): void
+        +verifyPembatalan(data: array): void
+        +processPembatalan(nik: string): void
+    }
+}
+
+' Utility Classes (yang memiliki relasi)
+package "Utilitas" {
+    class TerbilangConverter {
+        --
+        +convert(number: int): string
+        +convertToWords(amount: decimal, currency: string): string
+    }
+
+    class EmailManager {
+        -$smtpHost: string
+        -$smtpUsername: string
+        -$smtpPassword: string
+        --
+        +sendEmail(to: string, subject: string, body: string): boolean
+        +sendRegistrationConfirmation(data: array): boolean
+        +sendPaymentConfirmation(data: array): boolean
+    }
+}
+
+' ========== RELATIONSHIPS ==========
+' Configuration relationships
+ConfigManager ||--|| DatabaseConnection : menggunakan
+
+' Entity relationships
+DataJamaah }|--|| DataPaket : terdaftar_dalam
+DataJamaah ||--o{ DataInvoice : memiliki
+DataJamaah ||--o| DataPembatalan : dapat_dibatalkan
+
+' Manager to Entity relationships
+PaketManager --> DataPaket : mengelola
+JamaahManager --> DataJamaah : mengelola
+PaymentManager --> DataInvoice : mengelola
+ManifestManager --> DataJamaah : mengatur_kamar
+
+' Controller to Manager relationships
+AdminController --> PaketManager : menggunakan
+AdminController --> JamaahManager : menggunakan
+AdminController --> ManifestManager : menggunakan
+AdminController --> PaymentManager : menggunakan
+
+RegistrationController --> JamaahManager : menggunakan
+RegistrationController --> PaymentManager : menggunakan
+RegistrationController --> FileUploadManager : menggunakan
+
+PembatalanController --> DataPembatalan : mengelola
+
+' Utility relationships
+EmailManager --> TerbilangConverter : menggunakan
+PaymentManager --> TerbilangConverter : menggunakan
+FileUploadManager --> RailwayFileManager : mewarisi
+
+note right of DataJamaah
+  Entitas utama yang menyimpan
+  data jamaah, termasuk informasi
+  kamar dan status pembayaran
+end note
+
+note left of ManifestManager
+  Mengelola penugasan kamar
+  dan ekspor manifest ke Excel
+end note
+
+note bottom of RailwayFileManager
+  Menangani upload file dengan
+  optimisasi untuk Railway.com
+end note
+
+@enduml

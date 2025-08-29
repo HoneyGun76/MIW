@@ -1,0 +1,168 @@
+@startuml Diagram Kelas MIW
+
+skinparam class {
+    BackgroundColor White
+    ArrowColor #2688d4
+    BorderColor #2688d4
+}
+
+class PaketPerjalanan {
+    -idPaket: Integer
+    -jenisPerjalanan: JenisPerjalanan
+    -mataUang: JenisMataUang
+    -namaProgram: String
+    -tanggalKeberangkatan: Tanggal
+    -hargaQuad: Desimal
+    -hargaTriple: Desimal
+    -hargaDouble: Desimal
+    -hotelMadinah: String
+    -hotelMekkah: String
+    -hotelTambahan: String[]
+    -kamarMadinah: Map<JenisKamar, String[]>
+    -kamarMekkah: Map<JenisKamar, String[]>
+    -kamarTambahan: Map<String, Map<JenisKamar, String[]>>
+    -nomorKamar: String[]
+    -konfirmasiHotel: DataKonfirmasi
+    -waktuDibuat: DateTime
+    -waktuDiperbarui: DateTime
+    +getKamarTersedia(hotel: String, jenis: JenisKamar): String[]
+    +hitungHarga(jenisKamar: JenisKamar): Desimal
+    +cekKetersediaanKamar(hotel: String, nomor: String): Boolean
+}
+
+class Jemaah {
+    -nik: String
+    -paket: PaketPerjalanan
+    -namaLengkap: String
+    -tempatLahir: String
+    -tanggalLahir: Tanggal
+    -jenisKelamin: JenisKelamin
+    -alamat: Alamat
+    -kontak: InfoKontak
+    -infoFisik: InfoFisik
+    -infoOrangTua: InfoOrangTua
+    -kewarganegaraan: Kewarganegaraan
+    -pendidikan: Pendidikan
+    -pekerjaan: Pekerjaan
+    -golonganDarah: GolonganDarah
+    -statusPernikahan: StatusPernikahan
+    -infoPaspor: InfoPaspor
+    -infoPembayaran: InfoPembayaran
+    -infoVaksin: InfoVaksin
+    -dokumen: InfoDokumen
+    -preferensiKamar: JenisKamar
+    -permintaanKhusus: String
+    -waktuDibuat: DateTime
+    -waktuDiperbarui: DateTime
+    +unggahDokumen(jenis: JenisDokumen, berkas: Berkas): Boolean
+    +lakukanPembayaran(jumlah: Desimal, jenis: JenisPembayaran): Boolean
+    +perbaruiStatus(status: Status): void
+    +hitungSisaPembayaran(): Desimal
+}
+
+class Faktur {
+    -nomorFaktur: String
+    -paket: PaketPerjalanan
+    -jemaah: Jemaah
+    -detailFaktur: DetailFaktur
+    -infoPembayaran: InfoPembayaran
+    -jumlah: InfoUang
+    +buatFaktur(): PDF
+    +hitungTotal(): Desimal
+    +perbaruiStatusPembayaran(status: StatusPembayaran): void
+}
+
+class ManifestPerjalanan {
+    -idManifest: Integer
+    -paket: PaketPerjalanan
+    -jemaah: Jemaah
+    -penugasanKamar: PenugasanKamar
+    -hubungan: String
+    -waktuDibuat: DateTime
+    -waktuDiperbarui: DateTime
+    +tetapkanKamar(hotel: String, nomorKamar: String): Boolean
+    +perbaruiPenugasanKamar(kamarBaru: String): Boolean
+    +buatManifest(): Excel
+}
+
+class Pembatalan {
+    -jemaah: Jemaah
+    -alasan: String
+    -dokumen: DokumenPembatalan
+    -waktu: DateTime
+    +prosesRefund(): Boolean
+    +unggahBukti(berkas: Berkas): Boolean
+}
+
+' Objek Nilai
+class Alamat {
+    -jalan: String
+    -kodePos: String
+    -desa: String
+    -kecamatan: String
+    -kota: String
+    -provinsi: String
+}
+
+class InfoKontak {
+    -email: String
+    -telepon: String
+    -kontakDarurat: KontakDarurat
+}
+
+class InfoFisik {
+    -tinggiBadan: Integer
+    -beratBadan: Integer
+    -karakteristik: KarakteristikFisik
+}
+
+class InfoPaspor {
+    -namaPaspor: String
+    -nomorPaspor: String
+    -tempatPenerbitan: String
+    -tanggalPenerbitan: Tanggal
+    -tanggalKadaluarsa: Tanggal
+}
+
+' Enumerasi
+enum JenisPerjalanan {
+    HAJI
+    UMRAH
+}
+
+enum JenisMataUang {
+    IDR
+    USD
+}
+
+enum JenisKamar {
+    QUAD
+    TRIPLE
+    DOUBLE
+}
+
+enum JenisKelamin {
+    PRIA
+    WANITA
+}
+
+enum JenisPembayaran {
+    UANG_MUKA
+    PELUNASAN
+}
+
+enum StatusPembayaran {
+    MENUNGGU
+    TERVERIFIKASI
+    DITOLAK
+}
+
+' Relasi
+PaketPerjalanan "1" *-- "*" Jemaah
+PaketPerjalanan "1" *-- "*" Faktur
+PaketPerjalanan "1" *-- "*" ManifestPerjalanan
+Jemaah "1" *-- "*" Faktur
+Jemaah "1" *-- "0..1" Pembatalan
+Jemaah "1" *-- "*" ManifestPerjalanan
+
+@enduml

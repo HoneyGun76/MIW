@@ -1,0 +1,27 @@
+# Enable PHP processing
+AddType application/x-httpd-php .php
+
+# Set the default handler
+DirectoryIndex index.php
+
+# Prevent directory listing
+Options -Indexes
+
+# Enable URL rewriting
+RewriteEngine On
+
+# Redirect all requests to HTTPS
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Handle PHP files directly
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+# PHP configuration
+php_value upload_max_filesize 10M
+php_value post_max_size 10M
+php_value max_execution_time 30
+php_value max_input_time 60

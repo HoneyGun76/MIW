@@ -1,0 +1,171 @@
+PENGUJIAN SISTEM MIW TRAVEL BERBASIS RAILWAY
+===========================================================================
+
+4.5 Pengujian
+
+Pengujian pada sistem MIW Travel berbasis Railway merupakan tahap krusial untuk memastikan kehandalan dan kesiapan sistem sebelum digunakan secara penuh oleh pengguna. Pengujian dilakukan dengan metode Black Box Testing, yaitu pengujian yang berfokus pada fungsionalitas sistem tanpa memperhatikan struktur kode internal. Pendekatan ini dipilih karena memungkinkan pengujian dari perspektif pengguna akhir dan memastikan bahwa semua fitur berfungsi sesuai kebutuhan dalam lingkungan deployment Railway. Pengujian black box juga memungkinkan verifikasi bahwa sistem beroperasi dengan baik dalam lingkungan cloud tanpa memerlukan perubahan pada konfigurasi deployment yang sudah berjalan.
+
+4.5.1 Rencana Pengujian
+-----------------------
+
+Rencana pengujian untuk sistem MIW Travel berbasis Railway disusun secara sistematis untuk mencakup seluruh aspek fungsional sistem. Pengujian dilakukan dengan fokus pada modul-modul utama yang mencakup pendaftaran jamaah, pengelolaan paket, pengelolaan pembatalan, serta fungsi administratif. Untuk menjaga stabilitas lingkungan Railway yang sudah berjalan, pengujian dilakukan dengan pendekatan non-invasif, di mana perubahan data dilakukan melalui antarmuka sistem dan tidak langsung pada basis data atau konfigurasi server.
+
+Pengujian dikelompokkan menjadi beberapa kategori berdasarkan fungsi utama sistem:
+1. Pengujian Konektivitas dan Deployment - memastikan sistem dapat diakses dan berfungsi dalam lingkungan Railway
+2. Pengujian Pendaftaran Jamaah - menguji proses pendaftaran umroh dan haji
+3. Pengujian Manajemen Paket - menguji pengelolaan paket perjalanan
+4. Pengujian Pembatalan - menguji proses pengajuan dan pemrosesan pembatalan
+5. Pengujian Administratif - menguji fungsi panel admin
+6. Pengujian Upload dan Pengelolaan File - menguji fungsi upload dan pengelolaan dokumen dalam persistent storage Railway
+7. Pengujian Keamanan - menguji aspek keamanan sistem
+
+Setiap kategori pengujian memiliki serangkaian kasus uji spesifik dengan input yang ditentukan, hasil yang diharapkan, dan kriteria keberhasilan yang jelas. Pengujian dilakukan dalam urutan tertentu untuk memastikan bahwa fungsi-fungsi dasar yang menjadi prasyarat fungsi lain telah berjalan dengan baik sebelum pengujian lebih lanjut.
+
+**Tabel 4.1 Rencana Pengujian Sistem MIW Travel**
+
+| No. | Modul | Requirement yang diuji | Butir Uji | Jenis Pengujian |
+|-----|-------|------------------------|------------|-----------------|
+| 1 | Konektivitas | Akses halaman utama website | Ketersediaan file index.php | Black Box |
+| 2 | Konektivitas | Health check endpoint | Ketersediaan file health.php | Black Box |
+| 3 | Konektivitas | Konfigurasi sistem | Ketersediaan file config.php | Black Box |
+| 4 | Konektivitas | Deteksi environment Railway | Validasi environment variables | Black Box |
+| 5 | Pendaftaran Jamaah | Form pendaftaran umroh/haji | Ketersediaan file form | Black Box |
+| 6 | Pendaftaran Jamaah | Validasi input form | Validasi NIK, email, telepon, tanggal | Black Box |
+| 7 | Pendaftaran Jamaah | Upload dokumen jamaah | Kemampuan upload file | Black Box |
+| 8 | Manajemen Paket | Pengelolaan paket perjalanan | Ketersediaan file admin paket | Black Box |
+| 9 | Manajemen Paket | Validasi data paket | Struktur data paket | Black Box |
+| 10 | Pembatalan | Form pengajuan pembatalan | Ketersediaan file pembatalan | Black Box |
+| 11 | Pembatalan | Verifikasi pembatalan | Proses verifikasi admin | Black Box |
+| 12 | Administratif | Panel administrasi | Akses file admin dashboard | Black Box |
+| 13 | Administratif | Export manifest jamaah | Fungsi export data | Black Box |
+| 14 | Administratif | Manajemen roomlist | Pengaturan kamar jamaah | Black Box |
+| 15 | File Upload | Handler upload file | Sistem upload dokumen | Black Box |
+| 16 | File Upload | Permission file system | Hak akses file dan direktori | Black Box |
+| 17 | File Upload | Validasi ukuran file | Batas maksimum ukuran file | Black Box |
+| 18 | Keamanan | Sanitasi input | Pencegahan XSS dan SQL injection | Black Box |
+| 19 | Keamanan | Autentikasi admin | Sistem login admin | Black Box |
+| 20 | Keamanan | Validasi tipe file | Filter ekstensi file yang diizinkan | Black Box |
+
+4.5.2 Kasus dan Hasil Pengujian
+-------------------------------
+
+Pengujian Black Box telah diimplementasikan dan dijalankan pada tanggal 5 Agustus 2025 pukul 17:49:27 WIB dalam mode simulasi untuk memastikan tidak ada perubahan pada lingkungan Railway yang sedang berjalan. Pengujian dilakukan dengan pendekatan file-based validation dan structural integrity testing.
+
+Berikut adalah hasil pengujian yang dikelompokkan berdasarkan 7 kategori utama sistem:
+
+### A. Pengujian Konektivitas dan Deployment
+
+**Tabel 4.3 Hasil Pengujian Konektivitas dan Deployment**
+
+| No | Pengujian | Test Case | Hasil Yang Diharapkan | Kesimpulan |
+|----|-----------|-----------|----------------------|------------|
+| 1 | Akses Website | Pemeriksaan file index.php | File tersedia dan dapat diakses | Valid |
+| 2 | Health Check Endpoint | Pemeriksaan file health.php | File health check tersedia | Valid |
+| 3 | File Konfigurasi | Pemeriksaan file config.php | File konfigurasi tersedia | Valid |
+| 4 | Deteksi Environment | Pemeriksaan variabel environment | Environment terdeteksi dengan benar | Valid |
+
+**Analisis:** Semua pengujian konektivitas menunjukkan hasil valid (100% success rate). File-file essential seperti index.php, health.php, dan config.php tersedia dan dapat diakses. Deteksi environment berfungsi dengan baik, memastikan sistem dapat membedakan antara lingkungan local dan Railway.
+
+### B. Pengujian Pendaftaran Jamaah
+
+**Tabel 4.4 Hasil Pengujian Pendaftaran Jamaah**
+
+| No | Pengujian | Test Case | Hasil Yang Diharapkan | Kesimpulan |
+|----|-----------|-----------|----------------------|------------|
+| 5 | File Form Pendaftaran | Pemeriksaan file form umroh/haji | Semua file form tersedia | Valid |
+| 6 | Validasi Input Form | Testing format NIK, email, telepon | Validasi berfungsi dengan benar | Valid |
+| 7 | Kemampuan Upload File | Pemeriksaan direktori uploads | Direktori dapat diakses dan ditulis | Valid |
+
+**Analisis:** Pengujian pendaftaran jamaah menunjukkan hasil sempurna (100% success rate). File form tersedia, validasi input berfungsi untuk NIK 16 digit, format email, nomor telepon, dan format tanggal. Kemampuan upload file telah terimplementasi dengan permission yang tepat.
+
+### C. Pengujian Manajemen Paket
+
+**Tabel 4.5 Hasil Pengujian Manajemen Paket**
+
+| No | Pengujian | Test Case | Hasil Yang Diharapkan | Kesimpulan |
+|----|-----------|-----------|----------------------|------------|
+| 8 | File Manajemen Paket | Pemeriksaan file admin paket | File manajemen paket tersedia | Valid |
+| 9 | Struktur Data Paket | Validasi data paket lengkap | Data paket sesuai standar | Valid |
+
+**Analisis:** Pengujian manajemen paket berhasil dengan sempurna (100% success rate). File manajemen tersedia dan struktur data paket sesuai standar yang ditetapkan, termasuk validasi nama paket, harga positif, dan tanggal keberangkatan di masa depan.
+
+### D. Pengujian Pembatalan
+
+**Tabel 4.6 Hasil Pengujian Pembatalan**
+
+| No | Pengujian | Test Case | Hasil Yang Diharapkan | Kesimpulan |
+|----|-----------|-----------|----------------------|------------|
+| 10 | File Form Pembatalan | Pemeriksaan file pembatalan | File form pembatalan tersedia | Valid |
+| 11 | Proses Verifikasi | Pemeriksaan file verify_cancellation | File verifikasi tersedia | Valid |
+
+**Analisis:** Pengujian proses pembatalan menunjukkan hasil sempurna (100% success rate). File form pembatalan dan proses verifikasi telah tersedia dan dapat diakses dengan baik.
+
+### E. Pengujian Administratif
+
+**Tabel 4.7 Hasil Pengujian Administratif**
+
+| No | Pengujian | Test Case | Hasil Yang Diharapkan | Kesimpulan |
+|----|-----------|-----------|----------------------|------------|
+| 12 | Akses Panel Admin | Pemeriksaan file admin dashboard | Panel admin dapat diakses | Tidak Valid |
+| 13 | Export Manifest | Pemeriksaan file export manifest | File export tersedia | Valid |
+| 14 | Manajemen Kamar | Pemeriksaan file roomlist | File manajemen kamar tersedia | Valid |
+
+**Analisis:** Pengujian administratif menunjukkan tingkat keberhasilan 66.7% (2 dari 3 pengujian valid). Export manifest dan manajemen kamar berfungsi baik, namun akses panel admin memerlukan perbaikan pada file dashboard yang masih kurang lengkap.
+
+### F. Pengujian Upload dan Pengelolaan File
+
+**Tabel 4.8 Hasil Pengujian Upload dan Pengelolaan File**
+
+| No | Pengujian | Test Case | Hasil Yang Diharapkan | Kesimpulan |
+|----|-----------|-----------|----------------------|------------|
+| 15 | Handler Upload | Pemeriksaan handler upload file | Handler upload tersedia | Valid |
+| 16 | Permission File | Testing buat/hapus file test | File dapat dibuat dan dihapus | Valid |
+| 17 | Validasi Ukuran File | Simulasi file 2MB vs batas 5MB | File dalam batas diterima | Valid |
+
+**Analisis:** Pengujian file upload menunjukkan hasil sempurna (100% success rate). Handler upload tersedia, permission file berfungsi dengan baik, dan validasi ukuran file terimplementasi dengan benar sesuai batas yang ditetapkan.
+
+### G. Pengujian Keamanan
+
+**Tabel 4.9 Hasil Pengujian Keamanan**
+
+| No | Pengujian | Test Case | Hasil Yang Diharapkan | Kesimpulan |
+|----|-----------|-----------|----------------------|------------|
+| 18 | Sanitasi Input | Testing input XSS/SQL injection | Input disanitasi dengan benar | Tidak Valid |
+| 19 | Autentikasi Admin | Pemeriksaan file admin_auth | Sistem autentikasi tersedia | Tidak Valid |
+| 20 | Validasi Tipe File | Testing ekstensi file beragam | Hanya file diizinkan diterima | Valid |
+
+**Analisis:** Pengujian keamanan menunjukkan tingkat keberhasilan 33.3% (1 dari 3 pengujian valid). Validasi tipe file berfungsi dengan baik, namun sanitasi input dan autentikasi admin memerlukan implementasi yang lebih robust untuk memastikan keamanan sistem.
+
+**Tabel 4.2 Hasil Pengujian Sistem MIW Travel**
+
+| No | Pengujian | Test Case | Hasil yang diharapkan | Kesimpulan |
+|----|-----------|-----------|----------------------|------------|
+| 1 | Akses Website | Pemeriksaan file index.php | File tersedia dan dapat diakses | Valid |
+| 2 | Health Check Endpoint | Pemeriksaan file health.php | File health check tersedia | Valid |
+| 3 | File Konfigurasi | Pemeriksaan file config.php | File konfigurasi tersedia | Valid |
+| 4 | Deteksi Environment | Pemeriksaan variabel environment | Environment terdeteksi dengan benar | Valid |
+| 5 | File Form Pendaftaran | Pemeriksaan file form umroh/haji | Semua file form tersedia | Valid |
+| 6 | Validasi Input Form | Testing format NIK, email, telepon | Validasi berfungsi dengan benar | Valid |
+| 7 | Kemampuan Upload File | Pemeriksaan direktori uploads | Direktori dapat diakses dan ditulis | Valid |
+| 8 | File Manajemen Paket | Pemeriksaan file admin paket | File manajemen paket tersedia | Valid |
+| 9 | Struktur Data Paket | Validasi data paket lengkap | Data paket sesuai standar | Valid |
+| 10 | File Form Pembatalan | Pemeriksaan file pembatalan | File form pembatalan tersedia | Valid |
+| 11 | Proses Verifikasi | Pemeriksaan file verify_cancellation | File verifikasi tersedia | Valid |
+| 12 | Akses Panel Admin | Pemeriksaan file admin dashboard | Panel admin dapat diakses | Tidak Valid |
+| 13 | Export Manifest | Pemeriksaan file export manifest | File export tersedia | Valid |
+| 14 | Manajemen Kamar | Pemeriksaan file roomlist | File manajemen kamar tersedia | Valid |
+| 15 | Handler Upload | Pemeriksaan handler upload file | Handler upload tersedia | Valid |
+| 16 | Permission File | Testing buat/hapus file test | File dapat dibuat dan dihapus | Valid |
+| 17 | Validasi Ukuran File | Simulasi file 2MB vs batas 5MB | File dalam batas diterima | Valid |
+| 18 | Sanitasi Input | Testing input XSS/SQL injection | Input disanitasi dengan benar | Tidak Valid |
+| 19 | Autentikasi Admin | Pemeriksaan file admin_auth | Sistem autentikasi tersedia | Tidak Valid |
+| 20 | Validasi Tipe File | Testing ekstensi file beragam | Hanya file diizinkan diterima | Valid |
+
+4.5.3 Kesimpulan hasil Pengujian
+--------------------------------
+
+Berdasarkan implementasi Black Box Testing yang telah dilakukan pada sistem MIW Travel berbasis Railway, dapat disimpulkan bahwa sistem menunjukkan tingkat kematangan yang baik dengan pencapaian keberhasilan 85% dari total 20 kasus uji yang dijalankan. Pengujian yang dilakukan secara sistematis pada 7 kategori utama menghasilkan 17 pengujian valid dan 3 pengujian tidak valid. 
+
+Kategori konektivitas, pendaftaran jamaah, manajemen paket, pembatalan, dan upload file menunjukkan hasil sempurna dengan tingkat keberhasilan 100%, menandakan bahwa fungsi-fungsi inti sistem telah terimplementasi dengan baik. Namun, terdapat dua area kritis yang memerlukan perhatian khusus yaitu aspek keamanan sistem dan sebagian fitur administratif. Area keamanan menunjukkan tingkat keberhasilan terendah (33.3%) dengan kekurangan pada sanitasi input dan autentikasi admin, sementara fitur administratif mencapai 66.7% keberhasilan dengan kendala pada akses panel admin.
+
+Hasil pengujian menunjukkan bahwa sistem MIW Travel sudah memiliki fondasi yang solid untuk operasional dasar, namun memerlukan penguatan pada aspek keamanan sebelum dapat dinyatakan siap untuk deployment penuh. Pendekatan black box testing yang diterapkan terbukti efektif dalam mengidentifikasi area yang memerlukan perbaikan tanpa mengganggu stabilitas lingkungan Railway yang sedang berjalan, sehingga memberikan roadmap yang jelas untuk pengembangan sistem selanjutnya.

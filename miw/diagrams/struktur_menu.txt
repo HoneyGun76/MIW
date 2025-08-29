@@ -1,0 +1,41 @@
+STRUKTUR MENU SISTEM MIW TRAVEL BERBASIS RAILWAY
+===========================================================================
+
+1. Menu Utama (Homepage)
+   Halaman utama sistem MIW Travel menyediakan akses ke semua layanan utama dalam bentuk card layout. Terdapat tiga pilihan utama yang ditampilkan sebagai kartu layanan: Pendaftaran Haji, Pendaftaran Umroh, dan Panel Admin. Setiap kartu memiliki ikon yang relevan dan tombol yang mengarahkan pengguna ke halaman terkait. Menu ini dirancang dengan pendekatan user-centered design, memastikan pengguna dapat dengan mudah mengidentifikasi layanan yang diperlukan. Terdapat juga opsi tambahan untuk mengajukan pembatalan perjalanan, memudahkan jamaah yang perlu membatalkan pendaftaran.
+
+2. Menu Pendaftaran Jamaah
+   Menu pendaftaran dibagi menjadi dua jalur terpisah: Pendaftaran Haji dan Pendaftaran Umroh. Setiap jalur memiliki form khusus (form_haji.php dan form_umroh.php) yang mengumpulkan data yang diperlukan untuk jenis perjalanan tersebut. Form-form ini mencakup pengumpulan data pribadi, dokumen, pilihan paket perjalanan, dan informasi pembayaran. Setelah pendaftaran berhasil, pengguna diarahkan ke halaman konfirmasi dan diberikan invoice untuk pembayaran. Struktur menu ini memastikan proses pendaftaran yang terarah dan terorganisir sesuai dengan jenis perjalanan yang dipilih.
+
+3. Menu Panel Admin
+   Panel admin menyediakan akses terkendali ke fungsi manajemen sistem melalui navigasi tab-based. Tab-tab yang tersedia mencakup: Pendaftar Baru, Dasbor Admin, Manajemen Paket, Cancellation Request, Roomlist, Export Manifest, dan Dokumen Jamaah. Setiap tab memberikan akses ke antarmuka pengelolaan yang spesifik untuk aspek tersebut. Panel ini dirancang untuk administrator sistem yang telah diautentikasi, memastikan bahwa hanya personel yang berwenang yang dapat mengakses fungsi administrasi. Navigasi tab memudahkan perpindahan antar fungsi tanpa perlu kembali ke menu utama.
+
+4. Menu Pendaftar Baru (Admin)
+   Tab Pendaftar Baru menampilkan daftar jamaah yang baru mendaftar dan menunggu verifikasi pembayaran. Menu ini menampilkan data dalam format tabel dengan informasi penting seperti NIK, nama, program yang dipilih, jenis paket, tanggal keberangkatan, dan status pembayaran. Administrator dapat melihat detail lengkap setiap pendaftar, memverifikasi bukti pembayaran, dan menandai pembayaran sebagai terverifikasi atau ditolak. Fungsi pencarian dan pengurutan memudahkan admin untuk mengelola pendaftar baru ketika jumlahnya banyak.
+
+5. Menu Dasbor Admin
+   Dasbor Admin menyediakan tampilan komprehensif dari semua jamaah yang terdaftar dalam sistem. Menu ini menampilkan tabel dengan data lengkap jamaah beserta status pembayaran dan informasi paket. Administrator dapat melihat detail lengkap setiap jamaah termasuk informasi pribadi, kontak, keluarga, fisik, paket perjalanan, pembayaran, dan dokumen yang diunggah. Dasbor ini juga menyediakan fungsi penghapusan data jamaah jika diperlukan, dengan konfirmasi untuk mencegah penghapusan yang tidak disengaja.
+
+6. Menu Manajemen Paket
+   Menu Manajemen Paket memungkinkan administrator untuk mengelola paket perjalanan umroh dan haji. Administrator dapat melihat semua paket yang tersedia, menambahkan paket baru, mengedit paket yang ada, atau menghapus paket. Informasi paket mencakup jenis paket, program, tanggal keberangkatan, harga dasar untuk berbagai tipe kamar (quad, triple, double), informasi hotel di Mekkah dan Madinah, dan nomor HCN. Filter berdasarkan tipe paket (Umroh/Haji) memudahkan pengelolaan saat jumlah paket banyak.
+
+7. Menu Cancellation Request
+   Menu Cancellation Request menampilkan daftar permintaan pembatalan dari jamaah. Administrator dapat melihat detail pembatalan termasuk alasan, tanggal pengajuan, dan dokumen pendukung. Menu ini memungkinkan administrator untuk memproses pembatalan, menghitung pengembalian dana sesuai dengan kebijakan perusahaan, dan memperbarui status jamaah. Fungsi ekspor data ke Excel juga tersedia untuk pelaporan dan dokumentasi administratif.
+
+8. Menu Roomlist
+   Menu Roomlist memberikan antarmuka untuk mengelola pengaturan kamar jamaah untuk setiap paket perjalanan. Menu ini dibagi menjadi dua tab: Roomlist Umroh dan Roomlist Haji. Setiap tab menampilkan daftar paket yang tersedia beserta jamaah yang terdaftar pada paket tersebut. Administrator dapat mengatur penempatan kamar, melihat jamaah yang sudah ditempatkan, dan membuat perubahan sesuai kebutuhan. Fungsi pencarian dan pengurutan membantu mengelola roomlist dengan efisien.
+
+9. Menu Export Manifest
+   Menu Export Manifest memungkinkan administrator untuk menghasilkan dokumen manifest untuk paket perjalanan. Menu ini menampilkan daftar paket yang tersedia beserta jumlah jamaah yang terdaftar pada setiap paket. Administrator dapat memilih paket tertentu dan mengekspor data manifest dalam format Excel. Manifest mencakup informasi lengkap jamaah yang diperlukan untuk keperluan administrasi, imigrasi, dan operasional perjalanan. Format ekspor dirancang agar kompatibel dengan kebutuhan dokumen resmi.
+
+10. Menu Dokumen Jamaah
+    Menu Dokumen Jamaah menyediakan antarmuka untuk mengelola dokumen yang diunggah oleh jamaah. Administrator dapat melihat status dokumen setiap jamaah seperti buku kuning, foto, fotokopi KTP, fotokopi ijazah, fotokopi KK, fotokopi buku nikah, dan fotokopi akta kelahiran. Untuk setiap jamaah, administrator dapat mengelola dokumen-dokumen ini melalui modal yang muncul saat tombol "Manage Documents" diklik. Menu ini memastikan bahwa semua dokumen yang diperlukan untuk perjalanan lengkap dan valid.
+
+11. Menu Pembatalan (User)
+    Menu Pembatalan memberikan antarmuka bagi jamaah untuk mengajukan pembatalan pendaftaran. Jamaah perlu mengisi formulir pembatalan dengan informasi seperti NIK, nama, alasan pembatalan, dan mengunggah dokumen pendukung jika diperlukan. Setelah pengajuan, jamaah akan menerima konfirmasi dan dapat melihat status pembatalan mereka. Menu ini dirancang untuk memudahkan proses pembatalan bagi jamaah sambil memastikan bahwa semua informasi yang diperlukan untuk pemrosesan administratif tercatat dengan baik.
+
+12. Struktur Navigasi Global
+    Sistem ini mengimplementasikan navigasi berbasis tab untuk admin dan navigasi berbasis kartu untuk pengguna umum. Untuk admin, tab navigasi muncul secara konsisten di semua halaman administratif, memungkinkan perpindahan cepat antar fungsi. Untuk pengguna umum, struktur navigasi berfokus pada tugas-tugas utama (pendaftaran, pembatalan) dengan alur yang jelas dan linear. Pendekatan ini memastikan pengalaman pengguna yang intuitif dan efisien sesuai dengan peran pengguna dalam sistem.
+
+13. Integrasi Menu dengan Alur Kerja
+    Struktur menu dirancang untuk mengikuti alur kerja natural dari proses bisnis MIW Travel. Mulai dari pendaftaran jamaah, verifikasi pembayaran, pengelolaan dokumen, pengaturan roomlist, hingga ekspor manifest, setiap menu mendukung tahapan spesifik dalam proses. Integrasi ini memastikan bahwa administrator dapat dengan mudah memproses jamaah melalui seluruh siklus dari pendaftaran hingga keberangkatan, sementara jamaah mendapatkan antarmuka yang sederhana untuk memenuhi kebutuhan mereka.

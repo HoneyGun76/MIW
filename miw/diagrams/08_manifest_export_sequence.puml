@@ -1,0 +1,82 @@
+@startuml Manifest_Export_Sequence
+
+!theme plain
+skinparam linetype ortho
+skinparam backgroundColor white
+skinparam participantBackgroundColor white
+skinparam participantBorderColor black
+skinparam actorBackgroundColor white
+skinparam actorBorderColor black
+skinparam arrowColor black
+
+title Manifest Export Process - Sequence Diagram
+
+actor Admin
+participant "admin_roomlist.php\n(Roomlist Page)" as RoomlistPage
+participant "export_manifest.php\n(Manifest Exporter)" as ManifestExporter
+participant "Database\n(data_paket, data_jamaah)" as Database
+
+== Manifest Export Process ==
+
+Admin -> RoomlistPage: Access roomlist management
+activate RoomlistPage
+
+RoomlistPage -> Database: Get available packages\nSELECT * FROM data_paket
+activate Database
+Database --> RoomlistPage: Return package list
+deactivate Database
+
+RoomlistPage --> Admin: Display package selection
+
+Admin -> RoomlistPage: Configure roomlist for jamaah
+Admin -> RoomlistPage: Access "Export Manifest" page
+
+RoomlistPage --> Admin: Show export options
+
+Admin -> RoomlistPage: Click "Export Manifest"
+
+RoomlistPage -> ManifestExporter: POST request with\npak_id and export_type
+activate ManifestExporter
+
+== Data Retrieval ==
+
+ManifestExporter -> ManifestExporter: Validate parameters (pak_id, export_type)
+
+ManifestExporter -> Database: Get package details\nSELECT * FROM data_paket WHERE pak_id = ?
+activate Database
+Database --> ManifestExporter: Return package information
+deactivate Database
+
+alt Package not found
+    ManifestExporter --> RoomlistPage: Return error "Package not found"
+    RoomlistPage --> Admin: Show error message
+else Package exists
+    ManifestExporter -> Database: Get jamaah data\nSELECT j.* FROM data_jamaah j\nWHERE j.pak_id = ? ORDER BY j.nama
+    activate Database
+    Database --> ManifestExporter: Return jamaah list
+    deactivate Database
+    
+    == Manifest Generation ==
+    
+    ManifestExporter -> ManifestExporter: Prepare manifest data array
+    
+    loop For each jamaah
+        ManifestExporter -> ManifestExporter: Calculate age if needed\n(from tanggal_lahir)
+        ManifestExporter -> ManifestExporter: Determine marketing name
+        ManifestExporter -> ManifestExporter: calculateCompletionStatus()\nfor document completeness
+        ManifestExporter -> ManifestExporter: Format jamaah data for export
+    end
+    
+    ManifestExporter -> ManifestExporter: Create manifest structure\nwith package and jamaah details
+    
+    ManifestExporter -> ManifestExporter: Generate download file\n(Excel format)
+    
+    ManifestExporter --> RoomlistPage: Return manifest file\nfor download
+    deactivate ManifestExporter
+    
+    RoomlistPage --> Admin: Provide manifest download\nto admin device
+end
+
+deactivate RoomlistPage
+
+@enduml

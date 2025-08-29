@@ -1,0 +1,76 @@
+@startuml Urutan Pembatalan
+
+actor "Jamaah" as jamaah
+participant "Antarmuka Web" as ui
+participant "Layanan Pembatalan" as cancel
+participant "Layanan Pembayaran" as payment
+participant "Layanan Email" as email
+database "Database" as db
+
+jamaah -> ui: Akses form pembatalan
+activate ui
+
+ui -> db: Verifikasi data jamaah
+db --> ui: Info jamaah & pembayaran
+
+jamaah -> ui: Isi form pembatalan
+jamaah -> ui: Unggah bukti pembayaran
+
+ui -> cancel: Kirim permintaan pembatalan
+activate cancel
+
+cancel -> db: Simpan data pembatalan
+db --> cancel: Konfirmasi penyimpanan
+
+cancel -> payment: Hitung pengembalian dana
+activate payment
+payment -> db: Ambil data pembayaran
+db --> payment: Detail pembayaran
+payment -> payment: Kalkulasi denda
+payment --> cancel: Detail pengembalian
+deactivate payment
+
+cancel -> email: Kirim notifikasi admin
+activate email
+email -> email: Template notifikasi admin
+email --> cancel: Email terkirim
+deactivate email
+
+cancel --> ui: Pembatalan diproses
+deactivate cancel
+
+ui --> jamaah: Tampilkan konfirmasi
+deactivate ui
+
+note right of jamaah: Menunggu verifikasi admin
+
+actor "Admin" as admin
+admin -> ui: Akses dashboard pembatalan
+activate ui
+
+ui -> db: Ambil data pembatalan
+db --> ui: List pembatalan pending
+
+admin -> ui: Verifikasi pembatalan
+ui -> cancel: Proses verifikasi
+activate cancel
+
+cancel -> db: Update status pembatalan
+db --> cancel: Konfirmasi update
+
+cancel -> email: Kirim konfirmasi ke jamaah
+activate email
+email -> email: Template konfirmasi pembatalan
+email --> cancel: Email terkirim
+deactivate email
+
+cancel -> db: Hapus data jamaah
+db --> cancel: Konfirmasi penghapusan
+
+cancel --> ui: Verifikasi selesai
+deactivate cancel
+
+ui --> admin: Tampilkan status sukses
+deactivate ui
+
+@enduml

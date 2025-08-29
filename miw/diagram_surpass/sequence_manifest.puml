@@ -1,0 +1,48 @@
+@startuml Admin Manifest Management Sequence
+
+actor "Admin" as admin
+participant "Admin Interface" as ui
+participant "Manifest Service" as manifest
+participant "Room Service" as room
+participant "Document Service" as doc
+database "Database" as db
+
+admin -> ui: Access manifest management
+activate ui
+
+ui -> manifest: Load package manifests
+activate manifest
+manifest -> db: Query manifest data
+db --> manifest: Return manifests
+manifest --> ui: Display manifests
+deactivate manifest
+
+admin -> ui: Select package
+ui -> room: Get room assignments
+activate room
+room -> db: Query room status
+db --> room: Return room data
+room --> ui: Display room status
+deactivate room
+
+admin -> ui: Assign rooms
+ui -> room: Update room assignments
+activate room
+room -> db: Update manifest
+db --> room: Confirm update
+room --> ui: Assignment complete
+deactivate room
+
+admin -> ui: Generate manifest document
+ui -> doc: Create manifest document
+activate doc
+doc -> db: Query package details
+db --> doc: Return details
+doc -> doc: Generate Excel file
+doc --> ui: Download manifest
+deactivate doc
+
+ui --> admin: Show success message
+deactivate ui
+
+@enduml

@@ -1,0 +1,42 @@
+{
+    "name": "miw/travel",
+    "description": "MIW Travel Management System - Railway Deployment",
+    "require": {
+        "php": "^8.1",
+        "tecnickcom/tcpdf": "^6.8",
+        "dompdf/dompdf": "^3.1",
+        "phpoffice/phpspreadsheet": "^3.9",
+        "guzzlehttp/guzzle": "^7.9",
+        "phpmailer/phpmailer": "^6.6",
+        "mpdf/mpdf": "^8.0",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
+        "ext-gd": "*",
+        "ext-zip": "*",
+        "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
+    "repositories": {
+        "dompdf": {
+            "type": "vcs",
+            "url": "https://github.com/dompdf/php-svg-lib.git"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "mkdir -p /tmp/pdfs",
+            "chmod -R 777 /tmp/pdfs || true"
+        ],
+        "post-update-cmd": [
+            "mkdir -p /tmp/pdfs",
+            "chmod -R 777 /tmp/pdfs || true"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "classmap-authoritative": true,
+        "apcu-autoloader": true
+    }
+}

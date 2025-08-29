@@ -1,0 +1,81 @@
+@startuml sequence_pendaftaran_jamaah
+!include ../uml_black_white_style.puml
+
+' Strict black and white UML 2.5 standard design
+skinparam monochrome true
+skinparam shadowing false
+skinparam handwritten false
+skinparam backgroundColor White
+
+title Sequence Diagram - Proses Pendaftaran Jamaah (Umroh/Haji)
+
+actor "Calon Jamaah" as User
+participant "Form Controller" as Form
+participant "Input Validator" as Validator  
+participant "File Manager" as FileManager
+participant "Database" as DB
+participant "Email Service" as Email
+participant "Admin" as Admin
+
+User -> Form: Mengakses form pendaftaran\n(form_umroh.php / form_haji.php)
+activate Form
+
+Form -> DB: Ambil data paket tersedia
+DB --> Form: List paket (DataPaket)
+
+Form --> User: Tampilkan form dengan paket
+deactivate Form
+
+User -> Form: Submit data pendaftaran\n+ upload dokumen
+activate Form
+
+Form -> Validator: Validasi input data
+activate Validator
+Validator -> Validator: Cek NIK, email, telepon
+Validator -> Validator: Validasi kelengkapan data
+Validator --> Form: Hasil validasi
+deactivate Validator
+
+alt Data Valid
+    Form -> FileManager: Upload dokumen\n(KTP, KK, Paspor, dll)
+    activate FileManager
+    FileManager -> FileManager: Validasi tipe file
+    FileManager -> FileManager: Generate nama file unik
+    FileManager -> FileManager: Simpan ke direktori upload
+    FileManager --> Form: Path file tersimpan
+    deactivate FileManager
+
+    Form -> DB: INSERT ke data_jamaah
+    activate DB
+    DB -> DB: Simpan data jamaah
+    DB --> Form: Success + jamaah_id
+    deactivate DB
+
+    Form -> Email: Kirim notifikasi ke jamaah
+    activate Email
+    Email -> Email: Generate email konfirmasi
+    Email --> User: Email konfirmasi pendaftaran
+    deactivate Email
+
+    Form -> Email: Kirim notifikasi ke admin
+    activate Email
+    Email -> Email: Generate email notifikasi admin
+    Email --> Admin: Email pendaftaran baru
+    deactivate Email
+
+    Form --> User: Halaman sukses + invoice
+else Data Tidak Valid
+    Form --> User: Tampilkan error message
+end
+
+deactivate Form
+
+note over User, Admin
+    Setelah pendaftaran berhasil:
+    1. Jamaah menerima email konfirmasi
+    2. Admin menerima notifikasi pendaftaran baru
+    3. Status payment: "pending"
+    4. Admin dapat memverifikasi pembayaran
+end note
+
+@enduml

@@ -1,0 +1,41 @@
+PERANCANGAN KODIFIKASI SISTEM MIW TRAVEL BERBASIS RAILWAY
+===========================================================================
+
+1. Identifikasi Komponen Arsitektur
+   Sistem MIW Travel dibangun dengan arsitektur berbasis layanan yang terdiri dari beberapa komponen utama: aplikasi web PHP sebagai front-end dan back-end, database MySQL untuk penyimpanan data, sistem penyimpanan file untuk dokumen, dan layanan email untuk notifikasi. Setiap komponen diidentifikasi dengan nama unik dan prefix yang sesuai untuk memudahkan pengelolaan dan deployment di platform Railway.com.
+
+2. Struktur Kode dan Organisasi Direktori
+   File-file diorganisir dalam struktur hierarkis yang jelas untuk memisahkan kode aplikasi, konfigurasi, dan aset. Struktur direktori utama meliputi folder uploads (dengan subdirektori documents, payments, photos, cancellations), direktori include untuk logika bisnis, dan file-file PHP utama di root untuk memproses request. Struktur ini dirancang agar kompatibel dengan sistem Railway yang menggunakan container-based deployment.
+
+3. Konfigurasi Environment-Based
+   Sistem menerapkan deteksi otomatis environment yang membedakan antara lingkungan development lokal (XAMPP) dan production (Railway). Konfigurasi database, path upload, dan pengaturan sistem disesuaikan secara dinamis berdasarkan variabel lingkungan. File config.php menjadi pusat konfigurasi yang mendeteksi keberadaan variabel RAILWAY_ENVIRONMENT atau RAILWAY_PROJECT_ID untuk mengaktifkan mode Railway.
+
+4. Skema Database dan Relasi
+   Skema database dirancang dengan tabel-tabel yang terhubung melalui relasi yang jelas. Tabel utama meliputi data_paket untuk informasi paket travel, pendaftar_haji dan pendaftar_umroh untuk data jamaah, serta tabel pendukung seperti file_metadata untuk pelacakan file yang diunggah. Tiap tabel memiliki indeks yang dioptimalkan untuk kinerja query di lingkungan Railway.
+
+5. Sistem Manajemen File
+   Implementasi RailwayFileManager sebagai solusi khusus untuk menangani upload dan penyimpanan file. Sistem ini menggunakan persistent storage yang disediakan Railway melalui volume mounted di /app/uploads. Setiap file yang diunggah dicatat metadata-nya di database dengan referensi ke lokasi fisik di sistem file, sehingga tetap tersedia setelah deployment ulang.
+
+6. Deployment Automation
+   Proses deployment dioptimalkan menggunakan konfigurasi railway.json yang mendefinisikan builder (DOCKERFILE atau NIXPACKS), health check path, restart policy, dan startup command. Script bantu seperti deploy_railway.bat dan deploy_railway.sh menyederhanakan proses deployment dengan menangani login, linking project, pengaturan variabel lingkungan, dan deployment dengan perintah "railway up".
+
+7. Health Monitoring dan Diagnostik
+   Sistem diagnostik terintegrasi melalui RailwayDiagnostics dan RailwayDeploymentManager yang menyediakan dashboard untuk monitoring kesehatan aplikasi, performa database, status sistem file, dan statistik traffic. Endpoint health.php digunakan sebagai health check oleh Railway untuk memastikan aplikasi berjalan dengan baik.
+
+8. Keamanan dan Validasi
+   Implementasi lapisan keamanan melalui validasi input ketat, sanitasi data, prepared statements untuk interaksi database, dan header keamanan (X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Strict-Transport-Security). Variabel sensitif seperti kredensial SMTP disimpan sebagai environment variables di Railway daripada di kode sumber.
+
+9. Penanganan Error dan Logging
+   Sistem logging komprehensif yang mencatat aktivitas pengguna, error, dan peristiwa sistem ke dalam database dan file log. Ketika error terjadi, sistem mencatat detail lengkap tetapi hanya menampilkan pesan umum kepada pengguna. Log error di Railway dapat diakses melalui command "railway logs" dan melalui dashboard diagnostik.
+
+10. Integrasi Layanan Email
+    Implementasi EmailService yang dikonfigurasi untuk bekerja dengan SMTP melalui variabel lingkungan (SMTP_HOST, SMTP_USERNAME, SMTP_PASSWORD, SMTP_PORT, SMTP_ENCRYPTION). Layanan ini digunakan untuk mengirim konfirmasi pendaftaran, notifikasi pembayaran, dan dokumen manifest kepada jamaah dan administrator.
+
+11. Performance Optimization
+    Pengaturan performa seperti max_execution_time, connection pooling untuk database, dan penanganan file yang efisien. Konfigurasi khusus untuk Railway mencakup penggunaan lingkungan container dengan resource terbatas, dengan optimasi untuk memastikan respon cepat dan penggunaan memori yang efisien.
+
+12. Version Control dan Branch Strategy
+    Sistem menggunakan Git dengan strategi multi-branch: main untuk development aktif, production-backup untuk versi stabil terakhir, dan staging untuk pengujian fitur baru. Railway dikonfigurasi untuk dapat beralih antar branch melalui RailwayBranchSwitcher, memudahkan proses deployment versi baru dan rollback jika terjadi masalah.
+
+13. System Documentation
+    Dokumentasi komprehensif meliputi RAILWAY_DEPLOYMENT.md untuk panduan deployment, UPLOAD_CONFIGURATION_README.md untuk konfigurasi upload, README.md untuk petunjuk umum, dan API_DOCUMENTATION.md untuk dokumentasi endpoint. Dokumentasi internal juga tersedia dalam kode sumber dengan standar penulisan yang konsisten untuk memudahkan pemeliharaan.

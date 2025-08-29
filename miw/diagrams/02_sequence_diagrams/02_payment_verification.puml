@@ -1,0 +1,97 @@
+@startuml sequence_verifikasi_pembayaran
+!include ../uml_black_white_style.puml
+
+' Strict black and white UML 2.5 standard design
+skinparam monochrome true
+skinparam shadowing false
+skinparam handwritten false
+skinparam backgroundColor White
+
+title Sequence Diagram - Proses Verifikasi Pembayaran
+
+actor "Admin" as Admin
+participant "Admin Dashboard" as Dashboard
+participant "Payment Controller" as Payment
+participant "File Manager" as FileManager
+participant "Database" as DB
+participant "PDF Generator" as PDF
+participant "Email Service" as Email
+participant "Jamaah" as User
+
+Admin -> Dashboard: Login ke admin panel
+activate Dashboard
+
+Dashboard -> DB: Ambil data pembayaran pending
+activate DB
+DB --> Dashboard: List jamaah dengan status pending
+deactivate DB
+
+Dashboard --> Admin: Tampilkan daftar pending payments
+deactivate Dashboard
+
+Admin -> Dashboard: Pilih jamaah untuk verifikasi
+activate Dashboard
+
+Dashboard -> DB: Ambil detail jamaah & paket
+activate DB
+DB --> Dashboard: Data lengkap jamaah
+deactivate DB
+
+Dashboard --> Admin: Tampilkan detail pembayaran
+deactivate Dashboard
+
+Admin -> Payment: Verifikasi pembayaran\n(input: jumlah dibayar)
+activate Payment
+
+Payment -> FileManager: Validasi bukti pembayaran
+activate FileManager
+FileManager -> FileManager: Cek file pembayaran
+FileManager --> Payment: File valid
+deactivate FileManager
+
+Payment -> DB: Generate invoice_id
+activate DB
+DB -> DB: SELECT MAX invoice tahun ini
+DB --> Payment: Invoice ID baru
+deactivate DB
+
+Payment -> DB: INSERT ke data_invoice
+activate DB
+DB -> DB: Simpan data invoice
+DB --> Payment: Invoice tersimpan
+deactivate DB
+
+Payment -> DB: UPDATE status jamaah
+activate DB
+DB -> DB: SET payment_status = 'verified'
+DB -> DB: UPDATE payment_total, payment_remaining
+DB --> Payment: Status updated
+deactivate DB
+
+Payment -> PDF: Generate kwitansi PDF
+activate PDF
+PDF -> PDF: Load template kwitansi
+PDF -> PDF: Fill data invoice
+PDF -> PDF: Convert to PDF
+PDF --> Payment: PDF kwitansi
+deactivate PDF
+
+Payment -> Email: Kirim kwitansi ke jamaah
+activate Email
+Email -> Email: Attach PDF kwitansi
+Email --> User: Email kwitansi pembayaran
+deactivate Email
+
+Payment --> Admin: Verifikasi berhasil
+deactivate Payment
+
+note over Admin, User
+    Setelah verifikasi pembayaran:
+    1. Status jamaah berubah ke "verified"
+    2. Invoice dibuat dengan ID unik
+    3. Kwitansi PDF digenerate
+    4. Jamaah menerima kwitansi via email
+    5. Admin dapat assign kamar di manifest
+end note
+
+@enduml

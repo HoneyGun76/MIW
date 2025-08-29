@@ -1,0 +1,105 @@
+@startuml Registration_Process_Sequence
+
+!theme plain
+skinparam linetype ortho
+skinparam backgroundColor white
+skinparam participantBackgroundColor white
+skinparam participantBorderColor black
+skinparam actorBackgroundColor white
+skinparam actorBorderColor black
+skinparam arrowColor black
+
+title Registration Process - Sequence Diagram
+
+actor Jamaah
+participant "Website\n(MIW Landing)" as Website
+participant "form_umroh.php\n(Registration Form)" as RegistrationForm
+participant "submit_umroh.php\n(Registration Handler)" as SubmitHandler
+participant "UploadHandler\n(File Upload)" as UploadHandler
+participant "Database\n(data_jamaah)" as Database
+participant "email_functions.php\n(Email Service)" as EmailService
+participant Admin
+
+== Registration Process ==
+
+Jamaah -> Website: Access MIW website
+Website --> Jamaah: Display homepage
+
+Jamaah -> Website: Choose Umroh/Haji package
+Website --> Jamaah: Show package details
+
+Jamaah -> RegistrationForm: Click registration form
+activate RegistrationForm
+RegistrationForm --> Jamaah: Display registration form
+
+Jamaah -> RegistrationForm: Fill personal data\n(NIK, nama, tempat_lahir, etc.)
+Jamaah -> RegistrationForm: Upload required documents\n(KTP, KK, Paspor)
+Jamaah -> RegistrationForm: Select payment method
+Jamaah -> RegistrationForm: Submit registration form
+
+RegistrationForm -> SubmitHandler: POST registration data
+activate SubmitHandler
+
+== Data Validation ==
+
+SubmitHandler -> SubmitHandler: Validate required fields
+SubmitHandler -> SubmitHandler: Validate NIK format (16 digits)
+
+SubmitHandler -> Database: Check NIK uniqueness\nSELECT COUNT(*) FROM data_jamaah WHERE nik = ?
+activate Database
+Database --> SubmitHandler: Return count result
+deactivate Database
+
+alt NIK already exists
+    SubmitHandler --> RegistrationForm: Return error "NIK sudah terdaftar"
+    RegistrationForm --> Jamaah: Show error message
+else NIK is unique
+    SubmitHandler -> SubmitHandler: Validate email format
+    
+    == Document Upload ==
+    
+    SubmitHandler -> UploadHandler: handleUpload for each document
+    activate UploadHandler
+    
+    UploadHandler -> UploadHandler: Validate file type and size
+    UploadHandler -> UploadHandler: Generate custom filename
+    UploadHandler -> UploadHandler: Save file to documents folder
+    
+    UploadHandler --> SubmitHandler: Return upload result
+    deactivate UploadHandler
+    
+    == Database Insert ==
+    
+    SubmitHandler -> Database: BEGIN TRANSACTION
+    activate Database
+    
+    SubmitHandler -> Database: INSERT INTO data_jamaah\n(nik, nama, personal_data,\npak_id, document_paths)
+    
+    Database --> SubmitHandler: Confirm insert success
+    
+    SubmitHandler -> Database: COMMIT TRANSACTION
+    deactivate Database
+    
+    == Email Notifications ==
+    
+    SubmitHandler -> EmailService: Send registration confirmation\nto jamaah
+    activate EmailService
+    
+    EmailService -> EmailService: buildRegistrationDetails()
+    EmailService -> EmailService: buildConfirmationContent()
+    
+    EmailService --> Jamaah: Send confirmation email\nwith registration details
+    
+    EmailService -> EmailService: Build admin notification email
+    EmailService --> Admin: Send new registration\nnotification email
+    
+    deactivate EmailService
+    
+    SubmitHandler --> RegistrationForm: Return success response
+    deactivate SubmitHandler
+    
+    RegistrationForm -> RegistrationForm: Store payment info in session
+    RegistrationForm --> Jamaah: Display payment page\nwith bank account details
+end
+
+@enduml
