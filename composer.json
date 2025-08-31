@@ -27,19 +27,16 @@
     "scripts": {
         "post-install-cmd": [
             "mkdir -p /tmp/pdfs",
-            "chmod -R 777 /tmp/pdfs || true",
-            "ln -sf /app/vendor /app/miw/vendor || true"
+            "chmod -R 777 /tmp/pdfs || true"
         ],
         "post-update-cmd": [
             "mkdir -p /tmp/pdfs",
-            "chmod -R 777 /tmp/pdfs || true",
-            "ln -sf /app/vendor /app/miw/vendor || true"
+            "chmod -R 777 /tmp/pdfs || true"
         ]
     },
     "config": {
         "optimize-autoloader": true,
         "classmap-authoritative": true,
-        "apcu-autoloader": true,
-        "vendor-dir": "vendor"
+        "apcu-autoloader": true
     }
 }

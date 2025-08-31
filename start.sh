@@ -11,25 +11,25 @@ echo "Environment: ${RAILWAY_ENVIRONMENT:-local}"
 # Initialize upload directories and permissions for Railway
 if [ ! -z "$RAILWAY_ENVIRONMENT" ]; then
     echo "🔧 Initializing Railway upload directories..."
-    
+
     # Create upload subdirectories in the mounted volume
     mkdir -p /app/uploads/documents
     mkdir -p /app/uploads/payments
     mkdir -p /app/uploads/cancellations
     mkdir -p /app/error_logs
-    
+
     # Set proper permissions
     chmod -R 755 /app/uploads
     chmod -R 755 /app/error_logs
-    
+
     # Create index.php files to prevent directory listing
     echo '<?php header("HTTP/1.0 403 Forbidden"); exit("Directory listing is not allowed."); ?>' > /app/uploads/index.php
     echo '<?php header("HTTP/1.0 403 Forbidden"); exit("Directory listing is not allowed."); ?>' > /app/uploads/documents/index.php
     echo '<?php header("HTTP/1.0 403 Forbidden"); exit("Directory listing is not allowed."); ?>' > /app/uploads/payments/index.php
     echo '<?php header("HTTP/1.0 403 Forbidden"); exit("Directory listing is not allowed."); ?>' > /app/uploads/cancellations/index.php
-    
+
     echo "✅ Upload directories initialized successfully"
 fi
 
-# Start PHP built-in server from miw directory
-exec php -S 0.0.0.0:$PORT -t ./miw
+# Start PHP built-in server from current directory
+exec php -S 0.0.0.0:$PORT
