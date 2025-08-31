@@ -10,7 +10,7 @@ echo "Environment: ${RAILWAY_ENVIRONMENT:-local}"
 
 # Initialize upload directories and permissions for Railway
 if [ ! -z "$RAILWAY_ENVIRONMENT" ]; then
-    echo "🔧 Initializing Railway upload directories..."
+    echo "?? Initializing Railway upload directories..."
 
     # Create upload subdirectories in the mounted volume
     mkdir -p /app/uploads/documents
@@ -28,7 +28,23 @@ if [ ! -z "$RAILWAY_ENVIRONMENT" ]; then
     echo '<?php header("HTTP/1.0 403 Forbidden"); exit("Directory listing is not allowed."); ?>' > /app/uploads/payments/index.php
     echo '<?php header("HTTP/1.0 403 Forbidden"); exit("Directory listing is not allowed."); ?>' > /app/uploads/cancellations/index.php
 
-    echo "✅ Upload directories initialized successfully"
+    echo "? Upload directories initialized successfully"
+    
+    # Install and configure sendmail for fallback email functionality
+    echo "?? Setting up email fallback system..."
+    
+    # Update package list and install sendmail
+    apt-get update -qq > /dev/null 2>&1
+    apt-get install -y sendmail sendmail-cf > /dev/null 2>&1
+    
+    # Configure sendmail for basic operation
+    echo "127.0.0.1 localhost" >> /etc/hosts
+    echo "localhost.localdomain localhost" >> /etc/hosts
+    
+    # Start sendmail service
+    service sendmail start > /dev/null 2>&1
+    
+    echo "? Email fallback system configured"
 fi
 
 # Start PHP built-in server from current directory
