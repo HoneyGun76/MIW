@@ -4,11 +4,6 @@
 require_once 'config.php';
 require_once 'vendor/autoload.php';
 
-// Include email queue functions for Railway
-if ($isRailway) {
-    require_once 'email_queue_functions.php';
-}
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -18,32 +13,35 @@ use PHPMailer\PHPMailer\Exception;
 function configurePHPMailer() {
     $mail = new PHPMailer(true);
     
-    // Check if we should use PHP mail() instead of SMTP
-    if (defined('USE_PHP_MAIL') && USE_PHP_MAIL) {
-        $mail->isMail(); // Use PHP mail() function
-    } else {
-        $mail->isSMTP();
-        $mail->Host = SMTP_HOST;
-        $mail->SMTPAuth = true;
-        $mail->Username = SMTP_USERNAME;
-        $mail->Password = SMTP_PASSWORD;
-        $mail->SMTPSecure = SMTP_SECURE;
-        $mail->Port = SMTP_PORT;
-        
-        // Set longer timeout for Railway
-        $mail->Timeout = 30;
+    // Enable debugging if configured
+    if (defined('EMAIL_DEBUG') && EMAIL_DEBUG) {
+        $mail->SMTPDebug = 2; // Detailed debug output
+        $mail->Debugoutput = function($str, $level) {
+            error_log("SMTP Debug: $str");
+        };
     }
     
+    $mail->isSMTP();
+    $mail->Host = SMTP_HOST;
+    $mail->SMTPAuth = true;
+    $mail->Username = SMTP_USERNAME;
+    $mail->Password = SMTP_PASSWORD;
+    $mail->SMTPSecure = SMTP_SECURE;
+    $mail->Port = SMTP_PORT;
     $mail->CharSet = 'UTF-8';
     $mail->setFrom(EMAIL_FROM, EMAIL_FROM_NAME);
+    
+    // Add timeout settings for Railway
+    $mail->Timeout = 10; // 10 seconds timeout
+    $mail->SMTPKeepAlive = false; // Don't keep connection alive
     
     return $mail;
 }
 
 /**
- * Simple PHP mail() function for Railway
+ * Fallback email method using PHP's mail() function
  */
-function sendPHPMail($to, $subject, $body, $from = null) {
+function sendFallbackEmail($to, $subject, $body, $from = null) {
     if (!$from) {
         $from = EMAIL_FROM;
     }
@@ -57,10 +55,44 @@ function sendPHPMail($to, $subject, $body, $from = null) {
 }
 
 /**
- * Legacy function for backward compatibility
+ * Enhanced email sending with fallback mechanism
  */
-function sendFallbackEmail($to, $subject, $body, $from = null) {
-    return sendPHPMail($to, $subject, $body, $from);
+function sendEmailWithFallback($mail) {
+    try {
+        // Try SMTP first
+        $result = $mail->send();
+        error_log("Email sent successfully via SMTP to: " . implode(', ', array_keys($mail->getToAddresses())));
+        return true;
+        
+    } catch (Exception $e) {
+        error_log("SMTP failed: " . $e->getMessage());
+        
+        // Try fallback method if enabled
+        if (defined('USE_FALLBACK_EMAIL') && USE_FALLBACK_EMAIL) {
+            error_log("Attempting fallback email method...");
+            
+            try {
+                $toAddresses = $mail->getToAddresses();
+                $to = implode(', ', array_keys($toAddresses));
+                $subject = $mail->Subject;
+                $body = $mail->Body;
+                
+                $result = sendFallbackEmail($to, $subject, $body);
+                if ($result) {
+                    error_log("Email sent successfully via fallback method to: $to");
+                    return true;
+                } else {
+                    error_log("Fallback email method also failed");
+                    return false;
+                }
+            } catch (Exception $fallbackError) {
+                error_log("Fallback email failed: " . $fallbackError->getMessage());
+                return false;
+            }
+        }
+        
+        return false;
+    }
 }
 
 /**
@@ -629,8 +661,7 @@ function sendPembatalanNotification($jamaahData, $dendaResult, $pembatalan_id) {
         $mail->Body = $emailBody;
         $mail->isHTML(true);
         
-        $mail->send();
-        return true;
+        return sendEmailWithFallback($mail);
         
     } catch (Exception $e) {
         error_log("Pembatalan email send failed: " . $e->getMessage());

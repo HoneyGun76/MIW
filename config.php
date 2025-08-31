@@ -118,15 +118,15 @@ define('DB_PASS', $db_config['password']);
  */
 // Environment-based email configuration
 if ($isRailway) {
-    // Railway production email settings - PHP mail() mode
+    // Railway production email settings - with debugging and fallback
     define('SMTP_HOST', $_ENV['SMTP_HOST'] ?? getenv('SMTP_HOST') ?? 'smtp.gmail.com');
     define('SMTP_USERNAME', $_ENV['SMTP_USERNAME'] ?? getenv('SMTP_USERNAME') ?? '');
     define('SMTP_PASSWORD', $_ENV['SMTP_PASSWORD'] ?? getenv('SMTP_PASSWORD') ?? '');
-    define('SMTP_PORT', $_ENV['SMTP_PORT'] ?? getenv('SMTP_PORT') ?? 25);
+    define('SMTP_PORT', $_ENV['SMTP_PORT'] ?? getenv('SMTP_PORT') ?? 587);
     define('SMTP_ENCRYPTION', $_ENV['SMTP_ENCRYPTION'] ?? getenv('SMTP_ENCRYPTION') ?? 'tls');
     define('EMAIL_ENABLED', true);
-    define('USE_PHP_MAIL', true);  // Use PHP mail() function
-    define('USE_SMTP', false);     // Disable SMTP
+    define('EMAIL_DEBUG', true); // Enable debugging in Railway
+    define('USE_FALLBACK_EMAIL', true); // Enable fallback email method
 } else {
     // Local development email settings
     define('SMTP_HOST', 'smtp.gmail.com');
@@ -135,8 +135,8 @@ if ($isRailway) {
     define('SMTP_PORT', 587);
     define('SMTP_ENCRYPTION', 'tls');
     define('EMAIL_ENABLED', true);
-    define('USE_PHP_MAIL', false); // Use SMTP locally
-    define('USE_SMTP', true);
+    define('EMAIL_DEBUG', false); // Disable debugging locally
+    define('USE_FALLBACK_EMAIL', false); // Disable fallback locally
 }
 
 // Common email settings

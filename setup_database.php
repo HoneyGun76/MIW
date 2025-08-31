@@ -40,7 +40,7 @@ try {
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )",
         
-        "CREATE TABLE IF NOT EXISTS pembatalan (
+        "        "CREATE TABLE IF NOT EXISTS pembatalan (
             id INT AUTO_INCREMENT PRIMARY KEY,
             jamaah_id INT,
             alasan TEXT,
@@ -49,7 +49,27 @@ try {
             tanggal_processed DATETIME,
             notes TEXT,
             FOREIGN KEY (jamaah_id) REFERENCES jamaah(id) ON DELETE CASCADE
-        )"
+        )",
+        
+        "CREATE TABLE IF NOT EXISTS email_queue (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            recipient_email VARCHAR(255) NOT NULL,
+            recipient_name VARCHAR(255),
+            subject VARCHAR(500) NOT NULL,
+            body TEXT NOT NULL,
+            email_type VARCHAR(50) DEFAULT 'general',
+            attachments JSON,
+            status ENUM('pending', 'processing', 'sent', 'failed') DEFAULT 'pending',
+            priority INT DEFAULT 5,
+            attempts INT DEFAULT 0,
+            max_attempts INT DEFAULT 3,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            processed_at TIMESTAMP NULL,
+            error_message TEXT NULL,
+            
+            INDEX idx_status_priority (status, priority),
+            INDEX idx_created_at (created_at)
+        )""
     ];
     
     foreach ($createTables as $sql) {
