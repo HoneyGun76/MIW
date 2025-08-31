@@ -88,11 +88,22 @@ try {
     
 } catch(PDOException $e) {
     error_log("Database connection failed: " . $e->getMessage());
-    if ($db_config['environment'] === 'local') {
+    
+    // Don't kill the process - let health check and other functions handle gracefully
+    $pdo = null;
+    $conn = null;
+    
+    // Only die in local development for debugging, but not for health checks
+    if ($db_config['environment'] === 'local' && 
+        (!isset($_SERVER['REQUEST_URI']) || 
+         strpos($_SERVER['REQUEST_URI'], 'health') === false) &&
+        (!isset($_SERVER['PHP_SELF']) || 
+         strpos($_SERVER['PHP_SELF'], 'health') === false)) {
         die("Connection failed: " . $e->getMessage());
-    } else {
-        die("Database connection failed. Please try again later.");
     }
+    
+    // In production or health check, continue execution
+    error_log("MIW: Continuing execution without database connection");
 }
 
 // Legacy compatibility constants

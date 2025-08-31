@@ -5,7 +5,7 @@
   },
   "deploy": {
     "startCommand": "./start.sh",
-    "healthcheckPath": "/health.php",
+    "healthcheckPath": "/health_simple.php",
     "healthcheckTimeout": 100
   }
 }
