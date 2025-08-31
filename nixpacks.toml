@@ -1,0 +1,16 @@
+# Nixpacks configuration for MIW Travel Management System
+# This tells Railway to handle PHP dependencies from the /miw subdirectory
+
+[phases.install]
+cmds = [
+    "mkdir -p /var/log/nginx && mkdir -p /var/cache/nginx",
+    "cd miw && composer install --ignore-platform-reqs"
+]
+
+[phases.build]  
+cmds = [
+    "cd miw && composer install --no-dev --optimize-autoloader"
+]
+
+[start]
+cmd = "./start.sh"
