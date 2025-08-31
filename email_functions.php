@@ -4,6 +4,11 @@
 require_once 'config.php';
 require_once 'vendor/autoload.php';
 
+// Include email queue functions for Railway
+if ($isRailway) {
+    require_once 'email_queue_functions.php';
+}
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
