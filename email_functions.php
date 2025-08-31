@@ -12,20 +12,50 @@ use PHPMailer\PHPMailer\Exception;
  */
 function configurePHPMailer() {
     $mail = new PHPMailer(true);
-    $mail->isSMTP();
-    $mail->Host = SMTP_HOST;
-    $mail->SMTPAuth = true;
-    $mail->Username = SMTP_USERNAME;
-    $mail->Password = SMTP_PASSWORD;
-    $mail->SMTPSecure = SMTP_SECURE;
-    $mail->Port = SMTP_PORT;
+    
+    // Check if we should use PHP mail() instead of SMTP
+    if (defined('USE_PHP_MAIL') && USE_PHP_MAIL) {
+        $mail->isMail(); // Use PHP mail() function
+    } else {
+        $mail->isSMTP();
+        $mail->Host = SMTP_HOST;
+        $mail->SMTPAuth = true;
+        $mail->Username = SMTP_USERNAME;
+        $mail->Password = SMTP_PASSWORD;
+        $mail->SMTPSecure = SMTP_SECURE;
+        $mail->Port = SMTP_PORT;
+        
+        // Set longer timeout for Railway
+        $mail->Timeout = 30;
+    }
+    
     $mail->CharSet = 'UTF-8';
     $mail->setFrom(EMAIL_FROM, EMAIL_FROM_NAME);
     
-    // Set longer timeout for Railway
-    $mail->Timeout = 30;
-    
     return $mail;
+}
+
+/**
+ * Simple PHP mail() function for Railway
+ */
+function sendPHPMail($to, $subject, $body, $from = null) {
+    if (!$from) {
+        $from = EMAIL_FROM;
+    }
+    
+    $headers = "From: " . EMAIL_FROM_NAME . " <$from>\r\n";
+    $headers .= "Reply-To: $from\r\n";
+    $headers .= "MIME-Version: 1.0\r\n";
+    $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+    
+    return mail($to, $subject, $body, $headers);
+}
+
+/**
+ * Legacy function for backward compatibility
+ */
+function sendFallbackEmail($to, $subject, $body, $from = null) {
+    return sendPHPMail($to, $subject, $body, $from);
 }
 
 /**
