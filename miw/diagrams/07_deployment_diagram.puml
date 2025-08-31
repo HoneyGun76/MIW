@@ -1,92 +1,102 @@
-@startuml compact_deployment_diagram
+@startuml deployment_diagram
+!theme aws-orange
+title Deployment Diagram - Sistem MIW Travel Management
 
-!theme plain
-skinparam linetype ortho
-skinparam backgroundColor white
-skinparam nodeBackgroundColor white
-skinparam nodeBorderColor black
-skinparam componentBackgroundColor white
-skinparam componentBorderColor black
-skinparam artifactBackgroundColor white
-skinparam artifactBorderColor black
-skinparam direction top to bottom layout
-skinparam nodesep 25
-skinparam ranksep 45
+!define RECTANGLE class
 
-title MIW Travel System - Deployment Diagram
-
-' Top Level - Client
-node "Client Device" <<device>> {
-    artifact "Web Browser" <<browser>>
+node "🌐 Client Layer" {
+    [Web Browser] as Browser
+    [Admin Browser] as AdminBrowser
+    note right of Browser : Jamaah mengakses\nform pendaftaran
+    note right of AdminBrowser : Admin mengelola\nsistem
 }
 
-' Middle Level - Cloud Platform (Vertical Stack)
-node "Railway Cloud Platform" <<cloud>> {
-    
-    node "Docker Container" <<execution environment>> {
-        component "Apache+PHP 8.1" <<web server>> {
-            artifact "miw-app.war" <<web app>>
+node "☁️ Railway Cloud Platform" {
+    node "🐳 Docker Container" {
+        component "🐘 PHP 8.1-Apache" as PHP {
+            [index.php] as Index
+            [form_umroh.php] as FormUmroh
+            [form_haji.php] as FormHaji
+            [admin_dashboard.php] as AdminDash
+            [admin_paket.php] as AdminPaket
+            [admin_manifest.php] as AdminManifest
+            [config.php] as Config
+        }
+        
+        component "📁 File Storage" as FileStorage {
+            folder "/app/uploads/" {
+                folder "documents/" as DocFolder
+                folder "payments/" as PayFolder
+                folder "cancellations/" as CancelFolder
+                folder "photos/" as PhotoFolder
+            }
+        }
+        
+        component "📊 Vendor Libraries" as Vendor {
+            [PHPMailer] as Mailer
+            [TCPDF] as PDF
+            [PhpSpreadsheet] as Excel
+            [DomPDF] as DomPDF
         }
     }
     
-    ' Application Layer
-    artifact "Application Layer" <<software>> {
-        component "Registration Module"
-        --
-        component "Admin Module" 
-        --
-        component "Payment Module"
-        --
-        component "Document Module"
-    }
-    
-    ' Dependencies & Storage
-    artifact "System Resources" <<resources>> {
-        component "PHPMailer" <<library>>
-        component "TCPDF" <<library>>
-        component "PhpSpreadsheet" <<library>>
-        --
-        folder "/app/uploads/" <<file storage>>
-    }
-    
-    ' Database Service
-    node "MySQL Service" <<database server>> {
-        artifact "data_miw.sql" <<database>> {
-            database "data_jamaah"
-            --
-            database "data_paket"
-            --
-            database "data_pembatalan"
-            --
-            database "data_invoice"
+    node "🗄️ Railway MySQL" as MySQLNode {
+        database "📋 data_miw" as DB {
+            [data_jamaah] as TableJamaah
+            [data_paket] as TablePaket
+            [data_invoice] as TableInvoice
+            [data_pembatalan] as TablePembatalan
+            [admin_users] as TableAdmin
         }
     }
+    
+    node "📧 SMTP Service" as SMTPNode {
+        [Gmail SMTP] as SMTP
+        note right of SMTP : Email notifications\nvia environment variables
+    }
 }
 
-' Bottom Level - External Services
-node "External Infrastructure" <<external service>> {
-    artifact "Gmail SMTP" <<mail service>>
-    --
-    artifact "Git Repository" <<version control>>
+node "🔧 Development Environment" {
+    node "💻 Local XAMPP" {
+        [Apache Server] as LocalApache
+        [MySQL Server] as LocalMySQL
+        [PHP 8.1] as LocalPHP
+        folder "C:/xampp/htdocs/MIW-Railway/miw" as LocalFiles
+    }
 }
 
-' Vertical communication flow
-"Client Device" --> "Docker Container" : HTTPS/443
-"Docker Container" --> "Application Layer" : <<runs>>
-"Application Layer" --> "System Resources" : <<uses>>
-"Application Layer" --> "MySQL Service" : TCP/3306
-"Application Layer" --> "External Infrastructure" : SMTP/587
+node "🚀 CI/CD Pipeline" {
+    [GitHub Repository] as GitHub
+    [Railway CLI] as RailwayCLI
+    [Docker Registry] as DockerReg
+    note right of GitHub : Version control\nhttps://github.com/HoneyGun76/MIW.git
+}
 
-' Layout enforcement (hidden connections)
-"Client Device" -[hidden]down- "Railway Cloud Platform"
-"Docker Container" -[hidden]down- "Application Layer"
-"Application Layer" -[hidden]down- "System Resources" 
-"System Resources" -[hidden]down- "MySQL Service"
-"Railway Cloud Platform" -[hidden]down- "External Infrastructure"
+' Client connections
+Browser --> PHP : HTTPS Request
+AdminBrowser --> PHP : Admin Panel Access
 
-@enduml
+' Internal connections
+PHP --> DB : PDO Connection\n(Railway MySQL)
+PHP --> FileStorage : File Upload/Download
+PHP --> Vendor : Library Usage
+PHP --> SMTP : Email Sending
 
-@enduml
+' Database relationships
+TableJamaah --> TablePaket : pak_id foreign key
+TableJamaah --> TableInvoice : nik foreign key
+TableJamaah --> TablePembatalan : nik foreign key
+
+' Development workflow
+GitHub --> RailwayCLI : git push triggers\nauto deployment
+RailwayCLI --> DockerReg : Build container
+DockerReg --> PHP : Deploy application
+
+' Local development
+LocalFiles --> GitHub : Code development
+LocalApache --> LocalMySQL : Local testing
+
+note top of Railway
     **Railway Platform Features:**
     • Auto-scaling containers
     • Persistent file storage (/app/uploads)

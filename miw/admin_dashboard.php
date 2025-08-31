@@ -604,6 +604,9 @@ if (isset($_GET['nik'])) {
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-warning me-2" onclick="batalkanJamaah()">
+                        <i class="bi bi-x-circle"></i> Batalkan Jamaah
+                    </button>
                     <form method="POST" onsubmit="return confirmDelete()" class="me-2">
                         <input type="hidden" name="nik" id="deleteNikInput">
                         <button type="submit" name="delete_jamaah" class="btn btn-danger">
@@ -623,6 +626,61 @@ if (isset($_GET['nik'])) {
     <script>
         function confirmDelete() {
             return confirm('Apakah Anda yakin ingin menghapus data jamaah ini? Semua data terkait termasuk manifest, invoice, dan berkas yang diunggah akan dihapus secara permanen.');
+        }
+
+        function batalkanJamaah() {
+            var nik = document.getElementById('deleteNikInput').value;
+            if (!nik) {
+                alert('NIK tidak valid');
+                return;
+            }
+
+            if (!confirm('Apakah Anda yakin ingin membatalkan program jamaah ini? Email notifikasi akan dikirim ke jamaah dengan rincian denda pembatalan.')) {
+                return;
+            }
+
+            // Show loading
+            var loadingOverlay = document.createElement('div');
+            loadingOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;';
+            loadingOverlay.innerHTML = '<div>Memproses pembatalan...</div>';
+            document.body.appendChild(loadingOverlay);
+
+            // Send AJAX request to initiate cancellation
+            fetch('calculate_denda.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `initiate_cancellation=1&nik=${encodeURIComponent(nik)}&admin_name=Admin`
+            })
+            .then(response => response.json())
+            .then(result => {
+                document.body.removeChild(loadingOverlay);
+                
+                if (result.success) {
+                    var currencySymbol = result.denda_info.currency === 'USD' ? '$' : 'Rp';
+                    var dendaFormatted = new Intl.NumberFormat('id-ID').format(result.denda_info.denda_amount);
+                    
+                    alert(`Pembatalan berhasil diinisiasi!
+                    
+Detail:
+- Denda: ${currencySymbol} ${dendaFormatted}
+- Email notifikasi telah dikirim ke jamaah
+- Jamaah akan diarahkan untuk membayar denda pembatalan`);
+                    
+                    // Close modal and refresh page
+                    var modal = bootstrap.Modal.getInstance(document.getElementById('jamaahModal'));
+                    modal.hide();
+                    location.reload();
+                } else {
+                    alert('Gagal menginisiasi pembatalan: ' + result.error);
+                }
+            })
+            .catch(error => {
+                document.body.removeChild(loadingOverlay);
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat memproses pembatalan');
+            });
         }
 
         // Initialize tooltips

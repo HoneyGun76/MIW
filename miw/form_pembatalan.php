@@ -1,6 +1,46 @@
 <?php
 require_once "config.php";
 
+// Check if this is payment mode (admin-initiated cancellation)
+$paymentMode = isset($_GET['mode']) && $_GET['mode'] === 'payment';
+$pembatalan_id = isset($_GET['pembatalan_id']) ? $_GET['pembatalan_id'] : null;
+$nik = isset($_GET['nik']) ? $_GET['nik'] : null;
+
+// Get pembatalan data if in payment mode
+$pembatalanData = null;
+$jamaahData = null;
+$dendaInfo = null;
+
+if ($paymentMode && $pembatalan_id && $nik) {
+    try {
+        // Get pembatalan data
+        $stmt = $pdo->prepare("SELECT * FROM data_pembatalan WHERE id = ? AND nik = ?");
+        $stmt->execute([$pembatalan_id, $nik]);
+        $pembatalanData = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($pembatalanData) {
+            // Parse alasan to get status info
+            if (strpos($pembatalanData['alasan'], 'ADMIN_INITIATED|') === 0) {
+                $statusJson = substr($pembatalanData['alasan'], 16); // Remove "ADMIN_INITIATED|"
+                $statusInfo = json_decode($statusJson, true);
+                $dendaInfo = $statusInfo['calculation_details'] ?? null;
+            }
+            
+            // Get jamaah data
+            $stmt = $pdo->prepare("
+                SELECT j.*, p.program_pilihan, p.jenis_paket 
+                FROM data_jamaah j 
+                LEFT JOIN data_paket p ON j.pak_id = p.pak_id 
+                WHERE j.nik = ?
+            ");
+            $stmt->execute([$nik]);
+            $jamaahData = $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+    } catch (Exception $e) {
+        error_log("Error loading pembatalan data: " . $e->getMessage());
+    }
+}
+
 // Retrieve errors and input data from URL if any
 $errors = isset($_GET['errors']) ? $_GET['errors'] : null;
 $inputData = isset($_GET['input']) ? json_decode(urldecode($_GET['input']), true) : [];
@@ -11,8 +51,36 @@ $success = isset($_GET['success']) ? $_GET['success'] : null;
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Form Pembatalan Keikutsertaan</title>
+    <title><?php echo $paymentMode ? 'Pembayaran Denda Pembatalan' : 'Form Pembatalan Keikutsertaan'; ?></title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .payment-mode-header {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+        .denda-info {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .payment-form {
+            border: 2px solid #007bff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+        .hidden-form-section {
+            display: none;
+        }
+    </style>
     <script>
         window.onload = function () {
             const urlParams = new URLSearchParams(window.location.search);
@@ -25,11 +93,42 @@ $success = isset($_GET['success']) ? $_GET['success'] : null;
             }
             
             if (success) {
-                alert("Permohonan pembatalan berhasil diajukan! Kami akan menghubungi Anda via email/telepon.");
+                const isPaymentMode = <?php echo $paymentMode ? 'true' : 'false'; ?>;
+                if (isPaymentMode) {
+                    alert("Pembayaran denda berhasil disubmit! Kami akan memverifikasi pembayaran Anda dan memproses pengembalian dana.");
+                } else {
+                    alert("Permohonan pembatalan berhasil diajukan! Kami akan menghubungi Anda via email/telepon.");
+                }
             }
         };
 
         function validateForm() {
+            const isPaymentMode = <?php echo $paymentMode ? 'true' : 'false'; ?>;
+            
+            if (isPaymentMode) {
+                // Payment mode validation
+                const dendaPayment = document.getElementById('denda_payment');
+                if (!dendaPayment.files[0]) {
+                    alert('Bukti pembayaran denda harus diunggah');
+                    return false;
+                }
+                
+                const file = dendaPayment.files[0];
+                const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert('Hanya file JPG, PNG, atau PDF yang diperbolehkan');
+                    return false;
+                }
+                
+                if (file.size > 2 * 1024 * 1024) { // 2MB limit
+                    alert('Ukuran file tidak boleh melebihi 2MB');
+                    return false;
+                }
+                
+                return true;
+            }
+            
+            // Original form validation for normal mode
             // NIK validation (16 digits)
             const nik = document.getElementById('nik').value;
             if (!/^\d{16}$/.test(nik)) {
@@ -44,13 +143,6 @@ $success = isset($_GET['success']) ? $_GET['success'] : null;
                 return false;
             }
 
-            // No Paspor validation
-            const noPaspor = document.getElementById('no_paspor').value;
-            if (!noPaspor) {
-                alert('Nomor paspor harus diisi');
-                return false;
-            }
-
             // File validation
             const kwitansiFile = document.getElementById('kwitansi_path').files[0];
             if (!kwitansiFile) {
@@ -58,15 +150,32 @@ $success = isset($_GET['success']) ? $_GET['success'] : null;
                 return false;
             }
 
-            // Check file type
+            const proofFile = document.getElementById('proof_path').files[0];
+            if (!proofFile) {
+                alert('Harap upload bukti pembayaran');
+                return false;
+            }
+
+            // Check file types and sizes
             const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+            
             if (!allowedTypes.includes(kwitansiFile.type)) {
-                alert('Hanya file JPG, PNG, atau PDF yang diperbolehkan');
+                alert('File kwitansi harus berupa JPG, PNG, atau PDF');
+                return false;
+            }
+            
+            if (!allowedTypes.includes(proofFile.type)) {
+                alert('File bukti pembayaran harus berupa JPG, PNG, atau PDF');
                 return false;
             }
             
             if (kwitansiFile.size > 2 * 1024 * 1024) { // 2MB limit
-                alert('Ukuran file tidak boleh melebihi 2MB');
+                alert('Ukuran file kwitansi tidak boleh melebihi 2MB');
+                return false;
+            }
+            
+            if (proofFile.size > 2 * 1024 * 1024) { // 2MB limit
+                alert('Ukuran file bukti pembayaran tidak boleh melebihi 2MB');
                 return false;
             }
 
@@ -76,10 +185,105 @@ $success = isset($_GET['success']) ? $_GET['success'] : null;
 </head>
 <body>
     <header>
-        <h1>Form Pembatalan Keikutsertaan</h1>
+        <h1><?php echo $paymentMode ? 'Pembayaran Denda Pembatalan' : 'Form Pembatalan Keikutsertaan'; ?></h1>
     </header>
     <main>
-        <form action="submit_pembatalan.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <?php if ($paymentMode): ?>
+            <!-- Payment Mode - Admin Initiated Cancellation -->
+            <div class="payment-mode-header">
+                <h2>⚠️ Pembatalan Program Telah Diinisiasi Admin</h2>
+                <p>Program Anda telah dibatalkan oleh admin kami. Untuk menyelesaikan proses pembatalan, silakan lakukan pembayaran denda sesuai ketentuan di bawah ini.</p>
+            </div>
+            
+            <?php if ($jamaahData && $dendaInfo): ?>
+                <div class="denda-info">
+                    <h3>Informasi Pembatalan</h3>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;"><strong>Nama</strong></td>
+                            <td style="padding: 8px; border: 1px solid #ddd;"><?php echo htmlspecialchars($jamaahData['nama']); ?></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;"><strong>NIK</strong></td>
+                            <td style="padding: 8px; border: 1px solid #ddd;"><?php echo htmlspecialchars($jamaahData['nik']); ?></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;"><strong>Program</strong></td>
+                            <td style="padding: 8px; border: 1px solid #ddd;"><?php echo htmlspecialchars($jamaahData['program_pilihan']); ?></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;"><strong>Tanggal Keberangkatan</strong></td>
+                            <td style="padding: 8px; border: 1px solid #ddd;"><?php echo date('d/m/Y', strtotime($dendaInfo['departure_date'])); ?></td>
+                        </tr>
+                    </table>
+                    
+                    <h3 style="margin-top: 20px;">Rincian Biaya Pembatalan</h3>
+                    <?php 
+                    $currencySymbol = $dendaInfo['currency'] === 'USD' ? '$' : 'Rp';
+                    $dendaFormatted = number_format($dendaInfo['denda_amount'], 0, ',', '.');
+                    $totalFormatted = number_format($dendaInfo['total_package_price'], 0, ',', '.');
+                    $refundFormatted = number_format($dendaInfo['refund_amount'], 0, ',', '.');
+                    ?>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;"><strong>Total Biaya Paket</strong></td>
+                            <td style="padding: 8px; border: 1px solid #ddd;"><?php echo $currencySymbol . ' ' . $totalFormatted; ?></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;"><strong>Denda Pembatalan (<?php echo $dendaInfo['denda_percentage']; ?>%)</strong></td>
+                            <td style="padding: 8px; border: 1px solid #ddd; color: red;"><strong><?php echo $currencySymbol . ' ' . $dendaFormatted; ?></strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;"><strong>Dana yang Dikembalikan</strong></td>
+                            <td style="padding: 8px; border: 1px solid #ddd; color: green;"><strong><?php echo $currencySymbol . ' ' . $refundFormatted; ?></strong></td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <?php if ($dendaInfo['denda_amount'] > 0): ?>
+                    <div class="payment-form">
+                        <h3>Formulir Pembayaran Denda</h3>
+                        <p><strong>Jumlah yang harus dibayar: <?php echo $currencySymbol . ' ' . $dendaFormatted; ?></strong></p>
+                        <p>Silakan transfer ke rekening berikut dan upload bukti pembayaran:</p>
+                        <div style="background-color: #e9ecef; padding: 15px; margin: 10px 0; border-radius: 5px;">
+                            <strong>Informasi Rekening:</strong><br>
+                            Bank: BNI<br>
+                            No. Rekening: 1234567890<br>
+                            Atas Nama: PT Madinah Iman Wisata<br>
+                            <br>
+                            <em>Pastikan nominal transfer sesuai dengan jumlah denda yang tertera.</em>
+                        </div>
+                        
+                        <form action="submit_pembatalan.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+                            <input type="hidden" name="payment_mode" value="1">
+                            <input type="hidden" name="pembatalan_id" value="<?php echo $pembatalan_id; ?>">
+                            <input type="hidden" name="nik" value="<?php echo htmlspecialchars($nik); ?>">
+                            
+                            <label for="denda_payment">Upload Bukti Pembayaran Denda (max 2MB):</label>
+                            <input type="file" id="denda_payment" name="denda_payment" accept=".pdf,.jpg,.jpeg,.png" required>
+                            <small style="color: #666;">Format: JPG, PNG, atau PDF. Maksimal 2MB.</small>
+                            
+                            <button type="submit" style="background-color: #007bff; color: white; padding: 12px 24px; border: none; border-radius: 5px; margin-top: 15px;">Kirim Bukti Pembayaran</button>
+                        </form>
+                    </div>
+                <?php else: ?>
+                    <div class="payment-form">
+                        <h3>Tidak Ada Denda</h3>
+                        <p>Tidak ada denda yang dikenakan untuk pembatalan ini. Proses pengembalian dana akan segera diproses oleh tim kami.</p>
+                        <p>Anda akan menerima konfirmasi email setelah proses selesai.</p>
+                    </div>
+                <?php endif; ?>
+                
+            <?php else: ?>
+                <div class="payment-mode-header">
+                    <h3>Data tidak ditemukan</h3>
+                    <p>Maaf, data pembatalan tidak ditemukan. Silakan hubungi customer service kami.</p>
+                </div>
+            <?php endif; ?>
+            
+        <?php else: ?>
+            <!-- Normal Mode - Regular Cancellation Form -->
+            <form action="submit_pembatalan.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
             <input type="hidden" name="MAX_FILE_SIZE" value="2097152">
             <div class="cancellation-policy">
                 <h2>Kebijakan Pembatalan Madinah Iman Wisata</h2>
@@ -203,7 +407,8 @@ $success = isset($_GET['success']) ? $_GET['success'] : null;
             <input type="file" id="proof_path" name="proof_path" accept=".pdf,.jpg,.jpeg,.png" required>
 
             <button type="submit">Ajukan Pembatalan</button>
-        </form>
+            </form>
+        <?php endif; ?>
     </main>
 </body>
 </html>

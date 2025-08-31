@@ -3,25 +3,137 @@ require_once 'config.php';
 require_once 'email_functions.php';
 require_once 'upload_handler.php';
 
-function insertCancellationData($inputData, $kwitansiPath, $proofPath) {
-    global $conn;
+// Check if this is payment mode submission
+$paymentMode = isset($_POST['payment_mode']) && $_POST['payment_mode'] == '1';
+$pembatalan_id = $_POST['pembatalan_id'] ?? null;
+
+if ($paymentMode) {
+    // Handle payment mode submission
+    handlePaymentSubmission($pembatalan_id);
+    exit;
+}
+
+function handlePaymentSubmission($pembatalan_id) {
+    global $pdo;
+    
+    $nik = $_POST['nik'] ?? '';
+    
+    // Validate inputs
+    if (empty($pembatalan_id) || empty($nik)) {
+        redirectWithError('Data tidak valid');
+        return;
+    }
+    
+    // Validate file upload
+    if (empty($_FILES['denda_payment']['name'])) {
+        redirectWithError('Bukti pembayaran denda harus diupload');
+        return;
+    }
+    
+    $file = $_FILES['denda_payment'];
+    $allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+    if (!in_array($file['type'], $allowedTypes)) {
+        redirectWithError('Hanya file JPG, PNG, atau PDF yang diperbolehkan');
+        return;
+    }
+    
+    if ($file['size'] > 2 * 1024 * 1024) { // 2MB limit
+        redirectWithError('Ukuran file tidak boleh melebihi 2MB');
+        return;
+    }
     
     try {
-        $stmt = $conn->prepare("
+        $pdo->beginTransaction();
+        
+        // Verify pembatalan record exists and belongs to the NIK
+        $stmt = $pdo->prepare("SELECT * FROM data_pembatalan WHERE id = ? AND nik = ?");
+        $stmt->execute([$pembatalan_id, $nik]);
+        $pembatalanData = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if (!$pembatalanData) {
+            throw new Exception('Data pembatalan tidak ditemukan');
+        }
+        
+        // Upload payment proof
+        $uploadDir = 'uploads/cancellations/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+        
+        $fileName = 'denda_payment_' . $pembatalan_id . '_' . time() . '.' . pathinfo($file['name'], PATHINFO_EXTENSION);
+        $uploadPath = $uploadDir . $fileName;
+        
+        if (!move_uploaded_file($file['tmp_name'], $uploadPath)) {
+            throw new Exception('Gagal menyimpan file');
+        }
+        
+        // Update pembatalan record with payment proof and change status
+        $statusJson = substr($pembatalanData['alasan'], 16); // Remove "ADMIN_INITIATED|"
+        $statusInfo = json_decode($statusJson, true);
+        $statusInfo['status'] = 'payment_submitted';
+        $statusInfo['payment_proof'] = $uploadPath;
+        $statusInfo['payment_submitted_at'] = date('Y-m-d H:i:s');
+        
+        $newAlasan = "ADMIN_INITIATED|" . json_encode($statusInfo);
+        
+        $stmt = $pdo->prepare("UPDATE data_pembatalan SET alasan = ?, proof_path = ? WHERE id = ?");
+        $stmt->execute([$newAlasan, $uploadPath, $pembatalan_id]);
+        
+        // Get jamaah data for email
+        $stmt = $pdo->prepare("
+            SELECT j.*, p.program_pilihan 
+            FROM data_jamaah j 
+            LEFT JOIN data_paket p ON j.pak_id = p.pak_id 
+            WHERE j.nik = ?
+        ");
+        $stmt->execute([$nik]);
+        $jamaahData = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        // Send notification email to admin about payment submission
+        // In a real implementation, you might want to send this to admin
+        
+        $pdo->commit();
+        
+        redirectWithSuccess('Bukti pembayaran berhasil disubmit! Kami akan memverifikasi pembayaran Anda dan memproses pengembalian dana.', true);
+        
+    } catch (Exception $e) {
+        $pdo->rollBack();
+        error_log("Payment submission error: " . $e->getMessage());
+        redirectWithError('Terjadi kesalahan: ' . $e->getMessage());
+    }
+}
+
+function redirectWithError($message, $isPaymentMode = false) {
+    $baseUrl = $isPaymentMode ? 'form_pembatalan.php?mode=payment' : 'form_pembatalan.php';
+    header("Location: $baseUrl&errors=" . urlencode($message));
+    exit;
+}
+
+function redirectWithSuccess($message, $isPaymentMode = false) {
+    $baseUrl = $isPaymentMode ? 'form_pembatalan.php?mode=payment' : 'form_pembatalan.php';
+    header("Location: $baseUrl&success=" . urlencode($message));
+    exit;
+}
+
+function insertCancellationData($inputData, $kwitansiPath, $proofPath) {
+    global $pdo;
+    
+    try {
+        $stmt = $pdo->prepare("
             INSERT INTO data_pembatalan 
             (nik, nama, no_telp, email, alasan, kwitansi_path, proof_path) 
             VALUES 
-            (:nik, :nama, :no_telp, :email, :alasan, :kwitansi_path, :proof_path)
+            (?, ?, ?, ?, ?, ?, ?)
         ");
 
         return $stmt->execute([
-            ':nik' => $inputData['nik'],
-            ':nama' => $inputData['nama'],
-            ':no_telp' => $inputData['no_telp'],
-            ':email' => $inputData['email'],
-            ':alasan' => $inputData['alasan'],
-            ':kwitansi_path' => $kwitansiPath,
-            ':proof_path' => $proofPath
+            $inputData['nik'],
+            $inputData['nama'],
+            $inputData['no_telp'],
+            $inputData['email'],
+            $inputData['alasan'],
+            $kwitansiPath,
+            $proofPath
         ]);
         
     } catch(PDOException $e) {
@@ -54,7 +166,7 @@ if (empty($inputData['nik'])) {
     $response['errors'][] = 'Format NIK tidak valid (harus 16 digit)';
 } else {
     // Verify NIK exists in data_jamaah
-    $stmt = $conn->prepare("SELECT nik FROM data_jamaah WHERE nik = ?");
+    $stmt = $pdo->prepare("SELECT nik FROM data_jamaah WHERE nik = ?");
     $stmt->execute([$inputData['nik']]);
     if (!$stmt->fetch()) {
         $response['errors'][] = 'NIK tidak terdaftar dalam sistem';

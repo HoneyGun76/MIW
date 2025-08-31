@@ -524,3 +524,126 @@ function sendDocumentUploadEmail($jamaahData, $files) {
         return false;
     }
 }
+
+/**
+ * Send pembatalan notification email to jamaah
+ */
+function sendPembatalanNotification($jamaahData, $dendaResult, $pembatalan_id) {
+    try {
+        $mail = configurePHPMailer();
+        
+        // Format currency
+        $currencySymbol = $dendaResult['currency'] === 'USD' ? '$' : 'Rp';
+        $dendaFormatted = number_format($dendaResult['denda_amount'], 0, ',', '.');
+        $totalPriceFormatted = number_format($dendaResult['total_package_price'], 0, ',', '.');
+        $refundFormatted = number_format($dendaResult['refund_amount'], 0, ',', '.');
+        
+        // Build email content
+        $content = "<p>Yth. " . htmlspecialchars($jamaahData['nama']) . ",</p>";
+        $content .= "<p>Kami informasikan bahwa program " . htmlspecialchars($jamaahData['program_pilihan']) . " Anda telah dibatalkan oleh admin kami.</p>";
+        
+        $content .= "<h3>Detail Pembatalan</h3>
+        <table>
+            <tr><th width='30%'>NIK</th><td>" . htmlspecialchars($jamaahData['nik']) . "</td></tr>
+            <tr><th>Nama</th><td>" . htmlspecialchars($jamaahData['nama']) . "</td></tr>
+            <tr><th>Program</th><td>" . htmlspecialchars($jamaahData['program_pilihan']) . "</td></tr>
+            <tr><th>Tanggal Keberangkatan</th><td>" . date('d/m/Y', strtotime($dendaResult['departure_date'])) . "</td></tr>
+            <tr><th>Tipe Kamar</th><td>" . htmlspecialchars($jamaahData['type_room_pilihan']) . "</td></tr>
+        </table>";
+        
+        $content .= "<h3>Rincian Biaya Pembatalan</h3>
+        <table>
+            <tr><th width='30%'>Total Biaya Paket</th><td>$currencySymbol $totalPriceFormatted</td></tr>
+            <tr><th>Denda Pembatalan (" . $dendaResult['denda_percentage'] . "%)</th><td style='color: red;'>$currencySymbol $dendaFormatted</td></tr>
+            <tr><th>Dana yang Dikembalikan</th><td style='color: green;'>$currencySymbol $refundFormatted</td></tr>
+        </table>";
+        
+        if ($dendaResult['denda_amount'] > 0) {
+            $content .= "<h3>Instruksi Pembayaran Denda</h3>";
+            $content .= "<p>Untuk menyelesaikan proses pembatalan, Anda diwajibkan membayar denda sebesar <strong>$currencySymbol $dendaFormatted</strong>.</p>";
+            $content .= "<p>Silakan klik link berikut untuk melakukan pembayaran denda:</p>";
+            
+            // Create payment link
+            $baseUrl = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'];
+            $paymentLink = $baseUrl . "/miw/form_pembatalan.php?mode=payment&pembatalan_id=" . $pembatalan_id . "&nik=" . urlencode($jamaahData['nik']);
+            
+            $content .= "<p><a href='$paymentLink' style='background-color: #f6b127; color: #000; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>Bayar Denda Pembatalan</a></p>";
+            
+            $content .= "<p><strong>Catatan Penting:</strong></p>
+            <ul>
+                <li>Pembayaran denda harus diselesaikan dalam 7 hari kerja</li>
+                <li>Setelah pembayaran diverifikasi, dana akan dikembalikan dalam 14 hari kerja</li>
+                <li>Dana akan ditransfer ke rekening asal pembayaran</li>
+            </ul>";
+        } else {
+            $content .= "<p>Tidak ada denda yang dikenakan untuk pembatalan ini. Proses pengembalian dana akan segera diproses.</p>";
+        }
+        
+        $content .= "<p>Jika ada pertanyaan, silakan hubungi customer service kami.</p>";
+        $content .= "<p>Terima kasih atas pengertian Anda.</p>";
+        
+        $title = "Pemberitahuan Pembatalan Program " . $jamaahData['program_pilihan'];
+        $emailBody = buildEmailTemplate($title, $content);
+        
+        $mail->addAddress($jamaahData['email'], $jamaahData['nama']);
+        $mail->Subject = $title;
+        $mail->Body = $emailBody;
+        $mail->isHTML(true);
+        
+        $mail->send();
+        return true;
+        
+    } catch (Exception $e) {
+        error_log("Pembatalan email send failed: " . $e->getMessage());
+        return false;
+    }
+}
+
+/**
+ * Send pembatalan completion email to jamaah
+ */
+function sendPembatalanCompletion($jamaahData, $dendaInfo, $isApproved = true) {
+    try {
+        $mail = configurePHPMailer();
+        
+        $currencySymbol = $dendaInfo['currency'] === 'USD' ? '$' : 'Rp';
+        $refundFormatted = number_format($dendaInfo['refund_amount'], 0, ',', '.');
+        
+        if ($isApproved) {
+            $title = "Pembatalan Disetujui - " . $jamaahData['program_pilihan'];
+            $content = "<p>Yth. " . htmlspecialchars($jamaahData['nama']) . ",</p>";
+            $content .= "<p style='color: green;'><strong>Pembatalan program Anda telah DISETUJUI dan diproses.</strong></p>";
+            
+            $content .= "<h3>Detail Pengembalian Dana</h3>
+            <table>
+                <tr><th width='30%'>Jumlah Dikembalikan</th><td style='color: green;'>$currencySymbol $refundFormatted</td></tr>
+                <tr><th>Metode Pengembalian</th><td>Transfer ke rekening asal pembayaran</td></tr>
+                <tr><th>Estimasi Waktu</th><td>7-14 hari kerja</td></tr>
+            </table>";
+            
+            $content .= "<p>Dana akan ditransfer ke rekening yang sama dengan pembayaran terakhir Anda.</p>";
+            $content .= "<p>Anda akan menerima kwitansi pembatalan sebagai lampiran email ini.</p>";
+        } else {
+            $title = "Pembatalan Ditolak - " . $jamaahData['program_pilihan'];
+            $content = "<p>Yth. " . htmlspecialchars($jamaahData['nama']) . ",</p>";
+            $content .= "<p style='color: red;'><strong>Pembatalan program Anda telah DITOLAK.</strong></p>";
+            $content .= "<p>Silakan hubungi customer service untuk informasi lebih lanjut.</p>";
+        }
+        
+        $content .= "<p>Terima kasih atas pengertian Anda.</p>";
+        
+        $emailBody = buildEmailTemplate($title, $content);
+        
+        $mail->addAddress($jamaahData['email'], $jamaahData['nama']);
+        $mail->Subject = $title;
+        $mail->Body = $emailBody;
+        $mail->isHTML(true);
+        
+        $mail->send();
+        return true;
+        
+    } catch (Exception $e) {
+        error_log("Pembatalan completion email send failed: " . $e->getMessage());
+        return false;
+    }
+}
