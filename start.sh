@@ -30,8 +30,8 @@ if [ ! -z "$RAILWAY_ENVIRONMENT" ]; then
 
     echo "✅ Upload directories initialized successfully"
     
-    # Note: Email fallback will use PHP mail() function
-    echo "📧 Email fallback configured to use PHP mail() function"
+    # Note: Simplified email configuration
+    echo "📧 Email configured for Railway SMTP service"
 fi
 
 # Start PHP built-in server from current directory
