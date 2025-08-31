@@ -29,10 +29,25 @@ function configurePHPMailer() {
     $mail->SMTPSecure = SMTP_SECURE;
     $mail->Port = SMTP_PORT;
     $mail->CharSet = 'UTF-8';
-    $mail->setFrom(EMAIL_FROM, EMAIL_FROM_NAME);
     
-    // Add timeout settings for Railway
-    $mail->Timeout = 10; // 10 seconds timeout
+    // SendGrid-specific optimizations
+    if (strpos(SMTP_HOST, 'sendgrid') !== false) {
+        // SendGrid recommended settings
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
+        // Increase timeout for SendGrid
+        $mail->Timeout = 30;
+    } else {
+        // Standard timeout for other SMTP services
+        $mail->Timeout = 10;
+    }
+    
+    $mail->setFrom(EMAIL_FROM, EMAIL_FROM_NAME);
     $mail->SMTPKeepAlive = false; // Don't keep connection alive
     
     return $mail;
