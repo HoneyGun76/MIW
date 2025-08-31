@@ -12,6 +12,15 @@ use PHPMailer\PHPMailer\Exception;
  */
 function configurePHPMailer() {
     $mail = new PHPMailer(true);
+    
+    // Enable debugging if configured
+    if (defined('EMAIL_DEBUG') && EMAIL_DEBUG) {
+        $mail->SMTPDebug = 2; // Detailed debug output
+        $mail->Debugoutput = function($str, $level) {
+            error_log("SMTP Debug: $str");
+        };
+    }
+    
     $mail->isSMTP();
     $mail->Host = SMTP_HOST;
     $mail->SMTPAuth = true;
@@ -21,7 +30,69 @@ function configurePHPMailer() {
     $mail->Port = SMTP_PORT;
     $mail->CharSet = 'UTF-8';
     $mail->setFrom(EMAIL_FROM, EMAIL_FROM_NAME);
+    
+    // Add timeout settings for Railway
+    $mail->Timeout = 10; // 10 seconds timeout
+    $mail->SMTPKeepAlive = false; // Don't keep connection alive
+    
     return $mail;
+}
+
+/**
+ * Fallback email method using PHP's mail() function
+ */
+function sendFallbackEmail($to, $subject, $body, $from = null) {
+    if (!$from) {
+        $from = EMAIL_FROM;
+    }
+    
+    $headers = "From: " . EMAIL_FROM_NAME . " <$from>\r\n";
+    $headers .= "Reply-To: $from\r\n";
+    $headers .= "MIME-Version: 1.0\r\n";
+    $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+    
+    return mail($to, $subject, $body, $headers);
+}
+
+/**
+ * Enhanced email sending with fallback mechanism
+ */
+function sendEmailWithFallback($mail) {
+    try {
+        // Try SMTP first
+        $result = $mail->send();
+        error_log("Email sent successfully via SMTP to: " . implode(', ', array_keys($mail->getToAddresses())));
+        return true;
+        
+    } catch (Exception $e) {
+        error_log("SMTP failed: " . $e->getMessage());
+        
+        // Try fallback method if enabled
+        if (defined('USE_FALLBACK_EMAIL') && USE_FALLBACK_EMAIL) {
+            error_log("Attempting fallback email method...");
+            
+            try {
+                $toAddresses = $mail->getToAddresses();
+                $to = implode(', ', array_keys($toAddresses));
+                $subject = $mail->Subject;
+                $body = $mail->Body;
+                
+                $result = sendFallbackEmail($to, $subject, $body);
+                if ($result) {
+                    error_log("Email sent successfully via fallback method to: $to");
+                    return true;
+                } else {
+                    error_log("Fallback email method also failed");
+                    return false;
+                }
+            } catch (Exception $fallbackError) {
+                error_log("Fallback email failed: " . $fallbackError->getMessage());
+                return false;
+            }
+        }
+        
+        return false;
+    }
 }
 
 /**
@@ -590,8 +661,7 @@ function sendPembatalanNotification($jamaahData, $dendaResult, $pembatalan_id) {
         $mail->Body = $emailBody;
         $mail->isHTML(true);
         
-        $mail->send();
-        return true;
+        return sendEmailWithFallback($mail);
         
     } catch (Exception $e) {
         error_log("Pembatalan email send failed: " . $e->getMessage());
