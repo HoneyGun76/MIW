@@ -1,1 +1,0 @@
-twwr_whatsapp_callback({"country_code":"ID","country_name":"Indonesia","city":"Jakarta","postal":null,"latitude":-6.1744,"longitude":106.8294,"IPv4":"103.47.135.94","state":"Jakarta"})

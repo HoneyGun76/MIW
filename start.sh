@@ -31,5 +31,5 @@ if [ ! -z "$RAILWAY_ENVIRONMENT" ]; then
     echo "✅ Upload directories initialized successfully"
 fi
 
-# Start PHP built-in server
-exec php -S 0.0.0.0:$PORT -t .
+# Start PHP built-in server from miw directory
+exec php -S 0.0.0.0:$PORT -t ./miw
