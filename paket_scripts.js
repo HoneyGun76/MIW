@@ -23,6 +23,39 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('add_currency').value = 
             document.getElementById('add_jenis_paket').value === 'Haji' ? 'USD' : 'IDR';
     }
+
+    // Handle form submission to concatenate jenis_paket and program_pilihan
+    document.querySelector('#addPackageModal form')?.addEventListener('submit', function(e) {
+        const jenisSelect = document.getElementById('add_jenis_paket');
+        const namaInput = document.querySelector('#addPackageModal input[name="program_pilihan"]');
+        
+        if (jenisSelect && namaInput) {
+            // Concatenate "Jenis Paket" + " - " + "Nama Program"
+            namaInput.value = jenisSelect.value + ' - ' + namaInput.value.replace(jenisSelect.value + ' - ', '');
+        }
+    });
+
+    // Handle edit form submission
+    document.querySelector('#editPackageModal form')?.addEventListener('submit', function(e) {
+        const jenisSelect = document.getElementById('edit_jenis_paket');
+        const namaInput = document.querySelector('#editPackageModal input[name="program_pilihan"]');
+        
+        if (jenisSelect && namaInput) {
+            // Concatenate "Jenis Paket" + " - " + "Nama Program"  
+            const originalName = namaInput.value.replace(/^(Umroh|Haji) - /, '');
+            namaInput.value = jenisSelect.value + ' - ' + originalName;
+        }
+    });
+
+    // Handle flyer image preview for add modal
+    document.getElementById('add_flyer_image')?.addEventListener('change', function(e) {
+        handleFlyerPreview(e.target, 'add_flyer_preview');
+    });
+
+    // Handle flyer image preview for edit modal
+    document.getElementById('edit_flyer_image')?.addEventListener('change', function(e) {
+        handleFlyerPreview(e.target, 'edit_flyer_preview');
+    });
 });
 
 function addHotelField(containerId) {
@@ -111,6 +144,17 @@ function loadEditData(pakId) {
             setFieldValue('edit_base_price_double', data.base_price_double);
             setFieldValue('edit_hotel_medinah', data.hotel_medinah);
             setFieldValue('edit_hotel_makkah', data.hotel_makkah);
+            
+            // Handle flyer image preview
+            setFieldValue('edit_current_flyer', data.flyer_image);
+            const editFlyerPreview = document.getElementById('edit_flyer_preview');
+            if (editFlyerPreview) {
+                if (data.flyer_image) {
+                    editFlyerPreview.innerHTML = `<img src="${data.flyer_image}" alt="Current Flyer" style="max-width: 100%; max-height: 150px; object-fit: contain;">`;
+                } else {
+                    editFlyerPreview.innerHTML = '<span class="text-muted">No flyer uploaded</span>';
+                }
+            }
             
             try {
                 // Fill HCN data
@@ -209,4 +253,37 @@ function loadEditData(pakId) {
                 modalBody.style.opacity = '1';
             }
         });
+}
+
+function handleFlyerPreview(input, previewId) {
+    const preview = document.getElementById(previewId);
+    if (!preview) return;
+    
+    if (input.files && input.files[0]) {
+        const file = input.files[0];
+        
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+            alert('Please select a valid image file.');
+            input.value = '';
+            preview.innerHTML = '<span class="text-muted">No image selected</span>';
+            return;
+        }
+        
+        // Validate file size (2MB limit)
+        if (file.size > 2 * 1024 * 1024) {
+            alert('File size must be less than 2MB.');
+            input.value = '';
+            preview.innerHTML = '<span class="text-muted">No image selected</span>';
+            return;
+        }
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.innerHTML = `<img src="${e.target.result}" alt="Flyer Preview" style="max-width: 100%; max-height: 150px; object-fit: contain;">`;
+        };
+        reader.readAsDataURL(file);
+    } else {
+        preview.innerHTML = '<span class="text-muted">No image selected</span>';
+    }
 }

@@ -158,7 +158,7 @@ $paketData = getAllPackages($conn);
                     <h5 class="modal-title" id="addPackageModalLabel">Add New Package</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="row mb-3">
                             <div class="col-md-6">
@@ -176,7 +176,7 @@ $paketData = getAllPackages($conn);
                         
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label class="form-label">Program Pilihan</label>
+                                <label class="form-label">Nama Program</label>
                                 <input type="text" class="form-control" name="program_pilihan" required>
                             </div>
                             <div class="col-md-6">
@@ -265,6 +265,24 @@ $paketData = getAllPackages($conn);
                             </div>
                         </div>
 
+                        <!-- Flyer Upload Section -->
+                        <div class="flyer-container mb-3">
+                            <h5>Flyer Program</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="form-label">Upload Flyer Image</label>
+                                    <input type="file" class="form-control" name="flyer_image" id="add_flyer_image" accept="image/*">
+                                    <small class="form-text text-muted">Format: JPG, JPEG, PNG. Maksimal 2MB.</small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Preview</label>
+                                    <div id="add_flyer_preview" class="border rounded p-2" style="min-height: 150px; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa;">
+                                        <span class="text-muted">No image selected</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="hotel-container mb-3">
                             <h5>Additional Hotels</h5>
                             <div id="hotelsContainer">
@@ -289,7 +307,7 @@ $paketData = getAllPackages($conn);
                     <h5 class="modal-title" id="editPackageModalLabel">Edit Package</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="post" action="admin_paket.php">
+                <form method="post" action="admin_paket.php" enctype="multipart/form-data">
                     <div class="modal-body">
                         <input type="hidden" name="id" id="edit_package_id">
                         <div class="row mb-3">
@@ -308,7 +326,7 @@ $paketData = getAllPackages($conn);
                         
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label class="form-label">Program Pilihan</label>
+                                <label class="form-label">Nama Program</label>
                                 <input type="text" class="form-control" name="program_pilihan" id="edit_program_pilihan" required>
                             </div>
                             <div class="col-md-6">
@@ -393,6 +411,25 @@ $paketData = getAllPackages($conn);
                                 <div class="col-md-6">
                                     <label class="form-label">HCN Expiry Date</label>
                                     <input type="date" class="form-control" name="hcn_expiry_date" id="edit_hcn_expiry_date">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Flyer Upload Section -->
+                        <div class="flyer-container mb-3">
+                            <h5>Flyer Program</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="form-label">Upload Flyer Image</label>
+                                    <input type="file" class="form-control" name="flyer_image" id="edit_flyer_image" accept="image/*">
+                                    <small class="form-text text-muted">Format: JPG, JPEG, PNG. Maksimal 2MB.</small>
+                                    <input type="hidden" name="current_flyer" id="edit_current_flyer">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Preview</label>
+                                    <div id="edit_flyer_preview" class="border rounded p-2" style="min-height: 150px; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa;">
+                                        <span class="text-muted">No image selected</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
