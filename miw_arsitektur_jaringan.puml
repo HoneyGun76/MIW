@@ -1,0 +1,65 @@
+@startuml MIW_Arsitektur_Jaringan_Compact
+
+' Basic settings for compact design
+skinparam backgroundColor white
+skinparam handwritten false
+skinparam monochrome true
+skinparam defaultTextAlignment center
+skinparam padding 2
+skinparam nodesep 30
+skinparam ranksep 30
+
+' Simplify style for compactness
+skinparam node {
+  BackgroundColor white
+  BorderColor black
+  FontColor black
+  FontSize 12
+}
+
+skinparam database {
+  BackgroundColor white
+  BorderColor black
+}
+
+skinparam cloud {
+  BackgroundColor white
+  BorderColor black
+}
+
+skinparam artifact {
+  BackgroundColor white
+  BorderColor black
+}
+
+skinparam arrow {
+  Color black
+  FontColor black
+  FontSize 10
+}
+
+' Diagram title - shorter
+title Arsitektur Jaringan MIW
+
+' Simplified layout
+actor "Pengguna" as user
+cloud "Internet" as internet
+
+' More compact Railway platform
+node "Platform Railway" as railway {
+  artifact "Website MIW\n(PHP)" as app
+  database "MySQL" as db
+}
+
+' Simplified connections
+user -down-> internet : HTTPS
+internet -down-> railway : HTTPS
+app -right-> db : Data
+
+' Compact note with essential info
+note bottom of railway
+  Railway mengelola: web hosting,
+  database, SSL & file storage
+end note
+
+@enduml
