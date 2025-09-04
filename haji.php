@@ -325,6 +325,97 @@ var tve_frontend_options = {"ajaxurl":"https:\/\/hajiplus.miw.co.id\/wp-admin\/a
                     font-size: 35px;
                 }
             }
+            
+            /* Enhanced Package Details Styling */
+            .package-details {
+                background: #f8f9fa;
+                border-radius: 8px;
+                padding: 15px;
+                margin: 15px 0;
+                border-left: 4px solid #28a745;
+            }
+            
+            .detail-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 10px;
+                padding: 5px 0;
+                border-bottom: 1px solid #e9ecef;
+            }
+            
+            .detail-item:last-child {
+                border-bottom: none;
+                margin-bottom: 0;
+            }
+            
+            .detail-label {
+                font-weight: 600;
+                color: #495057;
+                font-size: 14px;
+                flex: 0 0 40%;
+                text-align: left;
+            }
+            
+            .detail-value {
+                color: #343a40;
+                font-size: 14px;
+                font-weight: 500;
+                flex: 1;
+                text-align: right;
+            }
+            
+            .package-price {
+                background: linear-gradient(135deg, #ff6b35, #f7931e);
+                color: white;
+                padding: 15px;
+                border-radius: 8px;
+                text-align: center;
+                margin: 15px 0;
+            }
+            
+            .price-amount {
+                display: block;
+                font-size: 24px;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+            
+            .price-contact {
+                display: block;
+                font-size: 16px;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+            
+            .price-label {
+                font-size: 12px;
+                opacity: 0.9;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            
+            @media (max-width: 768px) {
+                .package-details {
+                    padding: 12px;
+                }
+                
+                .detail-item {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 5px;
+                }
+                
+                .detail-label,
+                .detail-value {
+                    flex: 1;
+                    text-align: left;
+                }
+                
+                .detail-value {
+                    font-weight: 400;
+                }
+            }
 		</style>
 
 	</head>
@@ -407,11 +498,52 @@ var tve_frontend_options = {"ajaxurl":"https:\/\/hajiplus.miw.co.id\/wp-admin\/a
 					<div class="package-info">
 						<div class="package-name"><?= htmlspecialchars($package['nama_paket']) ?></div>
 						<div class="package-description"><?= htmlspecialchars($package['deskripsi']) ?></div>
+						
+						<!-- Enhanced Package Details -->
+						<div class="package-details">
+							<?php if (!empty($package['durasi'])): ?>
+								<div class="detail-item">
+									<span class="detail-label">📅 Durasi:</span>
+									<span class="detail-value"><?= htmlspecialchars($package['durasi']) ?> Hari</span>
+								</div>
+							<?php endif; ?>
+							
+							<?php if (!empty($package['tanggal_keberangkatan'])): ?>
+								<div class="detail-item">
+									<span class="detail-label">✈️ Keberangkatan:</span>
+									<span class="detail-value"><?= date('d M Y', strtotime($package['tanggal_keberangkatan'])) ?></span>
+								</div>
+							<?php endif; ?>
+							
+							<?php if (!empty($package['maskapai'])): ?>
+								<div class="detail-item">
+									<span class="detail-label">🛫 Maskapai:</span>
+									<span class="detail-value"><?= htmlspecialchars($package['maskapai']) ?></span>
+								</div>
+							<?php endif; ?>
+							
+							<?php if (!empty($package['hotel_mekkah']) || !empty($package['hotel_madinah'])): ?>
+								<div class="detail-item">
+									<span class="detail-label">🏨 Akomodasi:</span>
+									<span class="detail-value">
+										<?php if (!empty($package['hotel_mekkah'])): ?>
+											Mekkah: <?= htmlspecialchars($package['hotel_mekkah']) ?>
+										<?php endif; ?>
+										<?php if (!empty($package['hotel_madinah'])): ?>
+											<br>Madinah: <?= htmlspecialchars($package['hotel_madinah']) ?>
+										<?php endif; ?>
+									</span>
+								</div>
+							<?php endif; ?>
+						</div>
+						
 						<div class="package-price">
 							<?php if ($package['harga_display']): ?>
-								$<?= number_format($package['harga_display'], 0, ',', '.') ?>
+								<span class="price-amount">$<?= number_format($package['harga_display'], 0, ',', '.') ?></span>
+								<span class="price-label">per jamaah</span>
 							<?php else: ?>
-								Hubungi Kami
+								<span class="price-contact">💬 Hubungi Kami untuk Info Harga</span>
+								<span class="price-label">Konsultasi Gratis</span>
 							<?php endif; ?>
 						</div>
 						<a href="form_haji.php" class="register-button">Daftar Sekarang</a>

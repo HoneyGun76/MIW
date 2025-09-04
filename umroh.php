@@ -492,6 +492,51 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 							 src="<?php echo htmlspecialchars($package['image_url']); ?>" 
 							 alt="<?php echo htmlspecialchars($package['title']); ?>"
 							 onclick="openModal('<?php echo htmlspecialchars($package['image_url']); ?>')">
+						
+						<!-- Enhanced Package Details -->
+						<div class="package-details">
+							<?php if (!empty($package['duration'])): ?>
+								<div class="detail-item">
+									<strong>Durasi:</strong> <?php echo htmlspecialchars($package['duration']); ?>
+								</div>
+							<?php endif; ?>
+							
+							<?php if (!empty($package['departure_date'])): ?>
+								<div class="detail-item">
+									<strong>Tanggal Berangkat:</strong> <?php echo htmlspecialchars($package['departure_date']); ?>
+								</div>
+							<?php endif; ?>
+							
+							<?php if (!empty($package['airline'])): ?>
+								<div class="detail-item">
+									<strong>Maskapai:</strong> <?php echo htmlspecialchars($package['airline']); ?>
+								</div>
+							<?php endif; ?>
+							
+							<?php if (!empty($package['hotel_madinah']) || !empty($package['hotel_mekkah'])): ?>
+								<div class="detail-item">
+									<strong>Hotel:</strong>
+									<?php if (!empty($package['hotel_madinah'])): ?>
+										Madinah: <?php echo htmlspecialchars($package['hotel_madinah']); ?>
+									<?php endif; ?>
+									<?php if (!empty($package['hotel_madinah']) && !empty($package['hotel_mekkah'])): ?> | <?php endif; ?>
+									<?php if (!empty($package['hotel_mekkah'])): ?>
+										Mekkah: <?php echo htmlspecialchars($package['hotel_mekkah']); ?>
+									<?php endif; ?>
+								</div>
+							<?php endif; ?>
+							
+							<?php if (!empty($package['price'])): ?>
+								<div class="price-section">
+									<strong>Harga: <?php echo htmlspecialchars($package['price']); ?></strong>
+								</div>
+							<?php else: ?>
+								<div class="price-section">
+									<strong>Hubungi kami untuk informasi harga</strong>
+								</div>
+							<?php endif; ?>
+						</div>
+						
 						<div style="margin-top: 20px;">
 							<a href="https://miw.up.railway.app/form_umroh.php" 
 							   class="tcb-button-link tcb-plain-text" 
