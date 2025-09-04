@@ -16,6 +16,7 @@ if [ ! -z "$RAILWAY_ENVIRONMENT" ]; then
     mkdir -p /app/uploads/documents
     mkdir -p /app/uploads/payments
     mkdir -p /app/uploads/cancellations
+    mkdir -p /app/uploads/flyers
     mkdir -p /app/error_logs
 
     # Set proper permissions
@@ -27,6 +28,7 @@ if [ ! -z "$RAILWAY_ENVIRONMENT" ]; then
     echo '<?php header("HTTP/1.0 403 Forbidden"); exit("Directory listing is not allowed."); ?>' > /app/uploads/documents/index.php
     echo '<?php header("HTTP/1.0 403 Forbidden"); exit("Directory listing is not allowed."); ?>' > /app/uploads/payments/index.php
     echo '<?php header("HTTP/1.0 403 Forbidden"); exit("Directory listing is not allowed."); ?>' > /app/uploads/cancellations/index.php
+    echo '<?php header("HTTP/1.0 403 Forbidden"); exit("Directory listing is not allowed."); ?>' > /app/uploads/flyers/index.php
 
     echo "✅ Upload directories initialized successfully"
     

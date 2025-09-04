@@ -4,19 +4,39 @@
  * Displays available umroh package flyers
  */
 
-// Get flyer images from sample directory
-$flyerDirectory = 'sample/';
+require_once 'config.php';
+
+// Get flyer images from uploads directory first, then fallback to sample
+$uploadsFlyerDirectory = getUploadsPath() . '/flyers/';
+$sampleFlyerDirectory = 'sample/';
 $flyers = [];
 
-if (is_dir($flyerDirectory)) {
-    $files = glob($flyerDirectory . 'umroh-*.{jpg,jpeg,png,gif}', GLOB_BRACE);
+// First, check for uploaded flyers
+if (is_dir($uploadsFlyerDirectory)) {
+    $files = glob($uploadsFlyerDirectory . '*.{jpg,jpeg,png,gif}', GLOB_BRACE);
     foreach ($files as $file) {
         $filename = basename($file);
         $title = ucwords(str_replace(['-', '.jpg', '.jpeg', '.png', '.gif'], [' ', '', '', '', ''], $filename));
         $flyers[] = [
             'file' => $file,
             'title' => $title,
-            'filename' => $filename
+            'filename' => $filename,
+            'source' => 'uploads'
+        ];
+    }
+}
+
+// If no uploaded flyers found, use sample flyers
+if (empty($flyers) && is_dir($sampleFlyerDirectory)) {
+    $files = glob($sampleFlyerDirectory . 'umroh-*.{jpg,jpeg,png,gif}', GLOB_BRACE);
+    foreach ($files as $file) {
+        $filename = basename($file);
+        $title = ucwords(str_replace(['-', '.jpg', '.jpeg', '.png', '.gif'], [' ', '', '', '', ''], $filename));
+        $flyers[] = [
+            'file' => $file,
+            'title' => $title,
+            'filename' => $filename,
+            'source' => 'sample'
         ];
     }
 }
