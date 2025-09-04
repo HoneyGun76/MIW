@@ -53,34 +53,49 @@ if (empty($flyers) && is_dir($sampleFlyerDirectory)) {
             </div>
         </div>
         
-        <div class="row g-4">
+        <div class="row g-4 justify-content-center">
             <?php foreach ($flyers as $index => $flyer): ?>
-            <div class="col-lg-4 col-md-6">
-                <div class="flyer-card h-100">
-                    <div class="flyer-image-container">
-                        <img src="<?= htmlspecialchars($flyer['file']) ?>" 
-                             alt="<?= htmlspecialchars($flyer['title']) ?>"
-                             class="flyer-image img-fluid"
-                             loading="lazy"
-                             data-bs-toggle="modal" 
-                             data-bs-target="#flyerModal<?= $index ?>">
-                        <div class="flyer-overlay">
-                            <i class="fas fa-search-plus fa-2x"></i>
+            <div class="col-12 col-lg-10 col-xl-8">
+                <div class="flyer-card-large h-100">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-md-6">
+                            <div class="flyer-image-container-large">
+                                <img src="<?= htmlspecialchars($flyer['file']) ?>" 
+                                     alt="<?= htmlspecialchars($flyer['title']) ?>"
+                                     class="flyer-image-large img-fluid"
+                                     loading="lazy"
+                                     data-bs-toggle="modal" 
+                                     data-bs-target="#flyerModal<?= $index ?>">
+                                <div class="flyer-overlay-large">
+                                    <i class="fas fa-search-plus fa-3x"></i>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flyer-card-body">
-                        <h5 class="flyer-title"><?= htmlspecialchars($flyer['title']) ?></h5>
-                        <div class="flyer-actions">
-                            <button class="btn btn-primary btn-sm" 
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#flyerModal<?= $index ?>">
-                                <i class="fas fa-eye me-1"></i> Lihat Detail
-                            </button>
-                            <a href="<?= htmlspecialchars($flyer['file']) ?>" 
-                               download="<?= htmlspecialchars($flyer['filename']) ?>"
-                               class="btn btn-outline-secondary btn-sm">
-                                <i class="fas fa-download me-1"></i> Download
-                            </a>
+                        <div class="col-md-6">
+                            <div class="flyer-card-body-large">
+                                <h3 class="flyer-title-large mb-3"><?= htmlspecialchars($flyer['title']) ?></h3>
+                                <p class="flyer-description text-muted mb-4">
+                                    Paket umroh dengan fasilitas terbaik dan pelayanan berkualitas tinggi. 
+                                    Dapatkan pengalaman spiritual yang tak terlupakan bersama kami.
+                                </p>
+                                <div class="flyer-actions-large">
+                                    <button class="btn btn-primary btn-lg me-3" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#flyerModal<?= $index ?>">
+                                        <i class="fas fa-eye me-2"></i> Lihat Detail
+                                    </button>
+                                    <a href="<?= htmlspecialchars($flyer['file']) ?>" 
+                                       download="<?= htmlspecialchars($flyer['filename']) ?>"
+                                       class="btn btn-outline-primary btn-lg">
+                                        <i class="fas fa-download me-2"></i> Download
+                                    </a>
+                                </div>
+                                <div class="mt-4">
+                                    <a href="form_umroh.php" class="btn btn-success btn-lg w-100">
+                                        <i class="fas fa-user-plus me-2"></i> Daftar Sekarang
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -116,31 +131,36 @@ if (empty($flyers) && is_dir($sampleFlyerDirectory)) {
 </section>
 
 <style>
-/* Flyer Gallery Styles */
+/* Flyer Gallery Styles - Large Single Column Layout */
 .flyer-gallery {
     background-color: #f8f9fa;
+    padding: 3rem 0;
 }
 
-.flyer-card {
+/* Large Card Styles */
+.flyer-card-large {
     background: white;
-    border-radius: 10px;
+    border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 2rem;
 }
 
-.flyer-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+.flyer-card-large:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
 
-.flyer-image-container {
+/* Large Image Container */
+.flyer-image-container-large {
     position: relative;
     overflow: hidden;
-    aspect-ratio: 16/9;
+    height: 400px;
+    min-height: 400px;
 }
 
-.flyer-image {
+.flyer-image-large {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -148,17 +168,17 @@ if (empty($flyers) && is_dir($sampleFlyerDirectory)) {
     cursor: pointer;
 }
 
-.flyer-image-container:hover .flyer-image {
-    transform: scale(1.05);
+.flyer-image-container-large:hover .flyer-image-large {
+    transform: scale(1.08);
 }
 
-.flyer-overlay {
+.flyer-overlay-large {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(57, 163, 209, 0.8);
+    background: rgba(57, 163, 209, 0.85);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -168,26 +188,45 @@ if (empty($flyers) && is_dir($sampleFlyerDirectory)) {
     color: white;
 }
 
-.flyer-image-container:hover .flyer-overlay {
+.flyer-image-container-large:hover .flyer-overlay-large {
     opacity: 1;
 }
 
-.flyer-card-body {
-    padding: 1.5rem;
+/* Large Card Body */
+.flyer-card-body-large {
+    padding: 3rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 400px;
 }
 
-.flyer-title {
+.flyer-title-large {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.flyer-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #6c757d;
+}
+
+.flyer-actions-large {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Button Styles */
+.btn-lg {
+    padding: 0.75rem 2rem;
     font-size: 1.1rem;
     font-weight: 600;
-    color: #333;
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-.flyer-actions {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
+    border-radius: 8px;
 }
 
 .btn-primary {
@@ -198,6 +237,18 @@ if (empty($flyers) && is_dir($sampleFlyerDirectory)) {
 .btn-primary:hover {
     background-color: #2a8bb8;
     border-color: #2a8bb8;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
 }
 
 /* Modal customizations */
@@ -212,17 +263,51 @@ if (empty($flyers) && is_dir($sampleFlyerDirectory)) {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .flyer-actions {
+    .flyer-card-large .row {
         flex-direction: column;
     }
     
-    .flyer-actions .btn {
-        width: 100%;
+    .flyer-card-body-large {
+        height: auto;
+        padding: 2rem 1.5rem;
+        text-align: center;
     }
     
-    .modal-lg {
-        max-width: 95vw;
-        margin: 0.5rem;
+    .flyer-image-container-large {
+        height: 300px;
+        min-height: 300px;
+    }
+    
+    .flyer-title-large {
+        font-size: 1.5rem;
+    }
+    
+    .flyer-actions-large {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .btn-lg {
+        width: 100%;
+        padding: 0.875rem 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .flyer-gallery {
+        padding: 2rem 0;
+    }
+    
+    .flyer-card-body-large {
+        padding: 1.5rem 1rem;
+    }
+    
+    .flyer-title-large {
+        font-size: 1.3rem;
+    }
+    
+    .flyer-description {
+        font-size: 1rem;
     }
 }
 </style>
