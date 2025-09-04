@@ -167,13 +167,25 @@ if ($biaya_paket_value !== '') {
         function toggleMarketingFields() {
             const marketingType = document.getElementById("marketing_type");
             const marketingFields = document.getElementById("marketing_fields");
+            const relasiField = document.getElementById("relasi_field");
             const marketingNama = document.getElementById("marketing_nama");
             const marketingHp = document.getElementById("marketing_hp");
+            const relasiSelect = document.getElementById("relasi");
             const nama = document.getElementById("nama");
             const noTelp = document.getElementById("no_telp");
 
-            if (!marketingType || !marketingFields || !marketingNama || !marketingHp || !nama || !noTelp) {
+            if (!marketingType || !marketingFields || !relasiField || !marketingNama || !marketingHp || !nama || !noTelp) {
                 return;
+            }
+
+            // Hide all fields initially
+            marketingFields.style.display = "none";
+            relasiField.style.display = "none";
+            
+            // Clear relasi field
+            if (relasiSelect) {
+                relasiSelect.value = "";
+                relasiSelect.removeAttribute("required");
             }
 
             if (marketingType.value === "mandiri") {
@@ -188,8 +200,16 @@ if ($biaya_paket_value !== '') {
                 marketingHp.value = "";
                 marketingNama.readOnly = false;
                 marketingHp.readOnly = false;
-            } else {
-                marketingFields.style.display = "none";
+            } else if (marketingType.value === "keluarga") {
+                marketingFields.style.display = "block";
+                relasiField.style.display = "block";
+                marketingNama.value = "";
+                marketingHp.value = "";
+                marketingNama.readOnly = false;
+                marketingHp.readOnly = false;
+                if (relasiSelect) {
+                    relasiSelect.setAttribute("required", "required");
+                }
             }
         }
 
@@ -428,6 +448,7 @@ if ($biaya_paket_value !== '') {
                 <option value="">-- Pilih Tipe Pendaftaran --</option>
                 <option value="mandiri">Saya mendaftar sendiri/Mandiri</option>
                 <option value="orang_lain">Saya mendaftarkan orang lain</option>
+                <option value="keluarga">Saya mendaftarkan keluarga</option>
             </select>
 
             <div id="marketing_fields" style="display: none;">
@@ -436,6 +457,22 @@ if ($biaya_paket_value !== '') {
 
                 <label for="marketing_hp">No. HP Pendaftar:</label>
                 <input type="text" id="marketing_hp" name="marketing_hp">
+            </div>
+
+            <div id="relasi_field" style="display: none;">
+                <label for="relasi">Hubungan Mahram:</label>
+                <select id="relasi" name="relasi">
+                    <option value="">-- Pilih Hubungan --</option>
+                    <option value="Orang Tua">Orang Tua</option>
+                    <option value="Anak">Anak</option>
+                    <option value="Suami/Istri">Suami/Istri</option>
+                    <option value="Mertua">Mertua</option>
+                    <option value="Saudara Kandung">Saudara Kandung</option>
+                    <option value="Keponakan">Keponakan</option>
+                    <option value="Paman/Bibi">Paman/Bibi</option>
+                    <option value="Kakek/Nenek">Kakek/Nenek</option>
+                    <option value="Cucu">Cucu</option>
+                </select>
             </div>
 
             <h3>Request Khusus</h3>
